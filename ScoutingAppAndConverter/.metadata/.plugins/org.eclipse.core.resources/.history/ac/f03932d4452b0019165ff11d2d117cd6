@@ -1,0 +1,108 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Scanner;
+
+public class exportCSV {
+	
+	BufferedWriter writes;
+	BufferedWriter writinger;
+	BufferedReader reads;
+	importFMT grabber;
+	String line;
+	String tmp;
+	
+	public exportCSV(importFMT grabber) {
+		this.grabber = grabber;
+	}
+	
+	public void steal() {
+		line = grabber.line;
+	}
+	public void write(String fileName) {
+		try {
+			writes = new BufferedWriter(new FileWriter(new File(fileName)));
+			tmp = line.replace(":", "").replace(",", ": ").replace(";", "\n");
+			writes.write(tmp);
+			writes.close();
+			reads = new BufferedReader(new FileReader(new File(fileName)));
+			writinger = new BufferedWriter(new FileWriter(new File(fileName.replace(".txt", ".csv"))));
+			while(reads.ready()) {
+				writinger.write(fix(reads.readLine()));
+				writinger.write("\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void halt() {
+		try {
+			writes.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public String fix(String line) {
+		return line.replace("cargoCount", "11881188").replace("hatchCount", "1818")
+		.replace("a", "Scored on Hab side 1 at").replace("b", "Scored on Hab side 2 at").replace("c", "Cargo has gone up at")
+		.replace("d", "Cargo dropped at").replace("e", "Hatch went up at").replace("f", "Hatch was dropped at")
+		.replace("g", "Ship scored sucessfully at").replace("h", "Ship score attempt made, they failed, at")
+		.replace("i", "Rocket one was scored on sucessfully at").replace("j", "Rocket one was attempted on at")
+		.replace("k", "Rocket 2 was scored on").replace("l", "Rocket 2 was attempted on at").replace("m", "Rocket 3 was scored on at")
+		.replace("n", "Rocket 3 was attempted at").replace("o", "Hab one was climbed at").replace("p", "Hab 2 was climbed at")
+		.replace("q", "Hab 3 was climbed at").replace("r", "A hab was attempted, though failed, at").replace("s", "A robot defended at")
+		.replace("t", "A robot crossed the feild at").replace("11881188", "Cargo Count").replace("1818", "Hatch Count");
+	}
+	
+	public void eriksFixerUpper(String line) {
+		if (line.contains("cargoCount")) {
+			
+		} else if (line.contains("hatchCount")) {
+			
+		} else if (line.contains("a")) {
+			
+		} else if (line.contains("b")) {
+			
+		} else if (line.contains("c")) {
+			
+		} else if (line.contains("d")) {
+			
+		} else if (line.contains("e")) {
+			
+		} else if (line.contains("f")) {
+			
+		} else if (line.contains("g")) {
+			
+		} else if (line.contains("h")) {
+			
+		} else if (line.contains("i")) {
+			
+		} else if (line.contains("j")) {
+			
+		} else if (line.contains("k")) {
+			
+		} else if (line.contains("l")) {
+			
+		} else if (line.contains("m")) {
+			
+		} else if (line.contains("n")) {
+			
+		} else if (line.contains("o")) {
+			
+		} else if (line.contains("p")) {
+			
+		} else if (line.contains("q")) {
+			
+		} else if (line.contains("r")) {
+			
+		} else if (line.contains("s")) {
+			
+		} else if (line.contains("t")) {
+			
+		}
+	}
+}
