@@ -32,16 +32,16 @@ public class ElevatorSubsystem extends Subsystem {
 
 	public ElevatorSubsystem() {
 		Encoder elevatorWpiEncoder = new Encoder(RobotMap.elevatorEncoderLeft, RobotMap.elevatorEncoderRight);
-		this.elevatorEncoder = new RavenEncoder(elevatorWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.elevatorWheelDiameterInches, true);
-		this.elevatorMotor = new TalonSRX(RobotMap.elevatorMotor);
-		this.elevatorMotorFollower = new TalonSRX(RobotMap.elevatorMotorFollower);
-		this.elevatorMotorFollower.follow(this.elevatorMotor);
-		//this.retractedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorRetractionLimitSwitch);
-		//this.extendedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorExtensionLimitSwitch);
-		this.elevatorMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkF, TalonSRXConstants.kTimeoutMs);
-		this.elevatorMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkP, TalonSRXConstants.kTimeoutMs);
-		this.elevatorMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkI, TalonSRXConstants.kTimeoutMs);
-		this.elevatorMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkD, TalonSRXConstants.kTimeoutMs);
+		elevatorEncoder = new RavenEncoder(elevatorWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.elevatorWheelDiameterInches, true);
+		elevatorMotor = new TalonSRX(RobotMap.elevatorMotor);
+		elevatorMotorFollower = new TalonSRX(RobotMap.elevatorMotorFollower);
+		elevatorMotorFollower.follow(elevatorMotor);
+		//retractedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorRetractionLimitSwitch);
+		//extendedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorExtensionLimitSwitch);
+		elevatorMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkF, TalonSRXConstants.kTimeoutMs);
+		elevatorMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkP, TalonSRXConstants.kTimeoutMs);
+		elevatorMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkI, TalonSRXConstants.kTimeoutMs);
+		elevatorMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkD, TalonSRXConstants.kTimeoutMs);
 	}
 
 	public void initDefaultCommand() {
@@ -80,15 +80,15 @@ public class ElevatorSubsystem extends Subsystem {
     	
     	_expectedPower = magnitude;
     	
-    	this.elevatorMotor.set(ControlMode.PercentOutput, magnitude);
+    	elevatorMotor.set(ControlMode.PercentOutput, magnitude);
     }
 
 	public void getPosition() {
-		System.out.print("Elevator Position: " + this.getEncoderPosition());
+		System.out.print("Elevator Position: " + getEncoderPosition());
 	}
 
 	public double getEncoderPosition() {
-		int EncoderPosition = this.elevatorEncoder.getCycles();
+		int EncoderPosition = elevatorEncoder.getCycles();
 
 		return EncoderPosition;
 	}
@@ -102,33 +102,33 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void elevatorSubsystemDiagnostics() {
-		PCDashboardDiagnostics.SubsystemNumber("Elevator", "Encoder", this.getEncoderPosition());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitEncoderExtended", this.isEncoderAtExtensionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitEncoderRetracted", this.isEncoderAtRetractionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchExtended", this.getelevatorExtensionLimitSwitchValue());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchRetracted", this.getelevatorRetractionLimitSwitchValue());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitFinalExtension", this.isAtExtensionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitFinalRetraction", this.isAtRetractionLimit());
+		PCDashboardDiagnostics.SubsystemNumber("Elevator", "Encoder", getEncoderPosition());
+		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitEncoderExtended", isEncoderAtExtensionLimit());
+		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitEncoderRetracted", isEncoderAtRetractionLimit());
+		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchExtended", getelevatorExtensionLimitSwitchValue());
+		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchRetracted", getelevatorRetractionLimitSwitchValue());
+		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitFinalExtension", isAtExtensionLimit());
+		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitFinalRetraction", isAtRetractionLimit());
 
 		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "OverrideExtend", Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND.getOverride1());
 		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "OverrideRetract", Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT.getOverride1());
 		// Measure power sent to elevator
 		PCDashboardDiagnostics.SubsystemNumber("Elevator", "EncoderExpectedPower", _expectedPower);
 
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchAndEncoderAgreeRetracted", this.encoderAndLimitsMatchRetracted());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchAndEncoderAgreeExtended", this.encoderAndLimitsMatchExtended());
+		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchAndEncoderAgreeRetracted", encoderAndLimitsMatchRetracted());
+		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchAndEncoderAgreeExtended", encoderAndLimitsMatchExtended());
 	}
 
 	public boolean encoderAndLimitsMatchRetracted() {
 		boolean match = true;
 
-		if (this.getEncoderPosition() < Calibrations.elevatorEncoderMinimumValue
-				&& this.getelevatorRetractionLimitSwitchValue() == false) {
+		if (getEncoderPosition() < Calibrations.elevatorEncoderMinimumValue
+				&& getelevatorRetractionLimitSwitchValue() == false) {
 			match = false;
 		}
 
-		if (this.getelevatorRetractionLimitSwitchValue() == true
-				&& this.getEncoderPosition() > Calibrations.elevatorEncoderMinimumValue
+		if (getelevatorRetractionLimitSwitchValue() == true
+				&& getEncoderPosition() > Calibrations.elevatorEncoderMinimumValue
 						+ Calibrations.elevatorLiftDownwardSafetyMargin) {
 			match = false;
 		}
@@ -139,13 +139,13 @@ public class ElevatorSubsystem extends Subsystem {
 	public boolean encoderAndLimitsMatchExtended() {
 		boolean match = true;
 
-		if (this.getEncoderPosition() > Calibrations.elevatorEncoderMaximumValue
-				&& this.getelevatorExtensionLimitSwitchValue() == false) {
+		if (getEncoderPosition() > Calibrations.elevatorEncoderMaximumValue
+				&& getelevatorExtensionLimitSwitchValue() == false) {
 			match = false;
 		}
 
-		if (this.getelevatorExtensionLimitSwitchValue() == true
-				&& this.getEncoderPosition() < Calibrations.elevatorEncoderMaximumValue
+		if (getelevatorExtensionLimitSwitchValue() == true
+				&& getEncoderPosition() < Calibrations.elevatorEncoderMaximumValue
 						- Calibrations.elevatorLiftUpwardSafetyMargin) {
 			match = false;
 		}
@@ -158,7 +158,7 @@ public class ElevatorSubsystem extends Subsystem {
 		if (Math.abs(_expectedPower) > Calibrations.elevatorHoldPositionPowerMagnitude) {
 			// The line below only returns as true if the elevator is pushing harder than it
 			// needs to not move it
-			if (Math.abs(this.elevatorMotor.getSelectedSensorVelocity()) < Calibrations.elevatorConsideredMovingEncoderRate) {
+			if (Math.abs(elevatorMotor.getSelectedSensorVelocity()) < Calibrations.elevatorConsideredMovingEncoderRate) {
 				burnoutProtection();
 			}
 		}
@@ -172,15 +172,15 @@ public class ElevatorSubsystem extends Subsystem {
 
 	public void getIsAtLimits() {
 		System.out.print(" Extension Limit: " + isAtExtensionLimit() + " Retraction Limit: "
-			+ this.isAtRetractionLimit());
+			+ isAtRetractionLimit());
 	}
 
 	public void resetEncodersToRetractedLimit() {
-		this.elevatorMotor.setSelectedSensorPosition(Calibrations.elevatorEncoderMinimumValue, 0, 0);
+		elevatorMotor.setSelectedSensorPosition(Calibrations.elevatorEncoderMinimumValue, 0, 0);
 	}
 
 	public void resetEncodersToExtendedLimit() {
-		this.elevatorMotor.setSelectedSensorPosition(Calibrations.elevatorEncoderMaximumValue, 0, 0);
+		elevatorMotor.setSelectedSensorPosition(Calibrations.elevatorEncoderMaximumValue, 0, 0);
 	}
 
 	public void setMotorsPID(int position) {
@@ -188,7 +188,7 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void stop() {
-		this.elevatorMotor.set(ControlMode.PercentOutput, 0);
+		elevatorMotor.set(ControlMode.PercentOutput, 0);
 		// System.out.println("STOPPING ARM.STOPPING ARM.STOPPING ARM.STOPPING
 		// ARM.STOPPING ARM.STOPPING ARM.STOPPING ARM.");
 	}
@@ -197,38 +197,30 @@ public class ElevatorSubsystem extends Subsystem {
 	// of both should be used.
 
 	public void expectElevatorToBeAtRetractionLimit() {
-		boolean isAtLimitSwitch = this.getelevatorRetractionLimitSwitchValue();
-		// boolean isEncoderWithinRange = isEncoderAtExtensionLimit();
-
-		if (isAtLimitSwitch == true) {
-			this.resetEncodersToRetractedLimit();
+		if (getelevatorRetractionLimitSwitchValue()) {
+			resetEncodersToExtendedLimit();
 		}
 	}
 
 	public void expectElevatorToBeAtExtensionLimit() {
-		boolean isAtLimitSwitch = this.getelevatorExtensionLimitSwitchValue();
-		// boolean isEncoderWithinRange = isEncoderAtRetractionLimit();
-
-		if (isAtLimitSwitch == true) {
-			this.resetEncodersToExtendedLimit();
+		if (getelevatorExtensionLimitSwitchValue()) {
+			resetEncodersToExtendedLimit();
 		}
 	}
 
 	public boolean isEncoderAtExtensionLimit() {
-		boolean encoderLimit = false;
-
-		if (this.getEncoderPosition() >= Calibrations.elevatorEncoderMaximumValue
-				- Calibrations.elevatorLiftUpwardSafetyMargin) {
-			encoderLimit = true;
+		if (getEncoderPosition() >= 
+			Calibrations.elevatorEncoderMaximumValue - Calibrations.elevatorLiftUpwardSafetyMargin) {
+			return true;
 		}
 
-		return encoderLimit;
+		return false;
 	}
 
 	public boolean isEncoderAtRetractionLimit() {
 		boolean encoderLimit = false;
 
-		if (this.getEncoderPosition() <= Calibrations.elevatorEncoderMinimumValue
+		if (getEncoderPosition() <= Calibrations.elevatorEncoderMinimumValue
 				+ Calibrations.elevatorLiftDownwardSafetyMargin) {
 			encoderLimit = false;
 		}
@@ -239,47 +231,41 @@ public class ElevatorSubsystem extends Subsystem {
 	// Right now this method just looks at the right limit switch; some combination
 	// of both should be used.
 	public boolean isAtExtensionLimit() {
-		boolean isAtLimit = false;
 		boolean encoderLimit = false;
 		boolean switchLimit = false;
 
-		encoderLimit = this.isEncoderAtExtensionLimit();
+		encoderLimit = isEncoderAtExtensionLimit();
 
-		if (this.getelevatorExtensionLimitSwitchValue() == true) {
+		if (getelevatorExtensionLimitSwitchValue() == true) {
 			switchLimit = true;
-			this.resetEncodersToExtendedLimit();
+			resetEncodersToExtendedLimit();
 		}
 
-		isAtLimit = Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND.getIsAtLimit(encoderLimit, switchLimit);
-
-		return isAtLimit;
+		return Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND.getIsAtLimit(encoderLimit, switchLimit);
 	}
 
 	public boolean isAtRetractionLimit() {
-		boolean isAtLimit = false;
 		boolean encoderLimit = false;
 		boolean switchLimit = false;
 
-		encoderLimit = this.isEncoderAtRetractionLimit();
+		encoderLimit = isEncoderAtRetractionLimit();
 
-		if (this.getelevatorRetractionLimitSwitchValue() == true) {
+		if (getelevatorRetractionLimitSwitchValue()) {
 			switchLimit = true;
-			this.resetEncodersToRetractedLimit();
+			resetEncodersToRetractedLimit();
 		}
 
-		isAtLimit = Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT.getIsAtLimit(encoderLimit, switchLimit);
-
-		return isAtLimit;
+		return Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT.getIsAtLimit(encoderLimit, switchLimit);
 	}
 
 	public void holdPosition() {
-		this.elevatorMotor.set(ControlMode.PercentOutput, Calibrations.elevatorHoldPositionPowerMagnitude);
+		elevatorMotor.set(ControlMode.PercentOutput, Calibrations.elevatorHoldPositionPowerMagnitude);
 	}
 
 	public double getElevatorHeightPercentage() {
 		double encoderMax = (double) Calibrations.elevatorEncoderMaximumValue;
 		double encoderMin = (double) Calibrations.elevatorEncoderMinimumValue;
-		double encoderCurrent = this.getEncoderPosition();
+		double encoderCurrent = getEncoderPosition();
 
 		double heightPercentage = (encoderCurrent - encoderMin) / (encoderMax - encoderMin);
 		heightPercentage = Math.min(1, heightPercentage);
@@ -321,19 +307,17 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public boolean getIsExtendedPastEncoderPosition(int encoderPosition) {
-		boolean isPastMidway = false;
-
-		if (this.getEncoderPosition() > encoderPosition + Calibrations.ELEVATOR_AT_POSITION_BUFFER) {
-			isPastMidway = true;
+		if (getEncoderPosition() > encoderPosition + Calibrations.ELEVATOR_AT_POSITION_BUFFER) {
+			return true;
 		}
 
-		return isPastMidway;
+		return false;
 	}
 
 	public boolean getIsRetractedBeforeEncoderPosition(int encoderPosition) {
 		boolean isPastMidway = false;
 
-		if (this.getEncoderPosition() < encoderPosition - Calibrations.ELEVATOR_AT_POSITION_BUFFER) {
+		if (getEncoderPosition() < encoderPosition - Calibrations.ELEVATOR_AT_POSITION_BUFFER) {
 			isPastMidway = true;
 		}
 
@@ -343,8 +327,8 @@ public class ElevatorSubsystem extends Subsystem {
 	public boolean getIsAtPosition(int encoderPosition) {
 		boolean isAtMidway = false;
 
-		boolean notOverExtended = this.getIsExtendedPastEncoderPosition(encoderPosition);
-		boolean notOverRetracted = this.getIsRetractedBeforeEncoderPosition(encoderPosition);
+		boolean notOverExtended = getIsExtendedPastEncoderPosition(encoderPosition);
+		boolean notOverRetracted = getIsRetractedBeforeEncoderPosition(encoderPosition);
 
 		if (notOverExtended == false && notOverRetracted == false) {
 			isAtMidway = true;
