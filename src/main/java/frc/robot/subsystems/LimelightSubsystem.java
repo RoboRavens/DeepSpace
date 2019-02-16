@@ -13,10 +13,6 @@ import frc.util.PCDashboardDiagnostics;
  */
 public class LimelightSubsystem extends Subsystem {
 	static double Limit = 0.00;
-	static double A = 0;
-	static double B = 0;
-	static double C = 0;
-	static double D = 0;
 	edu.wpi.first.networktables.NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 	NetworkTableEntry tx = table.getEntry("tx");
 	NetworkTableEntry ty = table.getEntry("ty");

@@ -21,7 +21,7 @@ public class DriveTrainDriveFPSCommand extends Command {
         double leftYAxisValue = Robot.DRIVE_CONTROLLER.getAxis(AxisCode.LEFTSTICKY);
         double rightYAxisValue = Robot.DRIVE_CONTROLLER.getAxis(AxisCode.RIGHTSTICKY);
         double rightXAxisValue = Robot.DRIVE_CONTROLLER.getAxis(AxisCode.RIGHTSTICKX);
-        System.out.println("DEFAULT DRIVE CODE RUNNING");
+        //System.out.println("DEFAULT DRIVE CODE RUNNING");
         Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.drive(leftYAxisValue, rightYAxisValue, rightXAxisValue);
     }
 

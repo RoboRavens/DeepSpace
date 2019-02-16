@@ -11,17 +11,26 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class SetCargoOrHatchPanel extends Command {
-  public SetCargoOrHatchPanel() {}
+  private String _hatchOrCargo;
+  public SetCargoOrHatchPanel(String hatchOrCargo) {
+    this._hatchOrCargo = hatchOrCargo;
+    requires(Robot.SET_COMMAND_SUBSYSTEM);
+  }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Running SetCargoOrHatchPanel");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() { 
-    Robot.SET_COMMAND_SUBSYSTEM.setCargoOrHatchPanel("Cargo");
+    if (this._hatchOrCargo == "Cargo") {
+      Robot.SET_COMMAND_SUBSYSTEM.setCargoOrHatchPanel("Cargo");
+    } else {
+      Robot.SET_COMMAND_SUBSYSTEM.setCargoOrHatchPanel("Hatch Panel");
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
