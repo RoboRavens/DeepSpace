@@ -61,9 +61,9 @@ public class CargoWheelSubsystem extends Subsystem {
 
 	public boolean hasCargo() {
 		boolean otherLimit = false;
-		boolean hasCargo = false;
+		//boolean hasCargo = cargoSensor.get() == false;
 
-		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(hasCargo, otherLimit);
+		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(false, otherLimit);
 	}
 
 	public void periodic() {
@@ -71,7 +71,7 @@ public class CargoWheelSubsystem extends Subsystem {
 
 		PCDashboardDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", this.hasCargo());
 		//PCDashboardDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoSensorRaw", cargoSensor.get());
-		PCDashboardDiagnostics.SubsystemNumber("CargoWheel", "MotorOutputPercent", cargoMotor.getMotorOutputPercent());
+		//PCDashboardDiagnostics.SubsystemNumber("CargoWheel", "MotorOutputPercent", cargoMotor.getMotorOutputPercent());
 
 		if (this.hasCargo() == false) {
 			_hasCargoDurationTimer.reset();

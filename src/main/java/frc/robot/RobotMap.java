@@ -8,6 +8,11 @@ public class RobotMap {
 	public static int rightDriveChannel = 1;
 	public static int rightFollower1 = 12;
 	public static int rightFollower2 = 13;
+
+	public static final int leftDriveEncoder1 = 0;
+    public static final int leftDriveEncoder2 = 1;
+    public static final int rightDriveEncoder1 = 2;
+    public static final int rightDriveEncoder2 = 3;
 	
 	// Elevator System
 	public static final int elevatorMotor = 2;
@@ -40,9 +45,4 @@ public class RobotMap {
 
 	// Camera
 	public static final String cameraName = "cam0";
-
-	public static final int leftDriveEncoder1 = 0;
-    public static final int leftDriveEncoder2 = 1;
-    public static final int rightDriveEncoder1 = 2;
-    public static final int rightDriveEncoder2 = 3;
 }

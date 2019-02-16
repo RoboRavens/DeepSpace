@@ -37,7 +37,7 @@ public class Calibrations {
 	public static final double DriveTrainCollisionJerkThreshold = 4;
 
 	// 2019 and newer robots use talonSRX instead talon
-	public static final Boolean UseTalonSRXForDriveController = false;
+	public static final Boolean UseTalonSRXForDriveController = true;
 
 	
 	// Drive and gyro modes

@@ -22,8 +22,8 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class ElevatorSubsystem extends Subsystem {
 	public TalonSRX elevatorMotor;
-	//BufferedDigitalInput extendedLimitSwitch;
-	//BufferedDigitalInput retractedLimitSwitch;
+	BufferedDigitalInput extendedLimitSwitch;
+	BufferedDigitalInput retractedLimitSwitch;
 	private Timer _safetyTimer = new Timer();
 	private double _expectedPower;
 
@@ -154,7 +154,7 @@ public class ElevatorSubsystem extends Subsystem {
 		if (Math.abs(_expectedPower) > Calibrations.elevatorHoldPositionPowerMagnitude) {
 			// The line below only returns as true if the elevator is pushing harder than it
 			// needs to not move it
-			if (Math.abs(elevatorMotor.getSelectedSensorVelocity()) < Calibrations.elevatorConsideredMovingEncoderRate) {
+			if (Math.abs(this.elevatorMotor.getSelectedSensorVelocity()) < Calibrations.elevatorConsideredMovingEncoderRate) {
 				burnoutProtection();
 			}
 		}
