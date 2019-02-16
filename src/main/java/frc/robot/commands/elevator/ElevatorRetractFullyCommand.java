@@ -34,7 +34,7 @@ public class ElevatorRetractFullyCommand extends Command {
 			isFinished = true;
 		}
 
-		if (Robot.ELEVATOR_SUBSYSTEM.getIsAtRetractionLimit()) {
+		if (Robot.ELEVATOR_SUBSYSTEM.isAtRetractionLimit()) {
 			isFinished = true;
 		}
 		return isFinished;

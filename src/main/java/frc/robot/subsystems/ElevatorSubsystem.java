@@ -49,20 +49,20 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void extend(double magnitude) {
-    	if (this.getIsAtExtensionLimit()) {
-    		this.stop();
+    	if (isAtExtensionLimit()) {
+    		stop();
     	}
     	else {
-        	this.set(magnitude);	
+        	set(magnitude);	
     	}
 	}
 
 	public void retract(double magnitude) {
-    	if (this.getIsAtRetractionLimit()) {
-    		this.stop();
+    	if (isAtRetractionLimit()) {
+    		stop();
     	}
     	else {
-    		this.set(-1 * magnitude);
+    		set(-1 * magnitude);
     	}
 	}
 
@@ -71,10 +71,10 @@ public class ElevatorSubsystem extends Subsystem {
     	magnitude = Math.max(magnitude, -1);
     	magnitude *= 1;
     	
-    	if (getIsAtExtensionLimit() == true && Math.signum(magnitude) == 1) {
+    	if (isAtExtensionLimit() && Math.signum(magnitude) == 1) {
     		magnitude = 0;
     	}
-    	if (getIsAtRetractionLimit() == true && Math.signum(magnitude) == -1) {
+    	if (isAtRetractionLimit() && Math.signum(magnitude) == -1) {
     		magnitude = 0;
     	}
     	
@@ -96,8 +96,6 @@ public class ElevatorSubsystem extends Subsystem {
 	public void periodic() {
 		//retractedLimitSwitch.maintainState();
 		//extendedLimitSwitch.maintainState();
-		this.getIsAtExtensionLimit();
-		this.getIsAtRetractionLimit();
 
 		elevatorSubsystemDiagnostics();
 		checkExpectedSpeedVersusPower();
@@ -109,8 +107,8 @@ public class ElevatorSubsystem extends Subsystem {
 		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitEncoderRetracted", this.isEncoderAtRetractionLimit());
 		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchExtended", this.getelevatorExtensionLimitSwitchValue());
 		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchRetracted", this.getelevatorRetractionLimitSwitchValue());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitFinalExtension", this.getIsAtExtensionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitFinalRetraction", this.getIsAtRetractionLimit());
+		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitFinalExtension", this.isAtExtensionLimit());
+		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitFinalRetraction", this.isAtRetractionLimit());
 
 		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "OverrideExtend", Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND.getOverride1());
 		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "OverrideRetract", Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT.getOverride1());
@@ -173,8 +171,8 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void getIsAtLimits() {
-		System.out.print(" Extension Limit: " + this.getIsAtExtensionLimit() + " Retraction Limit: "
-				+ this.getIsAtRetractionLimit());
+		System.out.print(" Extension Limit: " + isAtExtensionLimit() + " Retraction Limit: "
+			+ this.isAtRetractionLimit());
 	}
 
 	public void resetEncodersToRetractedLimit() {
@@ -240,7 +238,7 @@ public class ElevatorSubsystem extends Subsystem {
 
 	// Right now this method just looks at the right limit switch; some combination
 	// of both should be used.
-	public boolean getIsAtExtensionLimit() {
+	public boolean isAtExtensionLimit() {
 		boolean isAtLimit = false;
 		boolean encoderLimit = false;
 		boolean switchLimit = false;
@@ -257,7 +255,7 @@ public class ElevatorSubsystem extends Subsystem {
 		return isAtLimit;
 	}
 
-	public boolean getIsAtRetractionLimit() {
+	public boolean isAtRetractionLimit() {
 		boolean isAtLimit = false;
 		boolean encoderLimit = false;
 		boolean switchLimit = false;

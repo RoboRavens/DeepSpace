@@ -26,7 +26,7 @@ public class ElevatorHoldPositionCommand extends Command {
 		// The goal of this command is to send a very small amount of power to the
 		// elevator motors
 		// to fight against gravity - NOT to move the elevator, at all.
-		if (Robot.ELEVATOR_SUBSYSTEM.getIsAtRetractionLimit() == false) {
+		if (Robot.ELEVATOR_SUBSYSTEM.isAtRetractionLimit() == false) {
 			Robot.ELEVATOR_SUBSYSTEM.holdPosition();
 		} else {
 			Robot.ELEVATOR_SUBSYSTEM.stop();
