@@ -28,7 +28,7 @@ public class BeakSubsystem extends Subsystem {
   // here. Call these from Commands.
 
   public BeakSubsystem() {
-		this.beak = new Solenoid(RobotMap.beakSolenoid);
+		//this.beak = new Solenoid(RobotMap.beakSolenoid);
 		this.hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
 		_hasHatchPanelDurationTimer.start();
   }
