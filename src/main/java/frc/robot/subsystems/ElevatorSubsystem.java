@@ -137,20 +137,18 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public boolean encoderAndLimitsMatchExtended() {
-		boolean match = true;
-
 		if (getEncoderPosition() > Calibrations.elevatorEncoderMaximumValue
 				&& getelevatorExtensionLimitSwitchValue() == false) {
-			match = false;
+			return false;
 		}
 
 		if (getelevatorExtensionLimitSwitchValue() == true
 				&& getEncoderPosition() < Calibrations.elevatorEncoderMaximumValue
 						- Calibrations.elevatorLiftUpwardSafetyMargin) {
-			match = false;
+			return false;
 		}
 
-		return match;
+		return true;
 	}
 
 	public void checkExpectedSpeedVersusPower() {
