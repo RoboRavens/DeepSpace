@@ -33,12 +33,15 @@ import frc.robot.commands.automatedscoring.SetRocketHeightHighCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightLowCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightMidCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
+import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.drivetrain.SetCutPowerFalse;
 import frc.robot.commands.drivetrain.SetCutPowerTrue;
 import frc.robot.commands.drivetrain.SetGyroTargetHeading;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.misc.SetOverride1Command;
+import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
+import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.BeakSubsystem;
 import frc.robot.subsystems.CargoWheelSubsystem;
@@ -51,6 +54,7 @@ import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ProgrammableLEDSubsystem;
 import frc.robot.subsystems.SetCommandSubsystem;
 import frc.util.LoggerOverlord;
+import frc.util.NetworkTableDiagnostics;
 import frc.util.OverrideSystem;
 
 /**
@@ -130,6 +134,11 @@ public class Robot extends TimedRobot {
 
 		this.setupDriveController();
 		this.setupOperationPanel();
+	}
+
+	@Override
+	public void robotPeriodic() {
+		NetworkTableDiagnostics.SendData();
 	}
 
 	/**
@@ -342,22 +351,22 @@ public class Robot extends TimedRobot {
 	}
 
 	public void setupDriveController() {
-		DRIVE_CONTROLLER.getButton(ButtonCode.X).whenPressed(new SetGyroTargetHeading(270));
-		DRIVE_CONTROLLER.getButton(ButtonCode.B).whenPressed(new SetGyroTargetHeading(90));
-		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new SetGyroTargetHeading(0));
-		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new SetCutPowerTrue());
-		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new SetAutomatedCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakCaptureHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new CargoWheelSuckCommand());
+		if (DRIVE_CONTROLLER.getAxisIsPressed(AxisCode.RIGHTTRIGGER)) {
+			new SetAutomatedCommand();
+		}
 	}
 
 	public void setupOperationPanel() {
 		System.out.println("Operation PANEL CONFIGURED!!! Operation PANEL CONFIGURED!!!");
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEDOWN).whileHeld(new ElevatorRetractWhileHeldCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEDOWN).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT, true));
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEDOWN).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT, false));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDERETRACT).whileHeld(new ElevatorRetractWhileHeldCommand());
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDERETRACT).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT, true));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT, false));
 		
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEUP).whileHeld(new ElevatorExtendWhileHeldCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEUP).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND, true));
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEUP).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND, false));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEEXTEND).whileHeld(new ElevatorExtendWhileHeldCommand());
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEEXTEND).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND, true));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEEXTEND).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND, false));
 		
 		OPERATION_PANEL.getButton(ButtonCode.ARMOVERRIDEEXTEND).whileHeld(new ArmExtendWhileHeldCommand());
 		OPERATION_PANEL.getButton(ButtonCode.ARMOVERRIDEEXTEND).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, true));
@@ -368,7 +377,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ARMOVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, false));
 
 		OPERATION_PANEL.getButton(ButtonCode.CARGOSPITOVERRIDE).whileHeld(new CargoWheelSpitCommand());
-		OPERATION_PANEL.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new SetCargoOrHatchPanel("Cargo")); //was new BeakReleaseHatchPanelCommand()
+		OPERATION_PANEL.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new BeakReleaseHatchPanelCommand()); //was new BeakReleaseHatchPanelCommand()
 
 		OPERATION_PANEL.getButton(ButtonCode.CARGOORHATCHPANEL).whenPressed(new SetCargoOrHatchPanel("Hatch Panel"));
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONCARGOSHIP).whenPressed(new SetLocationCargoShipCommand());

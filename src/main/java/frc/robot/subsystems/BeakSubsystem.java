@@ -20,8 +20,8 @@ import frc.ravenhardware.BufferedDigitalInput;
  * Add your docs here.
  */
 public class BeakSubsystem extends Subsystem {
-  Solenoid beak = new Solenoid(RobotMap.beakSolenoid);
-  BufferedDigitalInput hatchPanelSensor;
+  //Solenoid beak = new Solenoid(RobotMap.beakSolenoid);
+  //BufferedDigitalInput hatchPanelSensor;
   private Timer _hasHatchPanelDurationTimer = new Timer();
 
   // Put methods for controlling this subsystem
@@ -60,10 +60,10 @@ public class BeakSubsystem extends Subsystem {
   
 
   public void release() {
-    beak.set(false);
+    //beak.set(false);
   }
 
   public void capture() {
-    beak.set(true);
+    //beak.set(true);
   }
 }

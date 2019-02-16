@@ -22,7 +22,7 @@ public class ArmExtendWhileHeldCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ARM_SUBSYSTEM.setMotorsPID(Calibrations.armEncoderMaximumValue);
+        Robot.ARM_SUBSYSTEM.extend(0.1);
         // System.out.println("EXTENDING ARM.EXTENDING ARM.EXTENDING ARM.EXTENDING
         // ARM.EXTENDING ARM.EXTENDING ARM.EXTENDING ARM.EXTENDING ARM.");
     }

@@ -41,6 +41,42 @@ public class ElevatorSubsystem extends Subsystem {
 		setDefaultCommand(new ElevatorHoldPositionCommand());
 	}
 
+	public void extend(double magnitude) {
+    	if (this.getIsAtExtensionLimit()) {
+    		this.stop();
+    	}
+    	else {
+        	this.set(magnitude);	
+    	}
+	}
+
+	public void retract(double magnitude) {
+    	if (this.getIsAtRetractionLimit()) {
+    		this.stop();
+    	}
+    	else {
+    		this.set(-1 * magnitude);
+    	}
+	}
+
+	private void set(double magnitude) {
+    	// System.out.println(rightMotor.get);
+    	magnitude = Math.min(magnitude, 1);
+    	magnitude = Math.max(magnitude, -1);
+    	magnitude *= 1;
+    	
+    	if (getIsAtExtensionLimit() == true && Math.signum(magnitude) == 1) {
+    		magnitude = 0;
+    	}
+    	if (getIsAtRetractionLimit() == true && Math.signum(magnitude) == -1) {
+    		magnitude = 0;
+    	}
+    	
+    	_expectedPower = magnitude;
+    	
+    	this.elevatorMotor.set(ControlMode.PercentOutput, magnitude);
+    }
+
 	public void getPosition() {
 		System.out.print("Elevator Position: " + this.getEncoderPosition());
 	}
@@ -72,7 +108,6 @@ public class ElevatorSubsystem extends Subsystem {
 
 		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "OverrideExtend", Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND.getOverride1());
 		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "OverrideRetract", Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT.getOverride1());
-
 		// Measure power sent to elevator
 		PCDashboardDiagnostics.SubsystemNumber("Elevator", "EncoderExpectedPower", _expectedPower);
 
