@@ -12,7 +12,7 @@ import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.arm.ArmHoldPositionCommand;
-import frc.util.PCDashboardDiagnostics;
+import frc.util.NetworkTableDiagnostics;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
@@ -33,6 +33,18 @@ public class ArmSubsystem extends Subsystem {
 		this.armMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkP, TalonSRXConstants.kTimeoutMs);
 		this.armMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkI, TalonSRXConstants.kTimeoutMs);
 		this.armMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkD, TalonSRXConstants.kTimeoutMs);
+
+		NetworkTableDiagnostics.SubsystemNumber("Arm", "Encoder", () -> this.getEncoderPosition());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitEncoderExtension", () -> this.isEncoderAtExtensionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitEncoderRetraction", () -> this.isEncoderAtRetractionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchExtension", () -> this.getExtensionLimitSwitchValue());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchRetraction", () -> this.getelevatorRetractionLimitSwitchValue());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitFinalExtension", () -> this.getIsAtExtensionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitFinalRetraction", () -> this.getIsAtRetractionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchAndEncoderAgreeExtended", () -> this.encoderAndLimitsMatchExtended());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchAndEncoderAgreeRetracted", () -> this.encoderAndLimitsMatchRetracted());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "OverrideExtend", () -> Robot.OVERRIDE_SYSTEM_ARM_EXTEND.getOverride1());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "OverrideRetract",() ->  Robot.OVERRIDE_SYSTEM_ARM_RETRACT.getOverride1());
 	}
 
 	public void initDefaultCommand() {
@@ -70,18 +82,6 @@ public class ArmSubsystem extends Subsystem {
 		//extensionLimitSwitch.maintainState();
 		this.getIsAtExtensionLimit();
 		this.getIsAtRetractionLimit();
-
-		PCDashboardDiagnostics.SubsystemNumber("Arm", "Encoder", this.getEncoderPosition());
-		PCDashboardDiagnostics.SubsystemBoolean("Arm", "LimitEncoderExtension", this.isEncoderAtExtensionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Arm", "LimitEncoderRetraction", this.isEncoderAtRetractionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Arm", "LimitSwitchExtension", this.getExtensionLimitSwitchValue());
-		PCDashboardDiagnostics.SubsystemBoolean("Arm", "LimitSwitchRetraction", this.getelevatorRetractionLimitSwitchValue());
-		PCDashboardDiagnostics.SubsystemBoolean("Arm", "LimitFinalExtension", this.getIsAtExtensionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Arm", "LimitFinalRetraction", this.getIsAtRetractionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Arm", "LimitSwitchAndEncoderAgreeExtended", this.encoderAndLimitsMatchExtended());
-		PCDashboardDiagnostics.SubsystemBoolean("Arm", "LimitSwitchAndEncoderAgreeRetracted", this.encoderAndLimitsMatchRetracted());
-		PCDashboardDiagnostics.SubsystemBoolean("Arm", "OverrideExtend", Robot.OVERRIDE_SYSTEM_ARM_EXTEND.getOverride1());
-		PCDashboardDiagnostics.SubsystemBoolean("Arm", "OverrideRetract", Robot.OVERRIDE_SYSTEM_ARM_RETRACT.getOverride1());
 	}
 
 	public boolean encoderAndLimitsMatchExtended() {

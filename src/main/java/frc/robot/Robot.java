@@ -51,6 +51,7 @@ import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ProgrammableLEDSubsystem;
 import frc.robot.subsystems.SetCommandSubsystem;
 import frc.util.LoggerOverlord;
+import frc.util.NetworkTableDiagnostics;
 import frc.util.OverrideSystem;
 
 /**
@@ -130,6 +131,11 @@ public class Robot extends TimedRobot {
 
 		this.setupDriveController();
 		this.setupOperationPanel();
+	}
+
+	@Override
+	public void robotPeriodic() {
+		NetworkTableDiagnostics.SendData();
 	}
 
 	/**
