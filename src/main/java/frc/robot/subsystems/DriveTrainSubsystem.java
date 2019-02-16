@@ -3,11 +3,14 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.controls.Gamepad;
+import frc.ravenhardware.RavenEncoder;
 import frc.ravenhardware.RavenTank;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.commands.drivetrain.DriveTrainDriveFPSCommand;
 import frc.util.PCDashboardDiagnostics;
 

@@ -351,13 +351,13 @@ public class Robot extends TimedRobot {
 
 	public void setupOperationPanel() {
 		System.out.println("Operation PANEL CONFIGURED!!! Operation PANEL CONFIGURED!!!");
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEDOWN).whileHeld(new ElevatorRetractWhileHeldCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEDOWN).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT, true));
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEDOWN).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT, false));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDERETRACT).whileHeld(new ElevatorRetractWhileHeldCommand());
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDERETRACT).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT, true));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT, false));
 		
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEUP).whileHeld(new ElevatorExtendWhileHeldCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEUP).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND, true));
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEUP).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND, false));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEEXTEND).whileHeld(new ElevatorExtendWhileHeldCommand());
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEEXTEND).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND, true));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEEXTEND).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND, false));
 		
 		OPERATION_PANEL.getButton(ButtonCode.ARMOVERRIDEEXTEND).whileHeld(new ArmExtendWhileHeldCommand());
 		OPERATION_PANEL.getButton(ButtonCode.ARMOVERRIDEEXTEND).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, true));

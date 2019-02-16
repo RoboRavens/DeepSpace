@@ -40,4 +40,9 @@ public class RobotMap {
 
 	// Camera
 	public static final String cameraName = "cam0";
+
+	public static final int leftDriveEncoder1 = 0;
+    public static final int leftDriveEncoder2 = 1;
+    public static final int rightDriveEncoder1 = 2;
+    public static final int rightDriveEncoder2 = 3;
 }

@@ -22,16 +22,16 @@ public class OperationPanel {
 		int buttonNumber;
 
 		switch (button) {
-		case ELEVATOROVERRIDEDOWN:
+		case ELEVATOROVERRIDEEXTEND:
 			buttonNumber = 1;
 			break;
-		case ELEVATOROVERRIDEUP:
+		case ELEVATOROVERRIDERETRACT:
 			buttonNumber = 2;
 			break;
-		case ARMOVERRIDERETRACT:
+		case ARMOVERRIDEEXTEND:
 			buttonNumber = 3;
 			break;
-		case ARMOVERRIDEEXTEND:
+		case ARMOVERRIDERETRACT:
 			buttonNumber = 4;
 			break;
 		case CARGOSPITOVERRIDE:

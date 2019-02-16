@@ -39,6 +39,32 @@ public class ArmSubsystem extends Subsystem {
 		setDefaultCommand(new ArmHoldPositionCommand());
 	}
 
+	public void extend(double magnitude) {
+    	if (this.getIsAtExtensionLimit()) {
+    		this.stop();
+    	}
+    	else {
+        	this.set(magnitude);
+    	}
+    }
+    
+    public void retract(double magnitude) {
+    	if (this.getIsAtRetractionLimit()) {
+    		this.stop();
+    	}
+    	else {
+    		this.set(-1 * magnitude);
+    	}
+    }
+    
+    private void set(double magnitude) {
+    	magnitude = Math.min(magnitude, 1);
+    	magnitude = Math.max(magnitude, -1);
+    	magnitude *= 1;
+    	
+    	this.armMotor.set(ControlMode.PercentOutput, magnitude);
+    }
+
 	public void periodic() {
 		//elevatorRetractionLimitSwitch.maintainState();
 		//extensionLimitSwitch.maintainState();
