@@ -24,15 +24,13 @@ public class ElevatorSubsystem extends Subsystem {
 	public TalonSRX elevatorMotor;
 	BufferedDigitalInput extendedLimitSwitch;
 	BufferedDigitalInput retractedLimitSwitch;
-	Encoder encoder;
 	private Timer _safetyTimer = new Timer();
 	private double _expectedPower;
 
 	public ElevatorSubsystem() {
 		this.elevatorMotor = new TalonSRX(RobotMap.elevatorMotor);
-		this.encoder = new Encoder(RobotMap.elevatorEncoder1, RobotMap.elevatorEncoder2);
-		this.retractedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorRetractionLimitSwitch);
-		this.extendedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorExtensionLimitSwitch);
+		//this.retractedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorRetractionLimitSwitch);
+		//this.extendedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorExtensionLimitSwitch);
 		this.elevatorMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkF, TalonSRXConstants.kTimeoutMs);
 		this.elevatorMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkP, TalonSRXConstants.kTimeoutMs);
 		this.elevatorMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkI, TalonSRXConstants.kTimeoutMs);
@@ -54,8 +52,8 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void periodic() {
-		retractedLimitSwitch.maintainState();
-		extendedLimitSwitch.maintainState();
+		//retractedLimitSwitch.maintainState();
+		//extendedLimitSwitch.maintainState();
 		this.getIsAtExtensionLimit();
 		this.getIsAtRetractionLimit();
 
@@ -75,8 +73,6 @@ public class ElevatorSubsystem extends Subsystem {
 		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "OverrideExtend", Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND.getOverride1());
 		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "OverrideRetract", Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT.getOverride1());
 
-		// Measure speed of elevator
-		PCDashboardDiagnostics.SubsystemNumber("Elevator", "EncoderRate", encoder.getRate());
 		// Measure power sent to elevator
 		PCDashboardDiagnostics.SubsystemNumber("Elevator", "EncoderExpectedPower", _expectedPower);
 
@@ -123,7 +119,7 @@ public class ElevatorSubsystem extends Subsystem {
 		if (Math.abs(_expectedPower) > Calibrations.elevatorHoldPositionPowerMagnitude) {
 			// The line below only returns as true if the elevator is pushing harder than it
 			// needs to not move it
-			if (Math.abs(encoder.getRate()) < Calibrations.elevatorConsideredMovingEncoderRate) {
+			if (Math.abs(this.elevatorMotor.getSelectedSensorVelocity()) < Calibrations.elevatorConsideredMovingEncoderRate) {
 				burnoutProtection();
 			}
 		}
@@ -274,7 +270,7 @@ public class ElevatorSubsystem extends Subsystem {
 	public boolean getelevatorExtensionLimitSwitchValue() {
 		boolean extendedLimitSwitchValue = false;
 
-		extendedLimitSwitchValue = !extendedLimitSwitch.get();
+		//extendedLimitSwitchValue = !extendedLimitSwitch.get();
 
 		return extendedLimitSwitchValue;
 	}
@@ -282,7 +278,7 @@ public class ElevatorSubsystem extends Subsystem {
 	public boolean getelevatorRetractionLimitSwitchValue() {
 		boolean retractionLimitLimitSwitchValue = false;
 
-		retractionLimitLimitSwitchValue = !retractedLimitSwitch.get();
+		//retractionLimitLimitSwitchValue = !retractedLimitSwitch.get();
 
 		return retractionLimitLimitSwitchValue;
 	}

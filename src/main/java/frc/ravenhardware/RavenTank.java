@@ -5,6 +5,8 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -64,6 +66,11 @@ public class RavenTank {
 
 	private void initializeRavenTank() {
 		_slewRate = Calibrations.slewRateMaximum;
+
+		Encoder leftWpiEncoder = new Encoder(RobotMap.leftDriveEncoder1, RobotMap.leftDriveEncoder2);
+        Encoder rightWpiEncoder = new Encoder(RobotMap.rightDriveEncoder1, RobotMap.rightDriveEncoder2);
+        leftRavenEncoder = new RavenEncoder(leftWpiEncoder, Calibrations.leftEncoderCyclesPerRevolution, Calibrations.driveWheelDiameterInches, false);
+        rightRavenEncoder = new RavenEncoder(rightWpiEncoder, Calibrations.rightEncoderCyclesPerRevolution, Calibrations.driveWheelDiameterInches, true);
 
 		gyroCooldownTimer = new Timer();
 
