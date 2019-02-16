@@ -66,14 +66,13 @@ public class Calibrations {
 	public static final int encoderCUI103CyclesPerRevolution = 4096 * 3;
 	// public static final int encoderE4TCyclesPerRevolution = 360;
 	// public static final int encoderE4PCyclesPerRevolution = 250;
-	public static final double driveWheelDiameterInches = 6;
-	public static final double driveWheelCircumferenceInches = Calibrations.driveWheelDiameterInches * Math.PI;
-	//public static final double driveEncoderE4TCyclesPerInch = (double) Calibrations.encoderE4TCyclesPerRevolution / Calibrations.driveWheelCircumferenceInches;
-	//public static final double driveEncoderE4PCyclesPerInch = (double) Calibrations.encoderE4PCyclesPerRevolution / Calibrations.driveWheelCircumferenceInches;
+	public static final double wheelDiameterInches = 6;
+	public static final double wheelCircumferenceInches = Calibrations.wheelDiameterInches * Math.PI;
+	//public static final double driveEncoderE4TCyclesPerInch = (double) Calibrations.encoderE4TCyclesPerRevolution / Calibrations.wheelCircumferenceInches;
+	//public static final double driveEncoderE4PCyclesPerInch = (double) Calibrations.encoderE4PCyclesPerRevolution / Calibrations.wheelCircumferenceInches;
 	
 	// We're using CUI 103 encoders on both sides of the drivetrain.
-	public static final int leftEncoderCyclesPerRevolution = Calibrations.encoderCUI103CyclesPerRevolution;
-	public static final int rightEncoderCyclesPerRevolution = Calibrations.encoderCUI103CyclesPerRevolution;
+	public static final int encoderCyclesPerRevolution = Calibrations.encoderCUI103CyclesPerRevolution;
 	
 	// Direction magic numbers
 	public static final int drivingForward = -1;
@@ -89,7 +88,9 @@ public class Calibrations {
     public static final double elevatorkI = 0.0;
     public static final double elevatorkD = 170.0;
 
-    public static final double elevatorHoldPositionPowerMagnitude = .05;
+	public static final double elevatorHoldPositionPowerMagnitude = .05;
+	
+	public static final double elevatorWheelDiameterInches = 1.25;
 	
 	public static final int elevatorEncoderMinimumValue = 0;
     public static final int elevatorEncoderMaximumValue = 27000;

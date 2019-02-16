@@ -18,22 +18,25 @@ public class RobotMap {
 	public static final int elevatorMotor = 2;
 	public static final int elevatorMotorFollower = 3;
 	
-	public static final int elevatorExtensionLimitSwitch = 0;
-	public static final int elevatorRetractionLimitSwitch = 1;
+	public static final int elevatorExtensionLimitSwitch = 4;
+	public static final int elevatorRetractionLimitSwitch = 5;
+
+	public static final int elevatorEncoderLeft = 6;
+	public static final int elevatorEncoderRight = 7;
 
 	// Arm System
 	public static final int armMotor = 4;
 
-	public static int armExtensionLimitSwitch = 2;
-	public static int armRetractionLimitSwitch = 3;
+	public static int armExtensionLimitSwitch = 8;
+	public static int armRetractionLimitSwitch = 9;
 	
 	// Cargo System 
 	public static final int cargoMotor = 5;
-	public static final int cargoSensor = 4;
+	public static final int cargoSensor = 10;
 
 	// Hatch Panel System
 	public static final int beakSolenoid = 0;
-	public static final int hatchPanelSensor = 5;
+	public static final int hatchPanelSensor = 11;
 
 	//Climber
 	public static final int climberMotor = 6;

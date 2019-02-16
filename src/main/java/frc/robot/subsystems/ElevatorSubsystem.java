@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.ravenhardware.BufferedDigitalInput;
+import frc.ravenhardware.RavenEncoder;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -22,13 +23,19 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class ElevatorSubsystem extends Subsystem {
 	public TalonSRX elevatorMotor;
+	public TalonSRX elevatorMotorFollower;
+	public RavenEncoder elevatorEncoder;
 	BufferedDigitalInput extendedLimitSwitch;
 	BufferedDigitalInput retractedLimitSwitch;
 	private Timer _safetyTimer = new Timer();
 	private double _expectedPower;
 
 	public ElevatorSubsystem() {
+		Encoder elevatorWpiEncoder = new Encoder(RobotMap.elevatorEncoderLeft, RobotMap.elevatorEncoderRight);
+		this.elevatorEncoder = new RavenEncoder(elevatorWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.elevatorWheelDiameterInches, true);
 		this.elevatorMotor = new TalonSRX(RobotMap.elevatorMotor);
+		this.elevatorMotorFollower = new TalonSRX(RobotMap.elevatorMotorFollower);
+		this.elevatorMotorFollower.follow(this.elevatorMotor);
 		//this.retractedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorRetractionLimitSwitch);
 		//this.extendedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorExtensionLimitSwitch);
 		this.elevatorMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkF, TalonSRXConstants.kTimeoutMs);
@@ -60,7 +67,6 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	private void set(double magnitude) {
-    	// System.out.println(rightMotor.get);
     	magnitude = Math.min(magnitude, 1);
     	magnitude = Math.max(magnitude, -1);
     	magnitude *= 1;
@@ -81,8 +87,8 @@ public class ElevatorSubsystem extends Subsystem {
 		System.out.print("Elevator Position: " + this.getEncoderPosition());
 	}
 
-	public int getEncoderPosition() {
-		int EncoderPosition = this.elevatorMotor.getSelectedSensorPosition(0);
+	public double getEncoderPosition() {
+		int EncoderPosition = this.elevatorEncoder.getCycles();
 
 		return EncoderPosition;
 	}
@@ -166,12 +172,6 @@ public class ElevatorSubsystem extends Subsystem {
 		command.close();
 	}
 
-	public int getElevatorPosition() {
-		int elevatorPosition;
-		elevatorPosition = (this.getEncoderPosition());
-		return elevatorPosition;
-	}
-
 	public void getIsAtLimits() {
 		System.out.print(" Extension Limit: " + this.getIsAtExtensionLimit() + " Retraction Limit: "
 				+ this.getIsAtRetractionLimit());
@@ -197,19 +197,6 @@ public class ElevatorSubsystem extends Subsystem {
 
 	// Right now this method just looks at the right limit switch; some combination
 	// of both should be used.
-	public boolean getIsAtRetractionLimit() {
-		boolean encoderLimit = false;
-		boolean switchLimit = false;
-
-		encoderLimit = this.isEncoderAtRetractionLimit();
-
-		if (this.getelevatorRetractionLimitSwitchValue() == true) {
-			switchLimit = true;
-			this.resetEncodersToRetractedLimit();
-		}
-
-		return Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT.getIsAtLimit(encoderLimit, switchLimit);
-	}
 
 	public void expectElevatorToBeAtRetractionLimit() {
 		boolean isAtLimitSwitch = this.getelevatorRetractionLimitSwitchValue();
@@ -245,7 +232,7 @@ public class ElevatorSubsystem extends Subsystem {
 
 		if (this.getEncoderPosition() <= Calibrations.elevatorEncoderMinimumValue
 				+ Calibrations.elevatorLiftDownwardSafetyMargin) {
-			encoderLimit = true;
+			encoderLimit = false;
 		}
 
 		return encoderLimit;
@@ -270,6 +257,23 @@ public class ElevatorSubsystem extends Subsystem {
 		return isAtLimit;
 	}
 
+	public boolean getIsAtRetractionLimit() {
+		boolean isAtLimit = false;
+		boolean encoderLimit = false;
+		boolean switchLimit = false;
+
+		encoderLimit = this.isEncoderAtRetractionLimit();
+
+		if (this.getelevatorRetractionLimitSwitchValue() == true) {
+			switchLimit = true;
+			this.resetEncodersToRetractedLimit();
+		}
+
+		isAtLimit = Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT.getIsAtLimit(encoderLimit, switchLimit);
+
+		return isAtLimit;
+	}
+
 	public void holdPosition() {
 		this.elevatorMotor.set(ControlMode.PercentOutput, Calibrations.elevatorHoldPositionPowerMagnitude);
 	}
@@ -277,7 +281,7 @@ public class ElevatorSubsystem extends Subsystem {
 	public double getElevatorHeightPercentage() {
 		double encoderMax = (double) Calibrations.elevatorEncoderMaximumValue;
 		double encoderMin = (double) Calibrations.elevatorEncoderMinimumValue;
-		double encoderCurrent = this.getElevatorPosition();
+		double encoderCurrent = this.getEncoderPosition();
 
 		double heightPercentage = (encoderCurrent - encoderMin) / (encoderMax - encoderMin);
 		heightPercentage = Math.min(1, heightPercentage);
@@ -311,11 +315,11 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public boolean getelevatorRetractionLimitSwitchValue() {
-		boolean retractionLimitLimitSwitchValue = false;
+		boolean retractionLimitSwitchValue = false;
 
-		//retractionLimitLimitSwitchValue = !retractedLimitSwitch.get();
+		//retractionLimitSwitchValue = !retractedLimitSwitch.get();
 
-		return retractionLimitLimitSwitchValue;
+		return retractionLimitSwitchValue;
 	}
 
 	public boolean getIsExtendedPastEncoderPosition(int encoderPosition) {

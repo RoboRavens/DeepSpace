@@ -5,7 +5,7 @@ import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorHoldPositionCommand extends Command {
-	int targetPosition;
+	double targetPosition;
 
 	public ElevatorHoldPositionCommand() {
 		requires(Robot.ELEVATOR_SUBSYSTEM);
@@ -15,7 +15,7 @@ public class ElevatorHoldPositionCommand extends Command {
 	protected void initialize() {
 		// Set the target position to be whatever the elevator's position is when the
 		// command begins.
-		this.targetPosition = Robot.ELEVATOR_SUBSYSTEM.getElevatorPosition();
+		this.targetPosition = Robot.ELEVATOR_SUBSYSTEM.getEncoderPosition();
 		System.out.println("ElevatorHoldPositionCommand init");
 	}
 
