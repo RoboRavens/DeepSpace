@@ -29,7 +29,7 @@ public class BeakSubsystem extends Subsystem {
 
   public BeakSubsystem() {
 		//this.beak = new Solenoid(RobotMap.beakSolenoid);
-		this.hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
+		//this.hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
 		_hasHatchPanelDurationTimer.start();
   }
 
@@ -41,9 +41,9 @@ public class BeakSubsystem extends Subsystem {
 
   public boolean hasHatchPanel() {
 		boolean otherLimit = false;
-		boolean hasHatchPanel = hatchPanelSensor.get() == false;
+		//boolean hasHatchPanel = hatchPanelSensor.get() == false;
 
-		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(hasHatchPanel, otherLimit);
+		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(false, otherLimit);
   }
   
   public void periodic()  {
