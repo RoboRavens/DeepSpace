@@ -5,6 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+
+
+
+
+
 package frc.robot.commands.automatedscoring;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -12,19 +17,19 @@ import frc.robot.Robot;
 
 public class SetRocketHeightMidCommand extends Command {
   public SetRocketHeightMidCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.SET_COMMAND_SUBSYSTEM);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Running SetRocketHeightMidCommand");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.SET_COMMAND_SUBSYSTEM.setRocketHeight("Low");
+    Robot.SET_COMMAND_SUBSYSTEM.setRocketHeight("Mid");
   }
 
   // Make this return true when this Command no longer needs to run execute()

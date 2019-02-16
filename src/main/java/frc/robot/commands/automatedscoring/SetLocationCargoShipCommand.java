@@ -12,11 +12,14 @@ import frc.robot.Robot;
 
 public class SetLocationCargoShipCommand extends Command {
 
-  public SetLocationCargoShipCommand() {}
+  public SetLocationCargoShipCommand() {
+    requires(Robot.SET_COMMAND_SUBSYSTEM);
+  }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Running SetLocationCargoShipCommand");
   }
 
   // Called repeatedly when this Command is scheduled to run

@@ -12,19 +12,19 @@ import frc.robot.Robot;
 
 public class SetRocketHeightLowCommand extends Command {
   public SetRocketHeightLowCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.SET_COMMAND_SUBSYSTEM);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Running SetRocketHeightLowCommand");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.SET_COMMAND_SUBSYSTEM.setRocketHeight("Mid");
+    Robot.SET_COMMAND_SUBSYSTEM.setRocketHeight("Low");
   }
 
   // Make this return true when this Command no longer needs to run execute()

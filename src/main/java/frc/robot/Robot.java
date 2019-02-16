@@ -32,7 +32,6 @@ import frc.robot.commands.automatedscoring.SetLocationRocketCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightHighCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightLowCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightMidCommand;
-import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.drivetrain.SetCutPowerFalse;
 import frc.robot.commands.drivetrain.SetCutPowerTrue;
@@ -195,10 +194,6 @@ public class Robot extends TimedRobot {
 		// this.elevator.getPosition();
 		// this.elevator.getIsAtLimits();
 		// this.arm.getPosition();
-
-		if (DRIVE_CONTROLLER.getButtonValue(ControlsMap.driveShiftToHighGearButton)) {
-			Robot.ELEVATOR_SUBSYSTEM.resetEncodersToRetractedLimit();
-		}
 	}
 
 	public void outputAutoModeToDashboardStringOne(String autoMode) {
@@ -373,9 +368,9 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ARMOVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, false));
 
 		OPERATION_PANEL.getButton(ButtonCode.CARGOSPITOVERRIDE).whileHeld(new CargoWheelSpitCommand());
-		OPERATION_PANEL.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new BeakReleaseHatchPanelCommand());
+		OPERATION_PANEL.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new SetCargoOrHatchPanel("Cargo")); //was new BeakReleaseHatchPanelCommand()
 
-		OPERATION_PANEL.getButton(ButtonCode.CARGOORHATCHPANEL).whenPressed(new SetCargoOrHatchPanel());
+		OPERATION_PANEL.getButton(ButtonCode.CARGOORHATCHPANEL).whenPressed(new SetCargoOrHatchPanel("Hatch Panel"));
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONCARGOSHIP).whenPressed(new SetLocationCargoShipCommand());
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONROCKET).whenPressed(new SetLocationRocketCommand());
 		OPERATION_PANEL.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new SetRocketHeightHighCommand());
