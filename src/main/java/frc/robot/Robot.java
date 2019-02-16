@@ -132,6 +132,11 @@ public class Robot extends TimedRobot {
 		this.setupOperationPanel();
 	}
 
+	@Override
+	public void robotPeriodic() {
+		NetworkTableDiagnostics.SendData();
+	}
+
 	/**
 	 * This function is called once each time the robot enters Disabled mode. You
 	 * can use it to reset any subsystem information you want to clear when the

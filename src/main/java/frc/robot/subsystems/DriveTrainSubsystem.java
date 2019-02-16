@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.controls.Gamepad;
 import frc.ravenhardware.RavenTank;
 import frc.robot.Calibrations;
+import frc.robot.NetworkTableDiagnostics;
 import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveFPSCommand;
 import frc.util.PCDashboardDiagnostics;
@@ -23,6 +24,8 @@ public class DriveTrainSubsystem extends Subsystem {
 
 	public DriveTrainSubsystem() {
 		this.ravenTank = new RavenTank();
+
+		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderAvgInchesTraveledNew", () -> Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled());
 	}
 
 	// Put methods for controlling this subsystem
