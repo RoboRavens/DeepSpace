@@ -38,34 +38,42 @@ public class SetCommandSubsystem extends Subsystem {
   }
 
   public void callAutomatedCommand() {
-    if (Robot.CARGO_WHEEL_SUBSYSTEM.hasCargo() || this._cargoOrHatchPanel == "Cargo") {
+    if (this._cargoOrHatchPanel == "Cargo") {
       if (this._location == "Cargo Ship") {
+        System.out.println("running CargoScoreCargoShipCommand");
         new CargoScoreCargoShipCommand();
       }
       if (this._location == "Rocket") {
         if (this._rocketHeight == "High") {
+          System.out.println("running CargoScoreHighRocketCommand");
           new CargoScoreHighRocketCommand();
         }
         if (this._rocketHeight == "Mid") {
+          System.out.println("running CargoScoreMidRocketCommand");
           new CargoScoreMidRocketCommand();
         }
         if (this._rocketHeight == "Low") {
+          System.out.println("running CargoScoreLowRocketCommand");
           new CargoScoreLowRocketCommand();          
         }
       }
     }
-    if (Robot.BEAK_SUBSYSTEM.hasHatchPanel() || this._cargoOrHatchPanel == "Hatch Panel") {
+    if (this._cargoOrHatchPanel == "Hatch Panel") {
       if (this._location == "Cargo Ship") {
+        System.out.println("running HatchPanelScoreCargoShipCommand");
         new HatchPanelScoreLowCommand();
       }
       if (this._location == "Rocket") {
         if (this._rocketHeight == "High") {
+          System.out.println("running HatchPanelScoreHighRocketCommand");
           new HatchPanelScoreHighRocketCommand();
         }
         if (this._rocketHeight == "Mid") {
+          System.out.println("running HatchPanelScoreMidRocketCommand");
           new HatchPanelScoreMidRocketCommand();
         }
         if (this._rocketHeight == "Low") {
+          System.out.println("running HatchPanelScoreLowRocketCommand");
           new HatchPanelScoreLowCommand();
         }
       }

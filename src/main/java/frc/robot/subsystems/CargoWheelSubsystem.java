@@ -17,12 +17,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class CargoWheelSubsystem extends Subsystem {
 	TalonSRX cargoMotor;
-	BufferedDigitalInput cargoSensor;
+	//BufferedDigitalInput cargoSensor;
 	private Timer _hasCargoDurationTimer = new Timer();
 
 	public CargoWheelSubsystem() {
 		this.cargoMotor = new TalonSRX(RobotMap.cargoMotor);
-		this.cargoSensor = new BufferedDigitalInput(RobotMap.cargoSensor);
+		//this.cargoSensor = new BufferedDigitalInput(RobotMap.cargoSensor);
 		_hasCargoDurationTimer.start();
 	}
 
@@ -61,16 +61,16 @@ public class CargoWheelSubsystem extends Subsystem {
 
 	public boolean hasCargo() {
 		boolean otherLimit = false;
-		boolean hasCargo = cargoSensor.get() == false;
+		boolean hasCargo = false;
 
 		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(hasCargo, otherLimit);
 	}
 
 	public void periodic() {
-		cargoSensor.maintainState();
+		//cargoSensor.maintainState();
 
 		PCDashboardDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", this.hasCargo());
-		PCDashboardDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoSensorRaw", cargoSensor.get());
+		//PCDashboardDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoSensorRaw", cargoSensor.get());
 		PCDashboardDiagnostics.SubsystemNumber("CargoWheel", "MotorOutputPercent", cargoMotor.getMotorOutputPercent());
 
 		if (this.hasCargo() == false) {

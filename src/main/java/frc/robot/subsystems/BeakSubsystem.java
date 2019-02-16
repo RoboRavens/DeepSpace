@@ -20,16 +20,16 @@ import frc.ravenhardware.BufferedDigitalInput;
  * Add your docs here.
  */
 public class BeakSubsystem extends Subsystem {
-  Solenoid beak = new Solenoid(RobotMap.beakSolenoid);
-  BufferedDigitalInput hatchPanelSensor;
+  //Solenoid beak = new Solenoid(RobotMap.beakSolenoid);
+  //BufferedDigitalInput hatchPanelSensor;
   private Timer _hasHatchPanelDurationTimer = new Timer();
 
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
   public BeakSubsystem() {
-		this.beak = new Solenoid(RobotMap.beakSolenoid);
-		this.hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
+		//this.beak = new Solenoid(RobotMap.beakSolenoid);
+		//this.hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
 		_hasHatchPanelDurationTimer.start();
   }
 
@@ -41,7 +41,7 @@ public class BeakSubsystem extends Subsystem {
 
   public boolean hasHatchPanel() {
 		boolean otherLimit = false;
-		boolean hasHatchPanel = hatchPanelSensor.get() == false;
+		boolean hasHatchPanel = false;
 
 		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(hasHatchPanel, otherLimit);
   }
@@ -60,10 +60,10 @@ public class BeakSubsystem extends Subsystem {
   
 
   public void release() {
-    beak.set(false);
+    //beak.set(false);
   }
 
   public void capture() {
-    beak.set(true);
+    //beak.set(true);
   }
 }
