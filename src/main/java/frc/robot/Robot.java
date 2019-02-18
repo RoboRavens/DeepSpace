@@ -21,12 +21,13 @@ import frc.controls.AxisCode;
 import frc.controls.ButtonCode;
 import frc.controls.Gamepad;
 import frc.controls.OperationPanel;
+import frc.controls.OperationPanel2;
 import frc.ravenhardware.RavenLighting;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
 import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
 import frc.robot.commands.arm.ArmRetractWhileHeldCommand;
 import frc.robot.commands.automatedscoring.SetAutomatedCommand;
-import frc.robot.commands.automatedscoring.SetCargoOrHatchPanel;
+import frc.robot.commands.automatedscoring.SetCargoOrHatchPanelCommand;
 import frc.robot.commands.automatedscoring.SetLocationCargoShipCommand;
 import frc.robot.commands.automatedscoring.SetLocationRocketCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightHighCommand;
@@ -73,8 +74,9 @@ public class Robot extends TimedRobot {
 	public static final LoggerOverlord LOGGER_OVERLORD = new LoggerOverlord(1f);
 
 	public static final Gamepad DRIVE_CONTROLLER = new Gamepad(0);
-	public static final Gamepad OPERATION_CONTROLLER = new Gamepad(3);
 	public static final OperationPanel OPERATION_PANEL = new OperationPanel(1);
+	public static final OperationPanel2 OPERATION_PANEL_2 = new OperationPanel2(2);
+	public static final Gamepad OPERATION_CONTROLLER = new Gamepad(3);
 
 	public static final ArmSubsystem ARM_SUBSYSTEM = new ArmSubsystem();
 	public static final BeakSubsystem BEAK_SUBSYSTEM = new BeakSubsystem();
@@ -374,16 +376,19 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ARMOVERRIDERETRACT).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, true));
 		OPERATION_PANEL.getButton(ButtonCode.ARMOVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, false));
 
-		OPERATION_PANEL.getButton(ButtonCode.CARGOSPITOVERRIDE).whileHeld(new CargoWheelSpitCommand());
-		OPERATION_PANEL.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new BeakReleaseHatchPanelCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.CARGOSPITOVERRIDE).whileHeld(new CargoWheelSpitCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new BeakReleaseHatchPanelCommand());
 
-		OPERATION_PANEL.getButton(ButtonCode.CARGOORHATCHPANEL).whenPressed(new SetCargoOrHatchPanel("Hatch Panel"));
+		OPERATION_PANEL.getButton(ButtonCode.SETHATCH).whenPressed(new SetCargoOrHatchPanelCommand("Hatch Panel"));
+		OPERATION_PANEL.getButton(ButtonCode.SETCARGO).whenPressed(new SetCargoOrHatchPanelCommand("Cargo"));
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONCARGOSHIP).whenPressed(new SetLocationCargoShipCommand());
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONROCKET).whenPressed(new SetLocationRocketCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new SetRocketHeightHighCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new SetRocketHeightMidCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new SetRocketHeightLowCommand());
-		OPERATION_PANEL.getButton(ButtonCode.SETAUTOMATEDCOMMAND).whileHeld(new SetAutomatedCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new SetRocketHeightHighCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new SetRocketHeightMidCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new SetRocketHeightLowCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.SETAUTOMATEDCOMMAND).whileHeld(new SetAutomatedCommand());
+
+		//OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whileHeld(); USE WHEN TESTING NEW COMMANDS
 	}
 	
 

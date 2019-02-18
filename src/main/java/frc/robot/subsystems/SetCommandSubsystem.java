@@ -24,7 +24,7 @@ public class SetCommandSubsystem extends Subsystem {
   private String _location;
   private String _rocketHeight;
 
-  public void setCargoOrHatchPanel(String cargoOrHatchPanel) {
+  public void SetCargoOrHatchPanelCommand(String cargoOrHatchPanel) {
     this._cargoOrHatchPanel = cargoOrHatchPanel;
   }
 

@@ -22,40 +22,28 @@ public class OperationPanel {
 		int buttonNumber;
 
 		switch (button) {
-		case ELEVATOROVERRIDEEXTEND:
-			buttonNumber = 1;
-			break;
 		case ELEVATOROVERRIDERETRACT:
-			buttonNumber = 2;
-			break;
-		case ARMOVERRIDEEXTEND:
-			buttonNumber = 3;
-			break;
-		case ARMOVERRIDERETRACT:
-			buttonNumber = 4;
-			break;
-		case CARGOSPITOVERRIDE:
 			buttonNumber = 5;
 			break;
-		case BEAKRELEASEOVERRIDE:
+		case ELEVATOROVERRIDEEXTEND:
 			buttonNumber = 6;
 			break;
-		case CARGOORHATCHPANEL:
+		case ARMOVERRIDERETRACT:
 			buttonNumber = 7;
 			break;
-		case SETLOCATIONCARGOSHIP:
+		case ARMOVERRIDEEXTEND:
 			buttonNumber = 8;
 			break;
 		case SETLOCATIONROCKET:
 			buttonNumber = 9;
 			break;
-		case ROCKETHEIGHTHIGH:
+		case SETHATCH:
 			buttonNumber = 10;
 			break;
-		case ROCKETHEIGHTMID:
+		case SETLOCATIONCARGOSHIP:
 			buttonNumber = 11;
 			break;
-		case ROCKETHEIGHTLOW:
+		case SETCARGO:
 			buttonNumber = 12;
 			break;
 		default:
