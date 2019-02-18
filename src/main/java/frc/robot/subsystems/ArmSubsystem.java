@@ -38,7 +38,7 @@ public class ArmSubsystem extends Subsystem {
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitEncoderExtension", () -> this.isEncoderAtExtensionLimit());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitEncoderRetraction", () -> this.isEncoderAtRetractionLimit());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchExtension", () -> this.getExtensionLimitSwitchValue());
-		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchRetraction", () -> this.getelevatorRetractionLimitSwitchValue());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchRetraction", () -> this.getArmRetractionLimitSwitchValue());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitFinalExtension", () -> this.getIsAtExtensionLimit());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitFinalRetraction", () -> this.getIsAtRetractionLimit());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchAndEncoderAgreeExtended", () -> this.encoderAndLimitsMatchExtended());
@@ -104,11 +104,11 @@ public class ArmSubsystem extends Subsystem {
 		boolean match = true;
 
 		if (this.getEncoderPosition() < Calibrations.armEncoderMinimumValue
-				&& this.getelevatorRetractionLimitSwitchValue() == false) {
+				&& this.getArmRetractionLimitSwitchValue() == false) {
 			match = false;
 		}
 
-		if (this.getelevatorRetractionLimitSwitchValue() == true
+		if (this.getArmRetractionLimitSwitchValue() == true
 				&& this.getEncoderPosition() > Calibrations.armEncoderMinimumValue + Calibrations.ARM_ENCODER_BUFFER) {
 			match = false;
 		}
@@ -124,12 +124,12 @@ public class ArmSubsystem extends Subsystem {
 		return extensionLimitSwitchValue;
 	}
 
-	public boolean getelevatorRetractionLimitSwitchValue() {
-		boolean elevatorRetractionLimitSwitchValue = false;
+	public boolean getArmRetractionLimitSwitchValue() {
+		boolean armRetractionLimitSwitchValue = false;
 
 		//elevatorRetractionLimitSwitchValue = !elevatorRetractionLimitSwitch.get();
 
-		return elevatorRetractionLimitSwitchValue;
+		return armRetractionLimitSwitchValue;
 	}
 
 	/*
@@ -146,7 +146,7 @@ public class ArmSubsystem extends Subsystem {
 
 		encoderLimit = this.isEncoderAtRetractionLimit();
 
-		if (this.getelevatorRetractionLimitSwitchValue() == true) {
+		if (this.getArmRetractionLimitSwitchValue() == true) {
 			switchLimit = true;
 			this.resetEncodersToRetractionLimit();
 		}
@@ -164,7 +164,7 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public void expectArmToBeAtRetractionLimit() {
-		boolean isAtLimitSwitch = this.getelevatorRetractionLimitSwitchValue();
+		boolean isAtLimitSwitch = this.getArmRetractionLimitSwitchValue();
 		boolean isEncoderWithinRange = isEncoderAtRetractionLimit();
 
 		if (isEncoderWithinRange == false && isAtLimitSwitch == true) {

@@ -8,6 +8,8 @@ public class RavenEncoder {
     int cyclesPerRevolution;
     double wheelDiameterInches;
     double wheelCircumferenceInches;
+    int relativeValue;
+    int encoderPositionWhenLimitIsHit;
 
     boolean inverted = false;
 
@@ -51,4 +53,12 @@ public class RavenEncoder {
     public void resetEncoder() {
         this.encoder.reset();
     }
-}
+
+    //public int setEncoderToMaxValue() {
+       
+    
+
+    //public int setEncoderToMinValue() {
+
+
+    }

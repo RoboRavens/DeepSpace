@@ -93,7 +93,7 @@ public class Calibrations {
 	public static final double elevatorWheelDiameterInches = 1.25;
 	
 	public static final int elevatorEncoderMinimumValue = 0;
-    public static final int elevatorEncoderMaximumValue = 27000;
+    public static final int elevatorEncoderMaximumValue = 13500;
 
     public static final int elevatorLowHatchEncoderValue = 4000;
     public static final int elevatorMidHatchEncoderValue = 18000;
@@ -108,8 +108,8 @@ public class Calibrations {
 	// At low speeds (max of .3), and a lift max value of 30k, 1500 maxes out the elevator.
 	// At higher speeds, a higher value is needed because the elevator will overshoot the target until we have PID.
 	
-	public static final int elevatorLiftUpwardSafetyMargin = 1300;
-	public static final int elevatorLiftDownwardSafetyMargin = 700;
+	public static final int elevatorLiftUpwardSafetyMargin = 600;
+	public static final int elevatorLiftDownwardSafetyMargin = 600;
 	public static final int ELEVATOR_AT_POSITION_BUFFER = 500;
 	
 	public static final double elevatorConsideredMovingEncoderRate = 0;
