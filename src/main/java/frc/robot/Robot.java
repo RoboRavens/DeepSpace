@@ -152,11 +152,11 @@ public class Robot extends TimedRobot {
 
 	}
 
-	public Robot() {
+	/*public Robot() {
 		server = CameraServer.getInstance();
 		// server.setQuality(Calibrations.cameraQuality);
 		server.startAutomaticCapture();
-	}
+	}*/
 
 	@Override
 	public void disabledPeriodic() {
