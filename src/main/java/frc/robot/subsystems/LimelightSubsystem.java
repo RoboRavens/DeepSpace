@@ -37,7 +37,8 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void periodic() {
-		table.getEntry("ledMode").setNumber(1);
+		table.getEntry("ledMode").setNumber(0);
+		table.getEntry("camMode").setNumber(0);
 		PCDashboardDiagnostics.SubsystemNumber("Limelight", "TargetArea", this.getTargetArea());
 		PCDashboardDiagnostics.SubsystemNumber("Limelight", "angleOffHorizontal", this.angleOffHorizontal());
 		PCDashboardDiagnostics.SubsystemNumber("Limelight", "angleOffVertical", this.angleOffVertical());
