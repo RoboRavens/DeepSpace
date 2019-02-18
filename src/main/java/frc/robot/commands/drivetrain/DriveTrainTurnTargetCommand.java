@@ -10,12 +10,9 @@ package frc.robot.commands.drivetrain;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class DriveTrainDriveTargetCommand extends Command {
-  private double _distanceDesiredFromTarget;
+public class DriveTrainTurnTargetCommand extends Command {
 
-  public DriveTrainDriveTargetCommand(double distanceDesiredFromTarget) {
-    this._distanceDesiredFromTarget = distanceDesiredFromTarget;
-    requires(Robot.DRIVE_TRAIN_SUBSYSTEM);
+  public DriveTrainTurnTargetCommand() {
     requires(Robot.LIMELIGHT_SUBSYSTEM);
   }
 
@@ -27,7 +24,7 @@ public class DriveTrainDriveTargetCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.LIMELIGHT_SUBSYSTEM.DriveToTarget(this._distanceDesiredFromTarget);
+    Robot.LIMELIGHT_SUBSYSTEM.turnToTarget();
   }
 
   // Make this return true when this Command no longer needs to run execute()

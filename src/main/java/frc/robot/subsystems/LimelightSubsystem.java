@@ -4,6 +4,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Calibrations;
+import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
 import frc.robot.commands.drivetrain.DriveTrainStopCommand;
 import frc.util.PCDashboardDiagnostics;
@@ -74,6 +75,10 @@ public class LimelightSubsystem extends Subsystem {
 
 	}
 
+	public void turnToTarget() {
+		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + tx.getDouble(0.0));
+	}
+
 	public static void limeLightDetect() {
 
 		// if( A*B^(targetArea+C) +D < Limit) {
@@ -81,7 +86,7 @@ public class LimelightSubsystem extends Subsystem {
 		// }
 	}
 
-	public void DriveToTarget(double distanceDesiredFromTarget) {
+	public void driveToTarget(double distanceDesiredFromTarget) {
 		this._distanceDesiredFromTarget = distanceDesiredFromTarget;
 
 		if (_inchesToTarget > (this._distanceDesiredFromTarget + 18)) {

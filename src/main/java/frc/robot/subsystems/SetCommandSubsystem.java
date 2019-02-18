@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot;
 import frc.robot.commands.cargo.CargoScoreCargoShipCommand;
 import frc.robot.commands.cargo.CargoScoreHighRocketCommand;
 import frc.robot.commands.cargo.CargoScoreLowRocketCommand;

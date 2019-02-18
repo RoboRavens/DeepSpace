@@ -34,9 +34,7 @@ import frc.robot.commands.automatedscoring.SetRocketHeightLowCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightMidCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
-import frc.robot.commands.drivetrain.SetCutPowerFalse;
-import frc.robot.commands.drivetrain.SetCutPowerTrue;
-import frc.robot.commands.drivetrain.SetGyroTargetHeading;
+import frc.robot.commands.drivetrain.DriveTrainTurnTargetCommand;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.misc.SetOverride1Command;
@@ -354,7 +352,7 @@ public class Robot extends TimedRobot {
 		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakCaptureHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new CargoWheelSuckCommand());
 		if (DRIVE_CONTROLLER.getAxisIsPressed(AxisCode.RIGHTTRIGGER)) {
-			new SetAutomatedCommand();
+			new DriveTrainTurnTargetCommand();
 		}
 	}
 
@@ -377,7 +375,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ARMOVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, false));
 
 		OPERATION_PANEL.getButton(ButtonCode.CARGOSPITOVERRIDE).whileHeld(new CargoWheelSpitCommand());
-		OPERATION_PANEL.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new BeakReleaseHatchPanelCommand()); //was new BeakReleaseHatchPanelCommand()
+		OPERATION_PANEL.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new BeakReleaseHatchPanelCommand());
 
 		OPERATION_PANEL.getButton(ButtonCode.CARGOORHATCHPANEL).whenPressed(new SetCargoOrHatchPanel("Hatch Panel"));
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONCARGOSHIP).whenPressed(new SetLocationCargoShipCommand());
@@ -385,6 +383,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new SetRocketHeightHighCommand());
 		OPERATION_PANEL.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new SetRocketHeightMidCommand());
 		OPERATION_PANEL.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new SetRocketHeightLowCommand());
+		OPERATION_PANEL.getButton(ButtonCode.SETAUTOMATEDCOMMAND).whileHeld(new SetAutomatedCommand());
 	}
 	
 
