@@ -12,13 +12,13 @@ import frc.robot.Calibrations;
 import frc.robot.commands.arm.ArmMoveToHeightCommand;
 import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
-import frc.robot.commands.drivetrain.DriveTrainDriveTargetCommand;
+
 import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 
 public class HatchPanelCaptureCommand extends CommandGroup {
   
   public HatchPanelCaptureCommand() {
-    addParallel(new DriveTrainDriveTargetCommand(Calibrations.distanceDesiredFromHPS));
+    
     addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorLowHatchEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armLowHatchEncoderValue));
     addSequential(new BeakCaptureHatchPanelCommand());

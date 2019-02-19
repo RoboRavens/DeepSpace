@@ -5,38 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.automatedscoring;
+package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class SetCargoOrHatchPanel extends Command {
-  private String _hatchOrCargo;
-  public SetCargoOrHatchPanel(String hatchOrCargo) {
-    this._hatchOrCargo = hatchOrCargo;
-    requires(Robot.SET_COMMAND_SUBSYSTEM);
+public class DriveTrainTurnTargetCommand extends Command {
+
+  public DriveTrainTurnTargetCommand() {
+    requires(Robot.LIMELIGHT_SUBSYSTEM);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Running SetCargoOrHatchPanel");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() { 
-    if (this._hatchOrCargo == "Cargo") {
-      Robot.SET_COMMAND_SUBSYSTEM.setCargoOrHatchPanel("Cargo");
-    } else {
-      Robot.SET_COMMAND_SUBSYSTEM.setCargoOrHatchPanel("Hatch Panel");
-    }
+  protected void execute() {
+    System.out.println("DRIVETRAINTURNTARGETCOMMANDISRUNNINGjhbdweibwejbdwekfbweijkfb");
+    Robot.LIMELIGHT_SUBSYSTEM.turnToTarget();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

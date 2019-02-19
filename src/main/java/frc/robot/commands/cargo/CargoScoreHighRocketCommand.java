@@ -12,13 +12,12 @@ import frc.robot.Calibrations;
 import frc.robot.commands.arm.ArmMoveToHeightCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckOrSpitCommand;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
-import frc.robot.commands.drivetrain.DriveTrainDriveTargetCommand;
+
 import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 
 public class CargoScoreHighRocketCommand extends CommandGroup {
   
   public CargoScoreHighRocketCommand() {
-    addParallel(new DriveTrainDriveTargetCommand(Calibrations.distanceDesiredFromRocket));
     addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorHighRocketPortEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armHighRocketPortEncoderValue));
     addSequential(new CargoWheelSuckOrSpitCommand(Calibrations.cargoSpitPowerMagnitude, "Spit"));

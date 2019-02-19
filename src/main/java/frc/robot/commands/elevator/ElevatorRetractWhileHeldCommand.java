@@ -1,6 +1,4 @@
 package frc.robot.commands.elevator;
-
-import frc.robot.Calibrations;
 import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
