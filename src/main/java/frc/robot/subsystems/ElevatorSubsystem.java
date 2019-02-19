@@ -24,23 +24,23 @@ public class ElevatorSubsystem extends Subsystem {
 	public TalonSRX elevatorMotor;
 	public TalonSRX elevatorMotorFollower;
 	public RavenEncoder elevatorEncoder;
-	BufferedDigitalInput extendedLimitSwitch;
-	BufferedDigitalInput retractedLimitSwitch;
+	BufferedDigitalInput extensionLimitSwitch;
+	BufferedDigitalInput retractionLimitSwitch;
 	private Timer _safetyTimer = new Timer();
 	private double _expectedPower;
 
 	public ElevatorSubsystem() {
-		elevatorMotor = new TalonSRX(RobotMap.elevatorMotor);
-		elevatorMotorFollower = new TalonSRX(RobotMap.elevatorMotorFollower);
-		elevatorMotorFollower.follow(elevatorMotor);
-		retractedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorRetractionLimitSwitch);
-		extendedLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorExtensionLimitSwitch);
-		elevatorMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkF, TalonSRXConstants.kTimeoutMs);
-		elevatorMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkP, TalonSRXConstants.kTimeoutMs);
-		elevatorMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkI, TalonSRXConstants.kTimeoutMs);
-		elevatorMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkD, TalonSRXConstants.kTimeoutMs);
+		this.elevatorMotor = new TalonSRX(RobotMap.elevatorMotor);
+		this.elevatorMotorFollower = new TalonSRX(RobotMap.elevatorMotorFollower);
+		this.elevatorMotorFollower.follow(elevatorMotor);
+		this.retractionLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorRetractionLimitSwitch);
+		this.extensionLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorExtensionLimitSwitch);
+		this.elevatorMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkF, TalonSRXConstants.kTimeoutMs);
+		this.elevatorMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkP, TalonSRXConstants.kTimeoutMs);
+		this.elevatorMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkI, TalonSRXConstants.kTimeoutMs);
+		this.elevatorMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkD, TalonSRXConstants.kTimeoutMs);
 
-		elevatorMotor.setSensorPhase(true);
+		this.elevatorMotor.setSensorPhase(true);
 	}
 
 	public void initDefaultCommand() {
@@ -91,8 +91,8 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void periodic() {
-		retractedLimitSwitch.maintainState();
-		extendedLimitSwitch.maintainState();
+		retractionLimitSwitch.maintainState();
+		extensionLimitSwitch.maintainState();
 
 		this.isAtExtensionLimit();
 		this.isAtRetractionLimit();
@@ -289,11 +289,11 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public boolean getElevatorExtensionLimitSwitchValue() {
-		return !extendedLimitSwitch.get();
+		return !extensionLimitSwitch.get();
 	}
 
 	public boolean getElevatorRetractionLimitSwitchValue() {
-		return !retractedLimitSwitch.get();
+		return !retractionLimitSwitch.get();
 	}
 
 	public boolean getIsExtendedPastEncoderPosition(int encoderPosition) {

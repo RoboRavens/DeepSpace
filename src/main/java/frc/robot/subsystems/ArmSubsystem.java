@@ -22,12 +22,12 @@ import frc.robot.TalonSRXConstants;
 public class ArmSubsystem extends Subsystem {
 	TalonSRX armMotor;
 	//BufferedDigitalInput extensionLimitSwitch;
-	//BufferedDigitalInput elevatorRetractionLimitSwitch;
+	//BufferedDigitalInput retractionLimitSwitch;
 	private Timer _safetyTimer = new Timer();
 
 	public ArmSubsystem() {
 		this.armMotor = new TalonSRX(RobotMap.armMotor);
-		//this.elevatorRetractionLimitSwitch = new BufferedDigitalInput(RobotMap.armRetractionLimitSwitch);
+		//this.retractionLimitSwitch = new BufferedDigitalInput(RobotMap.armRetractionLimitSwitch);
 		//this.extensionLimitSwitch = new BufferedDigitalInput(RobotMap.armExtensionLimitSwitch);
 		this.armMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkF, TalonSRXConstants.kTimeoutMs);
 		this.armMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkP, TalonSRXConstants.kTimeoutMs);
@@ -78,7 +78,7 @@ public class ArmSubsystem extends Subsystem {
     }
 
 	public void periodic() {
-		//elevatorRetractionLimitSwitch.maintainState();
+		//retractionLimitSwitch.maintainState();
 		//extensionLimitSwitch.maintainState();
 		this.getIsAtExtensionLimit();
 		this.getIsAtRetractionLimit();
@@ -127,7 +127,7 @@ public class ArmSubsystem extends Subsystem {
 	public boolean getArmRetractionLimitSwitchValue() {
 		boolean armRetractionLimitSwitchValue = false;
 
-		//elevatorRetractionLimitSwitchValue = !elevatorRetractionLimitSwitch.get();
+		//retractionLimitSwitchValue = !retractionLimitSwitch.get();
 
 		return armRetractionLimitSwitchValue;
 	}

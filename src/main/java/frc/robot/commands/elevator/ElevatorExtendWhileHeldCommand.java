@@ -20,11 +20,7 @@ public class ElevatorExtendWhileHeldCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-<<<<<<< HEAD
         Robot.ELEVATOR_SUBSYSTEM.extend(0.5);
-=======
-        Robot.ELEVATOR_SUBSYSTEM.extend(0.3);
->>>>>>> master
     }
 
     // Make this return true when this Command no longer needs to run execute()
