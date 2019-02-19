@@ -23,18 +23,20 @@ public class RobotMap {
 
 	// DIO PORTS
 
-	public static final int leftDriveEncoder = 0;
-    public static final int rightDriveEncoder = 1;
+	public static final int leftDriveEncoder1 = 0;
+	public static final int leftDriveEncoder2 = 1;
+	public static final int rightDriveEncoder1 = 2;
+	public static final int rightDriveEncoder2 = 3;
 	
-	public static final int elevatorExtensionLimitSwitch = 2;
-	public static final int elevatorRetractionLimitSwitch = 3;
+	public static final int elevatorExtensionLimitSwitch = 4;
+	public static final int elevatorRetractionLimitSwitch = 5;
 
-	public static int armExtensionLimitSwitch = 4;
-	public static int armRetractionLimitSwitch = 5;
+	public static int armExtensionLimitSwitch = 6;
+	public static int armRetractionLimitSwitch = 7;
 	
-	public static final int cargoSensor = 6;
+	public static final int cargoSensor = 8;
 
-	public static final int hatchPanelSensor = 7;
+	public static final int hatchPanelSensor = 9;
 
 
 	// RELAYS
