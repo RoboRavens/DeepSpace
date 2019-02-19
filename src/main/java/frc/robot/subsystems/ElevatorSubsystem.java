@@ -18,7 +18,6 @@ import frc.util.PCDashboardDiagnostics;
 import frc.robot.TalonSRXConstants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
 
 public class ElevatorSubsystem extends Subsystem {

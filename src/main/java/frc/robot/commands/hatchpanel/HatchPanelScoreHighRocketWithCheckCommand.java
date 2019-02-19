@@ -12,13 +12,13 @@ import frc.robot.Calibrations;
 import frc.robot.commands.arm.ArmMoveToHeightCommand;
 import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
-import frc.robot.commands.drivetrain.DriveTrainDriveTargetCommand;
+
 import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 
 public class HatchPanelScoreHighRocketWithCheckCommand extends CommandGroup {
   
   public HatchPanelScoreHighRocketWithCheckCommand() {
-    addParallel(new DriveTrainDriveTargetCommand(Calibrations.distanceDesiredFromRocket));
+    
     addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorHighHatchEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armHighHatchEncoderValue));
     addSequential(new BeakReleaseHatchPanelCommand());
