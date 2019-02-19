@@ -93,23 +93,23 @@ public class Calibrations {
 	public static final double elevatorWheelDiameterInches = 1.25;
 	
 	public static final int elevatorEncoderMinimumValue = 0;
-    public static final int elevatorEncoderMaximumValue = 13500;
+    public static final int elevatorEncoderMaximumValue = 49000;
 
-    public static final int elevatorLowHatchEncoderValue = 4000;
-    public static final int elevatorMidHatchEncoderValue = 18000;
-    public static final int elevatorHighHatchEncoderValue = 24000;
+    public static final int elevatorLowHatchEncoderValue = 8000;
+    public static final int elevatorMidHatchEncoderValue = 24500;
+    public static final int elevatorHighHatchEncoderValue = 46000;
 
-    public static final int elevatorCargoShipPortEncoderValue = 24000;
-    public static final int elevatorLowRocketPortEncoderValue = 24000;
-    public static final int elevatorMidRocketPortEncoderValue = 18000;
-    public static final int elevatorHighRocketPortEncoderValue = 24000;
+    public static final int elevatorCargoShipPortEncoderValue = 15000;
+    public static final int elevatorLowRocketPortEncoderValue = 12000;
+    public static final int elevatorMidRocketPortEncoderValue = 26000;
+    public static final int elevatorHighRocketPortEncoderValue = 48000;
 
     // The safety margin is how far away from the end of travel the encoders will stop the lift.
 	// At low speeds (max of .3), and a lift max value of 30k, 1500 maxes out the elevator.
 	// At higher speeds, a higher value is needed because the elevator will overshoot the target until we have PID.
 	
-	public static final int elevatorLiftUpwardSafetyMargin = 600;
-	public static final int elevatorLiftDownwardSafetyMargin = 600;
+	public static final int elevatorLiftUpwardSafetyMargin = 400;
+	public static final int elevatorLiftDownwardSafetyMargin = 400;
 	public static final int ELEVATOR_AT_POSITION_BUFFER = 500;
 	
 	public static final double elevatorConsideredMovingEncoderRate = 0;
@@ -131,14 +131,14 @@ public class Calibrations {
 	public static final int armEncoderMinimumValue = 0;
     public static final int armEncoderMaximumValue = 12000;
 
-    public static final int armLowHatchEncoderValue = 4000;
-    public static final int armMidHatchEncoderValue = 18000;
-    public static final int armHighHatchEncoderValue = 24000;
+    public static final int armLowHatchEncoderValue = 2000;
+    public static final int armMidHatchEncoderValue = 4000;
+    public static final int armHighHatchEncoderValue = 11000;
 
-    public static final int armCargoShipPortEncoderValue = 24000;
-    public static final int armLowRocketPortEncoderValue = 24000;
-    public static final int armMidRocketPortEncoderValue = 24000;
-    public static final int armHighRocketPortEncoderValue = 24000;
+    public static final int armCargoShipPortEncoderValue = 2000;
+    public static final int armLowRocketPortEncoderValue = 6000;
+    public static final int armMidRocketPortEncoderValue = 8000;
+    public static final int armHighRocketPortEncoderValue = 11000;
 
 	public static final int ARM_ENCODER_BUFFER = 300;
 	// This value represents the buffer that the arm can be *on either side* of midway,

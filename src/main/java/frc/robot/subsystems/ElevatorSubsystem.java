@@ -292,19 +292,11 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public boolean getElevatorExtensionLimitSwitchValue() {
-		boolean extendedLimitSwitchValue = false;
-
-		extendedLimitSwitchValue = extendedLimitSwitch.get();
-
-		return extendedLimitSwitchValue;
+		return !extendedLimitSwitch.get();
 	}
 
 	public boolean getElevatorRetractionLimitSwitchValue() {
-		boolean retractionLimitSwitchValue = false;
-
-		retractionLimitSwitchValue = retractedLimitSwitch.get();
-
-		return retractionLimitSwitchValue;
+		return !retractedLimitSwitch.get();
 	}
 
 	public boolean getIsExtendedPastEncoderPosition(int encoderPosition) {
