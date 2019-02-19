@@ -7,9 +7,11 @@
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="1" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="FMTtoCSV\FMTtoCSV.jar"/>
 			<item value="FMTtoCSV/FMTtoCSV.jar"/>
 		</list>
 		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">
+			<item value="C:\Users\Daisy\Desktop\Release.xml"/>
 			<item value=".xml"/>
 		</list>
 	</section>

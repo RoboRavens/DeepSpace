@@ -1,0 +1,74 @@
+import java.io.File;
+import java.util.Scanner;
+
+public class main extends searchForFiles{
+	
+	static Scanner scans = new Scanner(System.in);
+	static String name;
+	
+	final static int SLEEP_TIME = 3000;
+	
+	public static void main(String[] args) {
+		//System.out.println("Enter the file you want to convert here: ");
+		//name = scans.nextLine();
+		name = listPeers();
+		if (name == "ERROR!") {
+			System.out.println("Whoops! No unconverted files found.\nRemove the _converted in files to make them convert again.\n\nEXAMPLE:\nT5124_converted.fmt --> T5124.fmt");
+			try {
+				Thread.sleep(SLEEP_TIME * 3);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		} else {
+			File filed = new File(name);
+			importFMT importer = new importFMT(filed);
+			exportCSV exporter = new exportCSV(importer);
+		
+			System.out.println("Converting: " + name.replace(".\\", "\\"));
+			
+			importing(importer);
+			
+			System.out.println("Exporting: " + (name.replace(".\\", "\\")).replace(".fmt", ".csv"));
+			
+			exporting(importer, exporter);
+			
+			System.out.println("Cleaning up...\n");
+			
+			filed.renameTo(new File(name.replace(".fmt", "_converted.fmt")));
+			System.out.println("Disabled old file!");
+			moveToSelf(filed, ".txt", "byproduct");
+			moveToSelf(filed, ".csv", "output");
+			
+			System.out.println("\nClean complete! Thank you for using FMTtoCSV!\nMay all your radios connect!");
+			try {
+				Thread.sleep(SLEEP_TIME);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public static void importing(importFMT importerer) {
+		importerer.Grab();
+	}
+	public static void exporting(importFMT importerer, exportCSV exporterer) {
+		importerer.halt();
+		exporterer.steal();
+		exporterer.write(name.replace(".fmt", ".txt"));
+		exporterer.halt();
+	}
+	public static void moveToSelf(File assistant, String extension, String folder) {
+		File myFile = new File("");
+		String myFilePath = myFile.getAbsolutePath();
+		String tmp = assistant.getAbsolutePath();
+		String toMovePath = tmp.replace("_converted.fmt", extension).replace(".fmt", extension);
+		File toMove = new File(toMovePath);
+		File destination = new File(myFilePath + "\\" + folder + "\\" + toMove.getName());
+		//System.out.println("Attempted destination: " + destination.getAbsolutePath());
+		if (toMove.renameTo(destination)) {
+			System.out.println("Moved " + folder + " to: " + destination.getAbsolutePath());
+		} else {
+			System.out.println("Clogged! Couldn't move " + toMove.getName() + " to " + destination.getAbsolutePath() + " so it has been left in " + assistant.getParent());
+			System.out.println("(Destination exists: " + destination.exists() + ". Target exists: " + toMove.exists() + ".)");
+		}
+	}
+}

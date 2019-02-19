@@ -59,7 +59,7 @@ public class exportCSV {
 			writes.write(tmp);
 			writes.close();
 			reads = new BufferedReader(new FileReader(new File(fileName)));
-			writinger = new BufferedWriter(new FileWriter(new File(fileName.replace(".txt", ".csv"))));
+			writinger = new BufferedWriter(new FileWriter(new File((fileName.replace(".txt",".csv")))));
 			for(int i = 0;i < 5; i++) {
 				infoLines[i] = reads.readLine();
 			}
