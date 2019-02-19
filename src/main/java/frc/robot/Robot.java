@@ -386,9 +386,9 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new SetRocketHeightHighCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new SetRocketHeightMidCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new SetRocketHeightLowCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.SETAUTOMATEDCOMMAND).whileHeld(new SetAutomatedCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new SetAutomatedCommand());
 
-		//OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whileHeld(); USE WHEN TESTING NEW COMMANDS
+		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whileHeld(new CargoWheelSpitCommand()); //USE WHEN TESTING NEW COMMANDS
 	}
 	
 

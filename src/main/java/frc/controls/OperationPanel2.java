@@ -44,7 +44,7 @@ public class OperationPanel2 {
 			buttonNumber = 7;
 			break;
 		default:
-			throw new IllegalArgumentException("Invalid Button Code");
+			throw new IllegalArgumentException("Invalid Button Code: " + button);
 		}
 
 		return buttonNumber;
