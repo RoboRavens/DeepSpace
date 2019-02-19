@@ -30,8 +30,6 @@ public class ElevatorSubsystem extends Subsystem {
 	private double _expectedPower;
 
 	public ElevatorSubsystem() {
-		Encoder elevatorWpiEncoder = new Encoder(RobotMap.elevatorEncoderLeft, RobotMap.elevatorEncoderRight);
-		elevatorEncoder = new RavenEncoder(elevatorWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.elevatorWheelDiameterInches, true);
 		elevatorMotor = new TalonSRX(RobotMap.elevatorMotor);
 		elevatorMotorFollower = new TalonSRX(RobotMap.elevatorMotorFollower);
 		elevatorMotorFollower.follow(elevatorMotor);
