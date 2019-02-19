@@ -154,8 +154,7 @@ public class ElevatorSubsystem extends Subsystem {
 	public void checkExpectedSpeedVersusPower() {
 		// Check if elevator is being sent power and not moving at the right speed
 		if (Math.abs(_expectedPower) > Calibrations.elevatorHoldPositionPowerMagnitude) {
-			// The line below only returns as true if the elevator is pushing harder than it
-			// needs to not move it
+			// The line below only returns as true if the elevator is pushing harder than it needs to not move it
 			if (Math.abs(
 					elevatorMotor.getSelectedSensorVelocity()) < Calibrations.elevatorConsideredMovingEncoderRate) {
 				burnoutProtection();
@@ -187,12 +186,9 @@ public class ElevatorSubsystem extends Subsystem {
 
 	public void stop() {
 		elevatorMotor.set(ControlMode.PercentOutput, 0);
-		// System.out.println("STOPPING ARM.STOPPING ARM.STOPPING ARM.STOPPING
-		// ARM.STOPPING ARM.STOPPING ARM.STOPPING ARM.");
 	}
 
-	// Right now this method just looks at the right limit switch; some combination
-	// of both should be used.
+	// Right now this method just looks at the right limit switch; some combination of both should be used.
 
 	public void expectElevatorToBeAtRetractionLimit() {
 		if (getElevatorRetractionLimitSwitchValue()) {
@@ -226,8 +222,7 @@ public class ElevatorSubsystem extends Subsystem {
     	return encoderLimit;
     }
 
-	// Right now this method just looks at the right limit switch; some combination
-	// of both should be used.
+	// Right now this method just looks at the right limit switch; some combination of both should be used.
 	public boolean isAtExtensionLimit() {
     	boolean encoderLimit = false;
     	boolean switchLimit = false;

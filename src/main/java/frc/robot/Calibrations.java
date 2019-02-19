@@ -25,7 +25,6 @@ public class Calibrations {
 	
 	public static final double cutPowerModeMovementRatio = .3;
 	public static final double cutPowerModeTurnRatio = .5;
-	//public static final double gyroAdjustmentScaleFactor = .011; // Could possibly cause gyro issues
 	public static final double gyroAdjustmentDefaultScaleFactor = .03;
 	public static final double driveTrainTurnRelativeDegreesGyroAdjustmentScaleFactor = .009;
 	public static final double gyroCooldownTimerTime = .5;
@@ -39,7 +38,6 @@ public class Calibrations {
 	// 2019 and newer robots use talonSRX instead talon
 	public static final Boolean UseTalonSRXForDriveController = true;
 
-	
 	// Drive and gyro modes
 	public static final int bulldozerTank = 0;
 	public static final int fpsTank = 1;
@@ -62,14 +60,11 @@ public class Calibrations {
 	
 	
 	// DRIVE ENCODERS
-	// The *3 is for low gear. In high gear, it would just be 4096. Run all autonomous modes in low gear.
 	public static final int encoderCUI103CyclesPerRevolution = 4096 * 3;
 	// public static final int encoderE4TCyclesPerRevolution = 360;
 	// public static final int encoderE4PCyclesPerRevolution = 250;
 	public static final double wheelDiameterInches = 6;
 	public static final double wheelCircumferenceInches = Calibrations.wheelDiameterInches * Math.PI;
-	//public static final double driveEncoderE4TCyclesPerInch = (double) Calibrations.encoderE4TCyclesPerRevolution / Calibrations.wheelCircumferenceInches;
-	//public static final double driveEncoderE4PCyclesPerInch = (double) Calibrations.encoderE4PCyclesPerRevolution / Calibrations.wheelCircumferenceInches;
 	
 	// We're using CUI 103 encoders on both sides of the drivetrain.
 	public static final int encoderCyclesPerRevolution = Calibrations.encoderCUI103CyclesPerRevolution;

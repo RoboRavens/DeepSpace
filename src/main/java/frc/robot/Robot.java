@@ -26,7 +26,7 @@ import frc.ravenhardware.RavenLighting;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
 import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
 import frc.robot.commands.arm.ArmRetractWhileHeldCommand;
-import frc.robot.commands.automatedscoring.SetAutomatedCommand;
+import frc.robot.commands.automatedscoring.RunAutomatedCommand;
 import frc.robot.commands.automatedscoring.SetCargoOrHatchPanelCommand;
 import frc.robot.commands.automatedscoring.SetLocationCargoShipCommand;
 import frc.robot.commands.automatedscoring.SetLocationRocketCommand;
@@ -36,6 +36,8 @@ import frc.robot.commands.automatedscoring.SetRocketHeightMidCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.drivetrain.DriveTrainTurnTargetCommand;
+import frc.robot.commands.drivetrain.SetCutPowerFalse;
+import frc.robot.commands.drivetrain.SetCutPowerTrue;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.misc.SetOverride1Command;
@@ -120,15 +122,10 @@ public class Robot extends TimedRobot {
 
 		driverStation = DriverStation.getInstance();
 
-		// m_chooser.addDefault("Default Auto", new Command());
-		// m_chooser.addObject(name, object);
-		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		driverStation.getMatchTime();
 		// Zero the elevator encoders; the robot should always start with the elevator
 		// down.
-		// Note that this may not be true in practice, so we should later integrate the
-		// reset with limit switch code.
 		Robot.ELEVATOR_SUBSYSTEM.resetEncodersToRetractedLimit();
 		Robot.ARM_SUBSYSTEM.resetEncodersToRetractionLimit();
 
@@ -165,17 +162,10 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 
 		autoFromDashboard = SmartDashboard.getString("DB/String 0", "myDefaultData");
-		outputAutoModeToDashboardStringOne(autoFromDashboard);
-
-		// autoFromDashboard = SmartDashboard.getString("DB/String 0", "myDefaultData");
 		positionFromDashboard = SmartDashboard.getString("DB/String 2", "myDefaultData");
 
+		outputAutoModeToDashboardStringOne(autoFromDashboard);
 		outputPositionToDashboardStringThree(positionFromDashboard);
-		// outputAutoModeToDashboardStringOne(autoFromDashboard);
-
-		// System.out.println("Deployed");
-
-		// DRIVE_TRAIN_SUBSYSTEM.ravenTank.resetOrientationGyro();
 
 		Alliance alliance = driverStation.getAlliance();
 
@@ -199,10 +189,6 @@ public class Robot extends TimedRobot {
 		diagnostics.outputDisabledDiagnostics();
 
 		SmartDashboard.putString("DB/String 5", "TBD - Awaiting plates");
-
-		// this.elevator.getPosition();
-		// this.elevator.getIsAtLimits();
-		// this.arm.getPosition();
 	}
 
 	public void outputAutoModeToDashboardStringOne(String autoMode) {
@@ -299,7 +285,6 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeadingToCurrentHeading();
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.resetGyroAdjustmentScaleFactor();
-		// DRIVE_TRAIN_SUBSYSTEM.ravenTank.resetOrientationGyro();
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -356,6 +341,11 @@ public class Robot extends TimedRobot {
 		if (DRIVE_CONTROLLER.getAxisIsPressed(AxisCode.RIGHTTRIGGER)) {
 			new DriveTrainTurnTargetCommand();
 		}
+		if (DRIVE_CONTROLLER.getAxisIsPressed(AxisCode.LEFTTRIGGER)) {
+			new SetCutPowerTrue();
+		} else {
+			new SetCutPowerFalse();
+		}
 	}
 
 	public void setupOperationPanel() {
@@ -386,7 +376,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new SetRocketHeightHighCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new SetRocketHeightMidCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new SetRocketHeightLowCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new SetAutomatedCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
 
 		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whileHeld(new CargoWheelSpitCommand()); //USE WHEN TESTING NEW COMMANDS
 	}

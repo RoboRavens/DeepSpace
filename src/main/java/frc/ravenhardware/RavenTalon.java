@@ -60,8 +60,7 @@ public class RavenTalon {
 			targetOutput = Math.signum(targetOutput) * this.maxPower;
 		}
 
-		// apply deadband to compensate for controller joystick not returning to exactly
-		// 0
+		// apply deadband to compensate for controller joystick not returning to exactly 0
 		if (Math.abs(targetOutput) < this.deadband) {
 			targetOutput = 0;
 		}
@@ -94,8 +93,7 @@ public class RavenTalon {
 		// Update and set the output speed.
 		outputSpeed = newOutputSpeed;
 
-		// System.out.println("Target: " + targetOutput + " Actual: " + outputSpeed + "
-		// Slew: " + maxSlewRate);
+		// System.out.println("Target: " + targetOutput + " Actual: " + outputSpeed + " Slew: " + maxSlewRate);
 
 		PCDashboardDiagnostics.SubsystemNumber("DriveTrain", _name + "OutputPercent", outputSpeed);
 

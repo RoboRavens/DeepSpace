@@ -5,7 +5,6 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.cargowheel.CargoWheelStopCommand;
 import frc.util.PCDashboardDiagnostics;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Relay.Value;
@@ -26,20 +25,12 @@ public class CargoWheelSubsystem extends Subsystem {
 		_hasCargoDurationTimer.start();
 	}
 
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
 		setDefaultCommand(new CargoWheelStopCommand());
 	}
 
 	public void suck(double magnitude) {
-		// if(this.hasCargoPullTimeout() == true) {
-		// this.stop();
-		// } else {
 		this.set(-1 * magnitude);
-		// }
 	}
 
 	public void spit(double magnitude) {

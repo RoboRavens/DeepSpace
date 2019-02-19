@@ -223,8 +223,6 @@ public class ArmSubsystem extends Subsystem {
 
 	public void stop() {
 		this.armMotor.set(ControlMode.PercentOutput, 0);
-		// System.out.println("STOPPING ARM.STOPPING ARM.STOPPING ARM.STOPPING
-		// ARM.STOPPING ARM.STOPPING ARM.STOPPING ARM.");
 	}
 
 	public boolean getIsExtendedPastTarget(int targetEncoderValue) {

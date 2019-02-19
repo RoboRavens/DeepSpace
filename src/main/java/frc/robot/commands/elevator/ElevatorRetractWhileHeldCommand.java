@@ -14,7 +14,6 @@ public class ElevatorRetractWhileHeldCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        //System.out.println("ElevatorRetractCommand init");
     }
 
     // Called repeatedly when this Command is scheduled to run

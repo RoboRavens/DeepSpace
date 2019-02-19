@@ -53,12 +53,4 @@ public class RavenEncoder {
     public void resetEncoder() {
         this.encoder.reset();
     }
-
-    //public int setEncoderToMaxValue() {
-       
-    
-
-    //public int setEncoderToMinValue() {
-
-
-    }
+}

@@ -24,9 +24,6 @@ public class BeakSubsystem extends Subsystem {
   //BufferedDigitalInput hatchPanelSensor;
   private Timer _hasHatchPanelDurationTimer = new Timer();
 
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
   public BeakSubsystem() {
 		//this.beak = new Solenoid(RobotMap.beakSolenoid);
 		//this.hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
@@ -34,8 +31,6 @@ public class BeakSubsystem extends Subsystem {
   }
 
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new BeakCaptureHatchPanelCommand());
   }
 

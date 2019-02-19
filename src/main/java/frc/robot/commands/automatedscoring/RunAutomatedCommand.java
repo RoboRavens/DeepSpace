@@ -10,8 +10,8 @@ package frc.robot.commands.automatedscoring;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class SetAutomatedCommand extends Command {
-  public SetAutomatedCommand() {
+public class RunAutomatedCommand extends Command {
+  public RunAutomatedCommand() {
     requires(Robot.SET_COMMAND_SUBSYSTEM);
   }
 
