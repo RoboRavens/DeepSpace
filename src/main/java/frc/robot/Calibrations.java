@@ -60,10 +60,10 @@ public class Calibrations {
 	
 	
 	// DRIVE ENCODERS
-	public static final int encoderCUI103CyclesPerRevolution = 4096 * 3;
+	public static final int encoderCUI103CyclesPerRevolution = 4096; 
 	// public static final int encoderE4TCyclesPerRevolution = 360;
 	// public static final int encoderE4PCyclesPerRevolution = 250;
-	public static final double wheelDiameterInches = 6;
+	public static final double wheelDiameterInches = 4;
 	public static final double wheelCircumferenceInches = Calibrations.wheelDiameterInches * Math.PI;
 	
 	// We're using CUI 103 encoders on both sides of the drivetrain.
@@ -78,26 +78,26 @@ public class Calibrations {
     
 
 	//ELEVATOR
-	public static final double elevatorkF = 0.1;
+	public static final double elevatorHoldPositionPowerMagnitude = .25;
+
+	public static final double elevatorkF = Calibrations.elevatorHoldPositionPowerMagnitude;
     public static final double elevatorkP = 12.0;
     public static final double elevatorkI = 0.0;
-    public static final double elevatorkD = 170.0;
-
-	public static final double elevatorHoldPositionPowerMagnitude = .05;
+    public static final double elevatorkD = 230.0;
 	
 	public static final double elevatorWheelDiameterInches = 1.25;
 	
 	public static final int elevatorEncoderMinimumValue = 0;
-    public static final int elevatorEncoderMaximumValue = 49000;
+    public static final int elevatorEncoderMaximumValue = 51000;
 
     public static final int elevatorLowHatchEncoderValue = 8000;
-    public static final int elevatorMidHatchEncoderValue = 24500;
-    public static final int elevatorHighHatchEncoderValue = 46000;
+    public static final int elevatorMidHatchEncoderValue = 27000;
+    public static final int elevatorHighHatchEncoderValue = 33200;
 
-    public static final int elevatorCargoShipPortEncoderValue = 15000;
-    public static final int elevatorLowRocketPortEncoderValue = 12000;
-    public static final int elevatorMidRocketPortEncoderValue = 26000;
-    public static final int elevatorHighRocketPortEncoderValue = 48000;
+    public static final int elevatorCargoShipPortEncoderValue = 31000;
+    public static final int elevatorLowRocketPortEncoderValue = 20000;
+    public static final int elevatorMidRocketPortEncoderValue = 45000;
+    public static final int elevatorHighRocketPortEncoderValue = 50000;
 
     // The safety margin is how far away from the end of travel the encoders will stop the lift.
 	// At low speeds (max of .3), and a lift max value of 30k, 1500 maxes out the elevator.

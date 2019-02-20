@@ -74,7 +74,7 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void turnToTarget() {
-		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + tx.getDouble(0.0));
+		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + (tx.getDouble(0.0) - 12));
 	}
 
 	public void driveToTarget(double distanceDesiredFromTarget) {

@@ -39,9 +39,10 @@ import frc.robot.commands.drivetrain.DriveTrainTurnTargetCommand;
 import frc.robot.commands.drivetrain.SetCutPowerFalse;
 import frc.robot.commands.drivetrain.SetCutPowerTrue;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
+import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.misc.SetOverride1Command;
-import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
+import frc.robot.commands.beak.BeakHoldHatchPanelCommand;
 import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.BeakSubsystem;
@@ -336,16 +337,12 @@ public class Robot extends TimedRobot {
 	}
 
 	public void setupDriveController() {
-		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakCaptureHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakHoldHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new CargoWheelSuckCommand());
-		if (DRIVE_CONTROLLER.getAxisIsPressed(AxisCode.RIGHTTRIGGER)) {
-			new DriveTrainTurnTargetCommand();
-		}
-		if (DRIVE_CONTROLLER.getAxisIsPressed(AxisCode.LEFTTRIGGER)) {
+		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new DriveTrainTurnTargetCommand());
+		if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > 0.5) {
 			new SetCutPowerTrue();
-		} else {
-			new SetCutPowerFalse();
-		}
+		} 
 	}
 
 	public void setupOperationPanel() {
@@ -373,12 +370,12 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.SETCARGO).whenPressed(new SetCargoOrHatchPanelCommand("Cargo"));
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONCARGOSHIP).whenPressed(new SetLocationCargoShipCommand());
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONROCKET).whenPressed(new SetLocationRocketCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new SetRocketHeightHighCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new SetRocketHeightMidCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new SetRocketHeightLowCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorHighRocketPortEncoderValue));
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorMidRocketPortEncoderValue));
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorLowRocketPortEncoderValue));
 		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
 
-		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whileHeld(new CargoWheelSpitCommand()); //USE WHEN TESTING NEW COMMANDS
+		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorHighHatchEncoderValue)); //USE WHEN TESTING NEW COMMANDS
 	}
 	
 

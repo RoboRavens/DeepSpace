@@ -66,8 +66,8 @@ public class RavenTank {
 
 		Encoder leftWpiEncoder = new Encoder(RobotMap.leftDriveEncoder1, RobotMap.leftDriveEncoder2);
         Encoder rightWpiEncoder = new Encoder(RobotMap.rightDriveEncoder1, RobotMap.rightDriveEncoder2);
-        leftRavenEncoder = new RavenEncoder(leftWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
-        rightRavenEncoder = new RavenEncoder(rightWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
+        leftRavenEncoder = new RavenEncoder(leftWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
+        rightRavenEncoder = new RavenEncoder(rightWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
 
 		gyroCooldownTimer = new Timer();
 
@@ -476,7 +476,7 @@ public class RavenTank {
 	public double getNetInchesTraveled() {
 		double leftInches = this.leftRavenEncoder.getNetInchesTraveled();
 		double rightInches = this.rightRavenEncoder.getNetInchesTraveled();
-		double netInchesTraveled = (leftInches * rightInches)/2;
+		double netInchesTraveled = (leftInches + rightInches)/2;
 		
 		return netInchesTraveled;
 	}
