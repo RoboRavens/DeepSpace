@@ -16,7 +16,6 @@ public class ElevatorRetractFullyCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		//System.out.println("ElevatorRetractCommand init");
 		Robot.ELEVATOR_SUBSYSTEM.resetSafetyTimer();
 		Robot.ELEVATOR_SUBSYSTEM.startSafetyTimer();
 	}
@@ -34,7 +33,7 @@ public class ElevatorRetractFullyCommand extends Command {
 			isFinished = true;
 		}
 
-		if (Robot.ELEVATOR_SUBSYSTEM.getIsAtRetractionLimit()) {
+		if (Robot.ELEVATOR_SUBSYSTEM.isAtRetractionLimit()) {
 			isFinished = true;
 		}
 		return isFinished;

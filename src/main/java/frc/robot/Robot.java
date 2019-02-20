@@ -26,7 +26,7 @@ import frc.ravenhardware.RavenLighting;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
 import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
 import frc.robot.commands.arm.ArmRetractWhileHeldCommand;
-import frc.robot.commands.automatedscoring.SetAutomatedCommand;
+import frc.robot.commands.automatedscoring.RunAutomatedCommand;
 import frc.robot.commands.automatedscoring.SetCargoOrHatchPanelCommand;
 import frc.robot.commands.automatedscoring.SetLocationCargoShipCommand;
 import frc.robot.commands.automatedscoring.SetLocationRocketCommand;
@@ -36,10 +36,13 @@ import frc.robot.commands.automatedscoring.SetRocketHeightMidCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.drivetrain.DriveTrainTurnTargetCommand;
+import frc.robot.commands.drivetrain.SetCutPowerFalse;
+import frc.robot.commands.drivetrain.SetCutPowerTrue;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
+import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.misc.SetOverride1Command;
-import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
+import frc.robot.commands.beak.BeakHoldHatchPanelCommand;
 import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.BeakSubsystem;
@@ -120,15 +123,10 @@ public class Robot extends TimedRobot {
 
 		driverStation = DriverStation.getInstance();
 
-		// m_chooser.addDefault("Default Auto", new Command());
-		// m_chooser.addObject(name, object);
-		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		driverStation.getMatchTime();
 		// Zero the elevator encoders; the robot should always start with the elevator
 		// down.
-		// Note that this may not be true in practice, so we should later integrate the
-		// reset with limit switch code.
 		Robot.ELEVATOR_SUBSYSTEM.resetEncodersToRetractedLimit();
 		Robot.ARM_SUBSYSTEM.resetEncodersToRetractionLimit();
 
@@ -165,17 +163,10 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 
 		autoFromDashboard = SmartDashboard.getString("DB/String 0", "myDefaultData");
-		outputAutoModeToDashboardStringOne(autoFromDashboard);
-
-		// autoFromDashboard = SmartDashboard.getString("DB/String 0", "myDefaultData");
 		positionFromDashboard = SmartDashboard.getString("DB/String 2", "myDefaultData");
 
+		outputAutoModeToDashboardStringOne(autoFromDashboard);
 		outputPositionToDashboardStringThree(positionFromDashboard);
-		// outputAutoModeToDashboardStringOne(autoFromDashboard);
-
-		// System.out.println("Deployed");
-
-		// DRIVE_TRAIN_SUBSYSTEM.ravenTank.resetOrientationGyro();
 
 		Alliance alliance = driverStation.getAlliance();
 
@@ -199,10 +190,6 @@ public class Robot extends TimedRobot {
 		diagnostics.outputDisabledDiagnostics();
 
 		SmartDashboard.putString("DB/String 5", "TBD - Awaiting plates");
-
-		// this.elevator.getPosition();
-		// this.elevator.getIsAtLimits();
-		// this.arm.getPosition();
 	}
 
 	public void outputAutoModeToDashboardStringOne(String autoMode) {
@@ -299,7 +286,6 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeadingToCurrentHeading();
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.resetGyroAdjustmentScaleFactor();
-		// DRIVE_TRAIN_SUBSYSTEM.ravenTank.resetOrientationGyro();
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -351,11 +337,12 @@ public class Robot extends TimedRobot {
 	}
 
 	public void setupDriveController() {
-		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakCaptureHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakHoldHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new CargoWheelSuckCommand());
-		if (DRIVE_CONTROLLER.getAxisIsPressed(AxisCode.RIGHTTRIGGER)) {
-			new DriveTrainTurnTargetCommand();
-		}
+		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new DriveTrainTurnTargetCommand());
+		if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > 0.5) {
+			new SetCutPowerTrue();
+		} 
 	}
 
 	public void setupOperationPanel() {
@@ -383,12 +370,12 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.SETCARGO).whenPressed(new SetCargoOrHatchPanelCommand("Cargo"));
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONCARGOSHIP).whenPressed(new SetLocationCargoShipCommand());
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONROCKET).whenPressed(new SetLocationRocketCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new SetRocketHeightHighCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new SetRocketHeightMidCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new SetRocketHeightLowCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new SetAutomatedCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorHighRocketPortEncoderValue));
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorMidRocketPortEncoderValue));
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorLowRocketPortEncoderValue));
+		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
 
-		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whileHeld(new CargoWheelSpitCommand()); //USE WHEN TESTING NEW COMMANDS
+		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorHighHatchEncoderValue)); //USE WHEN TESTING NEW COMMANDS
 	}
 	
 

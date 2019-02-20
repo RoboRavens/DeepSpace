@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Relay.Value;
-import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
+import frc.robot.commands.beak.BeakHoldHatchPanelCommand;
+import frc.util.PCDashboardDiagnostics;
 import frc.robot.RobotMap;
 import frc.ravenhardware.BufferedDigitalInput;
 
@@ -21,29 +22,24 @@ import frc.ravenhardware.BufferedDigitalInput;
  */
 public class BeakSubsystem extends Subsystem {
   //Solenoid beak = new Solenoid(RobotMap.beakSolenoid);
-  //BufferedDigitalInput hatchPanelSensor;
+  BufferedDigitalInput hatchPanelSensor;
   private Timer _hasHatchPanelDurationTimer = new Timer();
-
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
   public BeakSubsystem() {
 		//this.beak = new Solenoid(RobotMap.beakSolenoid);
-		//this.hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
+		this.hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
 		_hasHatchPanelDurationTimer.start();
   }
 
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new BeakCaptureHatchPanelCommand());
+    setDefaultCommand(new BeakHoldHatchPanelCommand());
   }
 
   public boolean hasHatchPanel() {
 		boolean otherLimit = false;
-		//boolean hasHatchPanel = hatchPanelSensor.get() == false;
+		boolean hasHatchPanel = hatchPanelSensor.get() == false;
 
-		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(false, otherLimit);
+		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(hasHatchPanel, otherLimit);
   }
   
   public void periodic()  {
@@ -55,7 +51,10 @@ public class BeakSubsystem extends Subsystem {
 			Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kForward);
 		} else {
 			Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kOff);
-		}
+    }
+    
+    PCDashboardDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", this.hasHatchPanel());
+
   }
   
 

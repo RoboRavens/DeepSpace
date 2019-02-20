@@ -90,8 +90,7 @@ public class LightLink {
 
     public void set(int color, int action, int speed, int strip) {
         synchronized (LL_LOCK) {
-            // System.out.println("Inside synchronized. Params: color: " + color + " action:
-            // " + action + " " + " speed: " + speed + " strip: " + strip);
+            // System.out.println("Inside synchronized. Params: color: " + color + " action: " + action + " " + " speed: " + speed + " strip: " + strip);
             i2c.writeBulk(buildCommand(strip, color, action, speed));
         }
     }

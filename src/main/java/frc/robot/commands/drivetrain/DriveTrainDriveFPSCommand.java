@@ -17,7 +17,7 @@ public class DriveTrainDriveFPSCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        // System.out.println("Executing tank drive command.");
+        // System.out.println("Executing tank drive command");
         double leftYAxisValue = Robot.DRIVE_CONTROLLER.getAxis(AxisCode.LEFTSTICKY);
         double rightYAxisValue = Robot.DRIVE_CONTROLLER.getAxis(AxisCode.RIGHTSTICKY);
         double rightXAxisValue = Robot.DRIVE_CONTROLLER.getAxis(AxisCode.RIGHTSTICKX);

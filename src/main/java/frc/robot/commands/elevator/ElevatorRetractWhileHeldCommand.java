@@ -14,12 +14,11 @@ public class ElevatorRetractWhileHeldCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        //System.out.println("ElevatorRetractCommand init");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ELEVATOR_SUBSYSTEM.retract(0.1);
+        Robot.ELEVATOR_SUBSYSTEM.retract(0.2);
     }
 
     // Make this return true when this Command no longer needs to run execute()

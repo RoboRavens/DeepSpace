@@ -22,12 +22,12 @@ import frc.robot.TalonSRXConstants;
 public class ArmSubsystem extends Subsystem {
 	TalonSRX armMotor;
 	//BufferedDigitalInput extensionLimitSwitch;
-	//BufferedDigitalInput elevatorRetractionLimitSwitch;
+	//BufferedDigitalInput retractionLimitSwitch;
 	private Timer _safetyTimer = new Timer();
 
 	public ArmSubsystem() {
 		this.armMotor = new TalonSRX(RobotMap.armMotor);
-		//this.elevatorRetractionLimitSwitch = new BufferedDigitalInput(RobotMap.armRetractionLimitSwitch);
+		//this.retractionLimitSwitch = new BufferedDigitalInput(RobotMap.armRetractionLimitSwitch);
 		//this.extensionLimitSwitch = new BufferedDigitalInput(RobotMap.armExtensionLimitSwitch);
 		this.armMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkF, TalonSRXConstants.kTimeoutMs);
 		this.armMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkP, TalonSRXConstants.kTimeoutMs);
@@ -38,7 +38,7 @@ public class ArmSubsystem extends Subsystem {
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitEncoderExtension", () -> this.isEncoderAtExtensionLimit());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitEncoderRetraction", () -> this.isEncoderAtRetractionLimit());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchExtension", () -> this.getExtensionLimitSwitchValue());
-		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchRetraction", () -> this.getelevatorRetractionLimitSwitchValue());
+		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchRetraction", () -> this.getArmRetractionLimitSwitchValue());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitFinalExtension", () -> this.getIsAtExtensionLimit());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitFinalRetraction", () -> this.getIsAtRetractionLimit());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitSwitchAndEncoderAgreeExtended", () -> this.encoderAndLimitsMatchExtended());
@@ -78,7 +78,7 @@ public class ArmSubsystem extends Subsystem {
     }
 
 	public void periodic() {
-		//elevatorRetractionLimitSwitch.maintainState();
+		//retractionLimitSwitch.maintainState();
 		//extensionLimitSwitch.maintainState();
 		this.getIsAtExtensionLimit();
 		this.getIsAtRetractionLimit();
@@ -104,11 +104,11 @@ public class ArmSubsystem extends Subsystem {
 		boolean match = true;
 
 		if (this.getEncoderPosition() < Calibrations.armEncoderMinimumValue
-				&& this.getelevatorRetractionLimitSwitchValue() == false) {
+				&& this.getArmRetractionLimitSwitchValue() == false) {
 			match = false;
 		}
 
-		if (this.getelevatorRetractionLimitSwitchValue() == true
+		if (this.getArmRetractionLimitSwitchValue() == true
 				&& this.getEncoderPosition() > Calibrations.armEncoderMinimumValue + Calibrations.ARM_ENCODER_BUFFER) {
 			match = false;
 		}
@@ -124,12 +124,12 @@ public class ArmSubsystem extends Subsystem {
 		return extensionLimitSwitchValue;
 	}
 
-	public boolean getelevatorRetractionLimitSwitchValue() {
-		boolean elevatorRetractionLimitSwitchValue = false;
+	public boolean getArmRetractionLimitSwitchValue() {
+		boolean armRetractionLimitSwitchValue = false;
 
-		//elevatorRetractionLimitSwitchValue = !elevatorRetractionLimitSwitch.get();
+		//retractionLimitSwitchValue = !retractionLimitSwitch.get();
 
-		return elevatorRetractionLimitSwitchValue;
+		return armRetractionLimitSwitchValue;
 	}
 
 	/*
@@ -146,7 +146,7 @@ public class ArmSubsystem extends Subsystem {
 
 		encoderLimit = this.isEncoderAtRetractionLimit();
 
-		if (this.getelevatorRetractionLimitSwitchValue() == true) {
+		if (this.getArmRetractionLimitSwitchValue() == true) {
 			switchLimit = true;
 			this.resetEncodersToRetractionLimit();
 		}
@@ -164,7 +164,7 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public void expectArmToBeAtRetractionLimit() {
-		boolean isAtLimitSwitch = this.getelevatorRetractionLimitSwitchValue();
+		boolean isAtLimitSwitch = this.getArmRetractionLimitSwitchValue();
 		boolean isEncoderWithinRange = isEncoderAtRetractionLimit();
 
 		if (isEncoderWithinRange == false && isAtLimitSwitch == true) {
@@ -223,8 +223,6 @@ public class ArmSubsystem extends Subsystem {
 
 	public void stop() {
 		this.armMotor.set(ControlMode.PercentOutput, 0);
-		// System.out.println("STOPPING ARM.STOPPING ARM.STOPPING ARM.STOPPING
-		// ARM.STOPPING ARM.STOPPING ARM.STOPPING ARM.");
 	}
 
 	public boolean getIsExtendedPastTarget(int targetEncoderValue) {

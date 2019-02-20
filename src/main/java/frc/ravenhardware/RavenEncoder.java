@@ -6,18 +6,20 @@ public class RavenEncoder {
     Encoder encoder;
 
     int cyclesPerRevolution;
-    double driveWheelDiameterInches;
-    double driveWheelCircumferenceInches;
+    double wheelDiameterInches;
+    double wheelCircumferenceInches;
+    int relativeValue;
+    int encoderPositionWhenLimitIsHit;
 
     boolean inverted = false;
 
-    public RavenEncoder(Encoder encoder, int cyclesPerRevolution, double driveWheelDiameterInches, boolean inverted) {
+    public RavenEncoder(Encoder encoder, int cyclesPerRevolution, double wheelDiameterInches, boolean inverted) {
         this.encoder = encoder;
         this.cyclesPerRevolution = cyclesPerRevolution;
-        this.driveWheelDiameterInches = driveWheelDiameterInches;
+        this.wheelDiameterInches = wheelDiameterInches;
         this.inverted = inverted;
 
-        this.driveWheelCircumferenceInches = Math.PI * driveWheelDiameterInches;
+        this.wheelCircumferenceInches = Math.PI * wheelDiameterInches;
     }
 
     public double getNetRevolutions() {
@@ -32,7 +34,7 @@ public class RavenEncoder {
 
     public double getNetInchesTraveled() {
         double netRevolutions = getNetRevolutions();
-        double netInchesTraveled = netRevolutions * driveWheelCircumferenceInches;
+        double netInchesTraveled = netRevolutions * wheelCircumferenceInches;
 
         // I added the *2 here
         return netInchesTraveled * 2;

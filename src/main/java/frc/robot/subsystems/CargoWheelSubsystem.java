@@ -5,7 +5,6 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.cargowheel.CargoWheelStopCommand;
 import frc.util.PCDashboardDiagnostics;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Relay.Value;
@@ -17,29 +16,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class CargoWheelSubsystem extends Subsystem {
 	TalonSRX cargoMotor;
-	//BufferedDigitalInput cargoSensor;
+	BufferedDigitalInput cargoSensor;
 	private Timer _hasCargoDurationTimer = new Timer();
 
 	public CargoWheelSubsystem() {
 		this.cargoMotor = new TalonSRX(RobotMap.cargoMotor);
-		//this.cargoSensor = new BufferedDigitalInput(RobotMap.cargoSensor);
+		this.cargoSensor = new BufferedDigitalInput(RobotMap.cargoSensor);
 		_hasCargoDurationTimer.start();
 	}
 
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
 		setDefaultCommand(new CargoWheelStopCommand());
 	}
 
 	public void suck(double magnitude) {
-		// if(this.hasCargoPullTimeout() == true) {
-		// this.stop();
-		// } else {
 		this.set(-1 * magnitude);
-		// }
 	}
 
 	public void spit(double magnitude) {
@@ -61,16 +52,16 @@ public class CargoWheelSubsystem extends Subsystem {
 
 	public boolean hasCargo() {
 		boolean otherLimit = false;
-		//boolean hasCargo = cargoSensor.get() == false;
+		boolean hasCargo = cargoSensor.get() == false;
 
-		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(false, otherLimit);
+		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(hasCargo, otherLimit);
 	}
 
 	public void periodic() {
-		//cargoSensor.maintainState();
+		cargoSensor.maintainState();
 
 		PCDashboardDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", this.hasCargo());
-		//PCDashboardDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoSensorRaw", cargoSensor.get());
+		PCDashboardDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoSensorRaw", cargoSensor.get());
 		//PCDashboardDiagnostics.SubsystemNumber("CargoWheel", "MotorOutputPercent", cargoMotor.getMotorOutputPercent());
 
 		if (this.hasCargo() == false) {

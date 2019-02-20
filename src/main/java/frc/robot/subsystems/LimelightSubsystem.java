@@ -32,8 +32,6 @@ public class LimelightSubsystem extends Subsystem {
   	DriveTrainDriveInchesCommand driveTrainDriveInchesCommand = new DriveTrainDriveInchesCommand(this._distanceToDrive, this._powerMagnitude, this._direction);
 
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
 
 	}
 
@@ -76,14 +74,7 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void turnToTarget() {
-		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + tx.getDouble(0.0));
-	}
-
-	public static void limeLightDetect() {
-
-		// if( A*B^(targetArea+C) +D < Limit) {
-
-		// }
+		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + (tx.getDouble(0.0) - 12));
 	}
 
 	public void driveToTarget(double distanceDesiredFromTarget) {

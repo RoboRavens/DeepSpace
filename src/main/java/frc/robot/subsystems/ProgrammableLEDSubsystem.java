@@ -23,7 +23,7 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 			// off();
 		}
 
-		if (Robot.ELEVATOR_SUBSYSTEM.getIsAtExtensionLimit() == true) {
+		if (Robot.ELEVATOR_SUBSYSTEM.isAtExtensionLimit()) {
 			// rainbow(0);
 			// System.out.println("Lighting UP Lighting UP Lighting UP Lighting UP Lighting
 			// UP Lighting UP Lighting UP");

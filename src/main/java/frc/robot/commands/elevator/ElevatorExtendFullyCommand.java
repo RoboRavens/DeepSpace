@@ -17,7 +17,6 @@ public class ElevatorExtendFullyCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		System.out.println("ElevatorExtendCommand init");
 		Robot.ELEVATOR_SUBSYSTEM.resetSafetyTimer();
 		Robot.ELEVATOR_SUBSYSTEM.startSafetyTimer();
 	}
@@ -29,16 +28,15 @@ public class ElevatorExtendFullyCommand extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		boolean isFinished = false;
-
 		if (Robot.ELEVATOR_SUBSYSTEM.getSafetyTimer() > Calibrations.ELEVATOR_SAFETY_TIMER_TIMEOUT) {
-			isFinished = true;
+			return true;
 		}
 
-		if (Robot.ELEVATOR_SUBSYSTEM.getIsAtExtensionLimit()) {
-			isFinished = true;
+		if (Robot.ELEVATOR_SUBSYSTEM.isAtExtensionLimit()) {
+			return true;
 		}
-		return isFinished;
+
+		return false;
 	}
 
 	// Called once after isFinished returns true
