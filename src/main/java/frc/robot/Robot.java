@@ -38,6 +38,7 @@ import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.drivetrain.DriveTrainTurnTargetCommand;
 import frc.robot.commands.drivetrain.SetCutPowerFalse;
 import frc.robot.commands.drivetrain.SetCutPowerTrue;
+import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
@@ -342,7 +343,9 @@ public class Robot extends TimedRobot {
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new DriveTrainTurnTargetCommand());
 		if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > 0.5) {
 			new SetCutPowerTrue();
-		} 
+		}
+
+		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new DriveTrainDriveLimeLightCommand());
 	}
 
 	public void setupOperationPanel() {

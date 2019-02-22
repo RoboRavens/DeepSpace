@@ -78,7 +78,7 @@ public class Calibrations {
     
 
 	//ELEVATOR
-	public static final double elevatorHoldPositionPowerMagnitude = .25;
+	public static final double elevatorHoldPositionPowerMagnitude = .15;
 
 	public static final double elevatorkF = Calibrations.elevatorHoldPositionPowerMagnitude;
     public static final double elevatorkP = 12.0;
