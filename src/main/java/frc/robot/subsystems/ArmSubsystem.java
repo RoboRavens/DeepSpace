@@ -87,15 +87,15 @@ public class ArmSubsystem extends Subsystem {
 	public boolean encoderAndLimitsMatchExtended() {
 		boolean match = true;
 
-		if (this.getEncoderPosition() > Calibrations.armEncoderMaximumValue
+		if (this.getEncoderPosition() < Calibrations.armEncoderExtendedValue
 				&& this.getExtensionLimitSwitchValue() == false) {
 			match = false;
 		}
 
-		if (this.getExtensionLimitSwitchValue() == true
+		/*if (this.getExtensionLimitSwitchValue() == true
 				&& this.getEncoderPosition() < Calibrations.armEncoderMaximumValue - Calibrations.ARM_ENCODER_BUFFER) {
 			match = false;
-		}
+		}*/
 
 		return match;
 	}
@@ -103,15 +103,15 @@ public class ArmSubsystem extends Subsystem {
 	public boolean encoderAndLimitsMatchRetracted() {
 		boolean match = true;
 
-		if (this.getEncoderPosition() < Calibrations.armEncoderMinimumValue
+		if (this.getEncoderPosition() > Calibrations.armEncoderRetractedValue
 				&& this.getArmRetractionLimitSwitchValue() == false) {
 			match = false;
 		}
 
-		if (this.getArmRetractionLimitSwitchValue() == true
+		/*if (this.getArmRetractionLimitSwitchValue() == true
 				&& this.getEncoderPosition() > Calibrations.armEncoderMinimumValue + Calibrations.ARM_ENCODER_BUFFER) {
 			match = false;
-		}
+		}*/
 
 		return match;
 	}
@@ -146,10 +146,10 @@ public class ArmSubsystem extends Subsystem {
 
 		encoderLimit = this.isEncoderAtRetractionLimit();
 
-		if (this.getArmRetractionLimitSwitchValue() == true) {
+		/*if (this.getArmRetractionLimitSwitchValue() == true) {
 			switchLimit = true;
 			this.resetEncodersToRetractionLimit();
-		}
+		}*/
 
 		return Robot.OVERRIDE_SYSTEM_ARM_RETRACT.getIsAtLimit(encoderLimit, switchLimit);
 	}
@@ -174,7 +174,7 @@ public class ArmSubsystem extends Subsystem {
 
 	public boolean isEncoderAtExtensionLimit() {
 		boolean encoderLimit = false;
-		if (this.getEncoderPosition() >= Calibrations.armEncoderMaximumValue - Calibrations.ARM_ENCODER_BUFFER) {
+		if (this.getEncoderPosition() <= Calibrations.armEncoderExtendedValue + Calibrations.ARM_ENCODER_BUFFER) {
 			encoderLimit = true;
 		}
 		return encoderLimit;
@@ -182,7 +182,7 @@ public class ArmSubsystem extends Subsystem {
 
 	public boolean isEncoderAtRetractionLimit() {
 		boolean encoderLimit = false;
-		if (this.getEncoderPosition() <= Calibrations.armEncoderMinimumValue + Calibrations.ARM_ENCODER_BUFFER) {
+		if (this.getEncoderPosition() >= Calibrations.armEncoderRetractedValue - Calibrations.ARM_ENCODER_BUFFER) {
 			encoderLimit = true;
 		}
 		return encoderLimit;
@@ -195,10 +195,10 @@ public class ArmSubsystem extends Subsystem {
 
 		encoderLimit = this.isEncoderAtExtensionLimit();
 
-		if (this.getExtensionLimitSwitchValue() == true) {
+		/*if (this.getExtensionLimitSwitchValue() == true) {
 			switchLimit = true;
 			this.resetEncodersToExtendedLimit();
-		}
+		}*/
 
 		isAtLimit = Robot.OVERRIDE_SYSTEM_ARM_EXTEND.getIsAtLimit(encoderLimit, switchLimit);
 
@@ -210,11 +210,11 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public void resetEncodersToRetractionLimit() {
-		this.armMotor.setSelectedSensorPosition(Calibrations.armEncoderMinimumValue, 0, 0);
+		this.armMotor.setSelectedSensorPosition(Calibrations.armEncoderRetractedValue, 0, 0);
 	}
 
 	public void resetEncodersToExtendedLimit() {
-		this.armMotor.setSelectedSensorPosition(Calibrations.armEncoderMaximumValue, 0, 0);
+		this.armMotor.setSelectedSensorPosition(Calibrations.armEncoderExtendedValue, 0, 0);
 	}
 
 	public void setMotorsPID(int position) {

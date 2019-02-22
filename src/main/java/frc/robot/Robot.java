@@ -339,7 +339,7 @@ public class Robot extends TimedRobot {
 
 	public void setupDriveController() {
 		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakHoldHatchPanelCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new CargoWheelSuckCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.A).whileHeld(new CargoWheelSuckCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new DriveTrainTurnTargetCommand());
 		if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > 0.5) {
 			new SetCutPowerTrue();

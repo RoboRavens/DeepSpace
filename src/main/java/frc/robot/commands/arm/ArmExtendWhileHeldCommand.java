@@ -19,7 +19,7 @@ public class ArmExtendWhileHeldCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ARM_SUBSYSTEM.extend(0.1);
+        Robot.ARM_SUBSYSTEM.extend(0.2);
         // System.out.println("EXTENDING ARM WHILE HELD");
     }
 
