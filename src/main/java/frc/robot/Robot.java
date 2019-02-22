@@ -24,6 +24,7 @@ import frc.controls.OperationPanel;
 import frc.controls.OperationPanel2;
 import frc.ravenhardware.RavenLighting;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
+import frc.robot.commands.arm.ArmExtendFullyCommand;
 import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
 import frc.robot.commands.arm.ArmRetractWhileHeldCommand;
 import frc.robot.commands.automatedscoring.RunAutomatedCommand;
@@ -378,7 +379,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorLowRocketPortEncoderValue));
 		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
 
-		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorHighHatchEncoderValue)); //USE WHEN TESTING NEW COMMANDS
+		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ArmExtendFullyCommand()); //USE WHEN TESTING NEW COMMANDS
 	}
 	
 
