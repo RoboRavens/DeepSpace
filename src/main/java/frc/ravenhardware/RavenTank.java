@@ -159,6 +159,23 @@ public class RavenTank {
 		this.driveRightSide(right);
 	}
 
+	public void fpsTankLimelight(double translation) {
+		// This method simply sets the gyro target, it doesn't actually turn the robot.
+		// As a result, the gyro adjust value below will effectually turn the robot.
+		Robot.LIMELIGHT_SUBSYSTEM.turnToTarget();
+	
+		if (_cutPower) {
+			translation *= Calibrations.cutPowerModeMovementRatio;
+		}
+	
+		double gyroAdjust = getStaticGyroAdjustment();
+		double leftFinal = translation * -1 - gyroAdjust;
+		double rightFinal = translation - gyroAdjust;
+
+		this.driveLeftSide(leftFinal);
+		this.driveRightSide(rightFinal);
+	}
+
 	public void fpsTank(double translation, double turn) {
 
 		if (_cutPower) {

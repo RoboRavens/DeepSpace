@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.ravenhardware.BufferedValue;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
@@ -31,6 +32,8 @@ public class LimelightSubsystem extends Subsystem {
   	double timeoutSeconds = Calibrations.DriveTrainDriveInchesSafetyTimerSeconds;
   	DriveTrainDriveInchesCommand driveTrainDriveInchesCommand = new DriveTrainDriveInchesCommand(this._distanceToDrive, this._powerMagnitude, this._direction);
 
+	private BufferedValue bufferedAngleOffHorizontal = new BufferedValue(9);
+
 	public void initDefaultCommand() {
 
 	}
@@ -45,6 +48,8 @@ public class LimelightSubsystem extends Subsystem {
 		PCDashboardDiagnostics.AdHocNumber("Vision Tracking Distance (Inches)", (_heightDifference / _angleToTargetFromHorizontal));
 		PCDashboardDiagnostics.AdHocNumber("Height Difference", _heightDifference);
 		PCDashboardDiagnostics.AdHocNumber("Angle From Crosshair to Target", _angleToTargetFromHorizontal);
+	
+		bufferedAngleOffHorizontal.maintainState(this.angleOffHorizontal());
 	}
 
 	public double getTargetArea() {
