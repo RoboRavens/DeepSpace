@@ -401,6 +401,8 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
 
 		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ArmMoveToHeightCommand(Calibrations.armMidHatchEncoderValue)); //USE WHEN TESTING NEW COMMANDS
+		OPERATION_PANEL.getButton(ButtonCode.SETHATCH).whenPressed(new ArmMoveToHeightCommand(Calibrations.armHighHatchEncoderValue));
+		OPERATION_PANEL.getButton(ButtonCode.SETCARGO).whenPressed(new ArmMoveToHeightCommand(Calibrations.armLowHatchEncoderValue));
 
 		/*if (OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).get() == true) {
 			ARM_SUBSYSTEM.resetEncodersToExtendedLimit();
