@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Relay.Value;
-import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
 import frc.util.PCDashboardDiagnostics;
 import frc.robot.RobotMap;
 import frc.ravenhardware.BufferedDigitalInput;
@@ -21,15 +20,15 @@ import frc.ravenhardware.BufferedDigitalInput;
  * Add your docs here.
  */
 public class BeakSubsystem extends Subsystem {
-  Solenoid beakCapture;
-  Solenoid beakRelease;
-  BufferedDigitalInput hatchPanelSensor;
+  private Solenoid _beakCapture;
+  private Solenoid _beakRelease;
+  private BufferedDigitalInput _hatchPanelSensor;
   private Timer _hasHatchPanelDurationTimer = new Timer();
 
   public BeakSubsystem() {
-    beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);
-    beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
-		hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
+    this._beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);
+    this._beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
+		this._hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
 		_hasHatchPanelDurationTimer.start();
   }
 
@@ -41,7 +40,7 @@ public class BeakSubsystem extends Subsystem {
   //boolean hasHatchPanel = !hatchPanelSensor.get();
 
 		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(
-      !hatchPanelSensor.get(), 
+      !_hatchPanelSensor.get(), 
       false); // otherLimit
   }
   
@@ -58,12 +57,12 @@ public class BeakSubsystem extends Subsystem {
   
 
   public void release() {
-    beakRelease.set(true);
-    beakCapture.set(false);
+    _beakRelease.set(true);
+    _beakCapture.set(false);
   }
 
   public void capture() {
-    beakCapture.set(true);
-    beakRelease.set(false);
+    _beakCapture.set(true);
+    _beakRelease.set(false);
   }
 }

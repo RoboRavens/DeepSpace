@@ -24,10 +24,8 @@ import frc.controls.OperationPanel;
 import frc.controls.OperationPanel2;
 import frc.ravenhardware.RavenLighting;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
-import frc.robot.commands.arm.ArmExtendFullyCommand;
 import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
 import frc.robot.commands.arm.ArmMoveToHeightCommand;
-import frc.robot.commands.arm.ArmResetEncodersToExtendedCommand;
 import frc.robot.commands.arm.ArmRetractWhileHeldCommand;
 import frc.robot.commands.automatedscoring.RunAutomatedCommand;
 import frc.robot.commands.automatedscoring.SetCargoOrHatchPanelCommand;
@@ -36,15 +34,10 @@ import frc.robot.commands.automatedscoring.SetLocationRocketCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightHighCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightLowCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightMidCommand;
-import frc.robot.commands.cargowheel.CargoWheelHoldCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
-import frc.robot.commands.drivetrain.DriveTrainTurnTargetCommand;
-import frc.robot.commands.drivetrain.SetCutPowerFalse;
-import frc.robot.commands.drivetrain.SetCutPowerTrue;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
-import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.misc.SetOverride1Command;
 import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
@@ -311,7 +304,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-
 		diagnostics.outputTeleopDiagnostics();
 
 		if (DRIVE_TRAIN_SUBSYSTEM.ravenTank.userControlOfCutPower) {
@@ -345,13 +337,12 @@ public class Robot extends TimedRobot {
 	}
 
 	public boolean getMatchIsAtTime(int matchSecond) {
-		boolean isFinished = false;
 		double matchTime = driverStation.getMatchTime();
 		if (matchTime > matchSecond - .5 && matchTime < matchSecond + .5) {
-			isFinished = true;
+			return true;
 		}
 
-		return isFinished;
+		return false;
 	}
 
 	public void setupDriveController() {
@@ -401,15 +392,12 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
 
 		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ArmMoveToHeightCommand(Calibrations.armMidHatchEncoderValue)); //USE WHEN TESTING NEW COMMANDS
-		OPERATION_PANEL.getButton(ButtonCode.SETHATCH).whenPressed(new ArmMoveToHeightCommand(Calibrations.armHighHatchEncoderValue));
-		OPERATION_PANEL.getButton(ButtonCode.SETCARGO).whenPressed(new ArmMoveToHeightCommand(Calibrations.armLowHatchEncoderValue));
 
 		/*if (OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).get() == true) {
 			ARM_SUBSYSTEM.resetEncodersToExtendedLimit();
 		}*/
 	}
 	
-
 	/**
 	 * This function is called periodically during test mode.
 	 */

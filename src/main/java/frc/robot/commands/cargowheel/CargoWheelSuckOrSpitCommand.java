@@ -14,7 +14,7 @@ import frc.robot.Robot;
 public class CargoWheelSuckOrSpitCommand extends Command {
   private double _magnitude;
   private String _suckOrSpit;
-  private Timer timer;
+  private Timer _timer;
 
   public CargoWheelSuckOrSpitCommand(double magnitude, String suckOrSpit) {
     requires(Robot.CARGO_WHEEL_SUBSYSTEM);
@@ -25,8 +25,8 @@ public class CargoWheelSuckOrSpitCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    timer.reset();
-    timer.start();
+    _timer.reset();
+    _timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -43,7 +43,7 @@ public class CargoWheelSuckOrSpitCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (timer.get() > 1.0) {
+    if (_timer.get() > 1.0) {
       return true;
     }
     return false;

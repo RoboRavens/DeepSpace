@@ -19,7 +19,7 @@ public class RavenTalon {
 	public VictorSPX victorSPX2;
 	protected double outputSpeed;
 	private String _name;
-	private double maxPower;
+	private double _maxPower;
 
 	// The default slew rate of 2 means no acceleration cutting will occur,
 	// as this enables changing between -1 and 1 in a single tick.
@@ -51,13 +51,13 @@ public class RavenTalon {
 	}
 
 	public void setMaxPower(double newMaxPower) {
-		this.maxPower = newMaxPower;
+		this._maxPower = newMaxPower;
 	}
 
 	public void set(double targetOutput) {
 		// prevent targetOutput from being greater than maxPower
-		if (Math.abs(targetOutput) > this.maxPower) {
-			targetOutput = Math.signum(targetOutput) * this.maxPower;
+		if (Math.abs(targetOutput) > this._maxPower) {
+			targetOutput = Math.signum(targetOutput) * this._maxPower;
 		}
 
 		// apply deadband to compensate for controller joystick not returning to exactly 0
