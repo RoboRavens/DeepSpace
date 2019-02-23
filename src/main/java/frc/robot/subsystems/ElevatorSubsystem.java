@@ -283,11 +283,11 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public boolean getElevatorExtensionLimitSwitchValue() {
-		return !this.elevatorMotor.getSensorCollection().isFwdLimitSwitchClosed();
+		return this.elevatorMotor.getSensorCollection().isFwdLimitSwitchClosed();
 	}
 
 	public boolean getElevatorRetractionLimitSwitchValue() {
-		return !this.elevatorMotor.getSensorCollection().isRevLimitSwitchClosed();
+		return this.elevatorMotor.getSensorCollection().isRevLimitSwitchClosed();
 	}
 
 	public boolean getIsExtendedPastEncoderPosition(int encoderPosition) {
