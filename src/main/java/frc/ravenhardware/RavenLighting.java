@@ -49,11 +49,11 @@ public class RavenLighting {
 	}
 
 	public void maintainSecondsState() {
-		if (this._onForSeconds == false) {
+		if (_onForSeconds == false) {
 			return;
 		}
 
-		if (_timer.get() < this._secondsDuration) {
+		if (_timer.get() < _secondsDuration) {
 			this.turnOn();
 		} else {
 			this.turnOff();
@@ -71,7 +71,7 @@ public class RavenLighting {
 		maintainSecondsState();
 
 		// If not toggling, this method does nothing.
-		if (this._toggling == false) {
+		if (_toggling == false) {
 			return;
 		}
 

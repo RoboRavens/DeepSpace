@@ -21,7 +21,7 @@ public class CargoWheelSubsystem extends Subsystem {
 
 	public CargoWheelSubsystem() {
 		this.cargoMotor = new TalonSRX(RobotMap.cargoMotor);
-		this._cargoSensor = new BufferedDigitalInput(RobotMap.cargoSensor);
+		_cargoSensor = new BufferedDigitalInput(RobotMap.cargoSensor);
 		_hasCargoDurationTimer.start();
 	}
 

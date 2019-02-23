@@ -75,7 +75,7 @@ public class RavenTank {
 	}
 
 	public void setCutPower(boolean cutPower) {
-		this._cutPower = cutPower;
+		_cutPower = cutPower;
 	}
 
 	public boolean getCutPower() {
@@ -486,7 +486,7 @@ public class RavenTank {
 	}
 
 	public double getSlewRate() {
-		return this._slewRate;
+		return _slewRate;
 	}
 
 	/*

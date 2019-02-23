@@ -51,13 +51,13 @@ public class RavenTalon {
 	}
 
 	public void setMaxPower(double newMaxPower) {
-		this._maxPower = newMaxPower;
+		_maxPower = newMaxPower;
 	}
 
 	public void set(double targetOutput) {
 		// prevent targetOutput from being greater than maxPower
-		if (Math.abs(targetOutput) > this._maxPower) {
-			targetOutput = Math.signum(targetOutput) * this._maxPower;
+		if (Math.abs(targetOutput) > _maxPower) {
+			targetOutput = Math.signum(targetOutput) * _maxPower;
 		}
 
 		// apply deadband to compensate for controller joystick not returning to exactly 0

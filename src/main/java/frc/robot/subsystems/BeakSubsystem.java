@@ -26,9 +26,9 @@ public class BeakSubsystem extends Subsystem {
   private Timer _hasHatchPanelDurationTimer = new Timer();
 
   public BeakSubsystem() {
-    this._beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);
-    this._beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
-		this._hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
+    _beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);
+    _beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
+		_hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
 		_hasHatchPanelDurationTimer.start();
   }
 

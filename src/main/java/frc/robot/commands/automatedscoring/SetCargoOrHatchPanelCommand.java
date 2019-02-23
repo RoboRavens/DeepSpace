@@ -13,7 +13,7 @@ import frc.robot.Robot;
 public class SetCargoOrHatchPanelCommand extends Command {
   private String _hatchOrCargo;
   public SetCargoOrHatchPanelCommand(String hatchOrCargo) {
-    this._hatchOrCargo = hatchOrCargo;
+    _hatchOrCargo = hatchOrCargo;
     requires(Robot.SET_COMMAND_SUBSYSTEM);
   }
 
@@ -26,7 +26,7 @@ public class SetCargoOrHatchPanelCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() { 
-    if (this._hatchOrCargo == "Cargo") {
+    if (_hatchOrCargo == "Cargo") {
       Robot.SET_COMMAND_SUBSYSTEM.SetCargoOrHatchPanelCommand("Cargo");
     } else {
       Robot.SET_COMMAND_SUBSYSTEM.SetCargoOrHatchPanelCommand("Hatch Panel");

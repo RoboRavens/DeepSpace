@@ -13,7 +13,7 @@ public class ArmMoveToHeightCommand extends Command {
 
     public ArmMoveToHeightCommand(int encoderPosition) {
         requires(Robot.ARM_SUBSYSTEM);
-        this._targetEncoderPosition = encoderPosition;
+        _targetEncoderPosition = encoderPosition;
     }
 
     // Called just before this Command runs the first time
@@ -24,7 +24,7 @@ public class ArmMoveToHeightCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ARM_SUBSYSTEM.setMotorsPID(this._targetEncoderPosition);
+        Robot.ARM_SUBSYSTEM.setMotorsPID(_targetEncoderPosition);
     }
 
     // Make this return true when this Command no longer needs to run execute()
