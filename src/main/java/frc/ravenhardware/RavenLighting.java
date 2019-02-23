@@ -7,75 +7,75 @@ import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.Timer;
 
 public class RavenLighting {
-	private Relay mainArray;
-	Timer timer;
-	boolean toggling;
-	boolean onForSeconds = false;
-	double secondsDuration = 0;
+	private Relay _mainArray;
+	private Timer _timer;
+	private boolean _toggling;
+	private boolean _onForSeconds = false;
+	private double _secondsDuration = 0;
 
 	public RavenLighting(Relay relay) {
-		mainArray = relay;
-		timer = new Timer();
-		toggling = false;
+		_mainArray = relay;
+		_timer = new Timer();
+		_toggling = false;
 	}
 
 	public void turnOn() {
 		cancelToggle();
-		mainArray.set(Value.kOn);
+		_mainArray.set(Value.kOn);
 		// System.out.println("TURNING ON");
 	}
 
 	public void turnOff() {
 		cancelToggle();
-		mainArray.set(Value.kOff);
+		_mainArray.set(Value.kOff);
 		// System.out.println("TURNING OFF");
 	}
 
 	public void quickToggle() {
 		// If not already toggling, initialize a toggle sequence.
 		// If already toggling, no need to do anything.
-		if (toggling == false) {
-			timer.reset();
-			timer.start();
-			toggling = true;
+		if (_toggling == false) {
+			_timer.reset();
+			_timer.start();
+			_toggling = true;
 		}
 	}
 
 	public void turnOnForSeconds(double seconds) {
 		this.turnOn();
-		timer.start();
-		onForSeconds = true;
-		secondsDuration = seconds;
+		_timer.start();
+		_onForSeconds = true;
+		_secondsDuration = seconds;
 	}
 
 	public void maintainSecondsState() {
-		if (onForSeconds == false) {
+		if (_onForSeconds == false) {
 			return;
 		}
 
-		if (timer.get() < secondsDuration) {
+		if (_timer.get() < _secondsDuration) {
 			this.turnOn();
 		} else {
 			this.turnOff();
-			onForSeconds = false;
+			_onForSeconds = false;
 		}
 	}
 
 	public void cancelToggle() {
-		toggling = false;
-		timer.stop();
-		timer.reset();
+		_toggling = false;
+		_timer.stop();
+		_timer.reset();
 	}
 
 	public void maintainState() {
 		maintainSecondsState();
 
 		// If not toggling, this method does nothing.
-		if (toggling == false) {
+		if (_toggling == false) {
 			return;
 		}
 
-		double timerMs = timer.get() * 1000;
+		double timerMs = _timer.get() * 1000;
 
 		if (timerMs > Calibrations.lightingFlashTotalDurationMs) {
 			cancelToggle();
@@ -101,6 +101,6 @@ public class RavenLighting {
 			lightsValue = Value.kOff;
 		}
 
-		mainArray.set(lightsValue);
+		_mainArray.set(lightsValue);
 	}
 }

@@ -33,7 +33,7 @@ public class HatchPanelCheckCommand extends Command {
   protected void execute() {
     if (Robot.BEAK_SUBSYSTEM.hasHatchPanel()) {
       new BeakCaptureHatchPanelCommand();
-      this._command.start();
+      _command.start();
   } else {
     isFinished();
   }

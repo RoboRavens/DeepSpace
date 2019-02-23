@@ -13,7 +13,7 @@ import frc.util.PCDashboardDiagnostics;
  */
 public class DriveTrainSubsystem extends Subsystem {
 	public Robot robot;
-	Gamepad driveController;
+	public Gamepad driveController;
 	public RavenTank ravenTank;
 
 	public DriveTrainSubsystem() {

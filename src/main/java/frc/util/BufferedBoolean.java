@@ -9,11 +9,11 @@ public class BufferedBoolean {
 	
 	public BufferedBoolean() {
 		values = new LinkedList<Boolean>();
-		this._bufferSize = 29;
+		_bufferSize = 29;
 	}
 	
 	public BufferedBoolean(int bufferSize) {
-		this._bufferSize = 29;
+		_bufferSize = 29;
 	}
 	
 	public BufferedBoolean(double seconds) {
@@ -22,7 +22,7 @@ public class BufferedBoolean {
 		// Multiply seconds by fifty to get the buffer size.
 		int bufferSize = (int) Math.round(seconds * 50);
 		
-		this._bufferSize = bufferSize;
+		_bufferSize = bufferSize;
 	}
 	
 	// Adds the current value to the list, and

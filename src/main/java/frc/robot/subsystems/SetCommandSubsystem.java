@@ -25,53 +25,53 @@ public class SetCommandSubsystem extends Subsystem {
   private String _rocketHeight;
 
   public void SetCargoOrHatchPanelCommand(String cargoOrHatchPanel) {
-    this._cargoOrHatchPanel = cargoOrHatchPanel;
+    _cargoOrHatchPanel = cargoOrHatchPanel;
   }
 
   public void setLocation(String location) {
-    this._location = location;
+    _location = location;
   }
 
   public void setRocketHeight(String rocketHeight) {
-    this._rocketHeight = rocketHeight;
+    _rocketHeight = rocketHeight;
   }
 
   public void callAutomatedCommand() {
-    if (this._cargoOrHatchPanel == "Cargo") {
-      if (this._location == "Cargo Ship") {
+    if (_cargoOrHatchPanel == "Cargo") {
+      if (_location == "Cargo Ship") {
         System.out.println("running CargoScoreCargoShipCommand");
         new CargoScoreCargoShipCommand();
       }
-      if (this._location == "Rocket") {
-        if (this._rocketHeight == "High") {
+      if (_location == "Rocket") {
+        if (_rocketHeight == "High") {
           System.out.println("running CargoScoreHighRocketCommand");
           new CargoScoreHighRocketCommand();
         }
-        if (this._rocketHeight == "Mid") {
+        if (_rocketHeight == "Mid") {
           System.out.println("running CargoScoreMidRocketCommand");
           new CargoScoreMidRocketCommand();
         }
-        if (this._rocketHeight == "Low") {
+        if (_rocketHeight == "Low") {
           System.out.println("running CargoScoreLowRocketCommand");
           new CargoScoreLowRocketCommand();          
         }
       }
     }
-    if (this._cargoOrHatchPanel == "Hatch Panel") {
-      if (this._location == "Cargo Ship") {
+    if (_cargoOrHatchPanel == "Hatch Panel") {
+      if (_location == "Cargo Ship") {
         System.out.println("running HatchPanelScoreCargoShipCommand");
         new HatchPanelScoreLowCommand();
       }
-      if (this._location == "Rocket") {
-        if (this._rocketHeight == "High") {
+      if (_location == "Rocket") {
+        if (_rocketHeight == "High") {
           System.out.println("running HatchPanelScoreHighRocketCommand");
           new HatchPanelScoreHighRocketCommand();
         }
-        if (this._rocketHeight == "Mid") {
+        if (_rocketHeight == "Mid") {
           System.out.println("running HatchPanelScoreMidRocketCommand");
           new HatchPanelScoreMidRocketCommand();
         }
-        if (this._rocketHeight == "Low") {
+        if (_rocketHeight == "Low") {
           System.out.println("running HatchPanelScoreLowRocketCommand");
           new HatchPanelScoreLowCommand();
         }

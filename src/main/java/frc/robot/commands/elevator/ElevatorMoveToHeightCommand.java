@@ -13,7 +13,7 @@ public class ElevatorMoveToHeightCommand extends Command {
 
     public ElevatorMoveToHeightCommand(int encoderPosition) {
         requires(Robot.ELEVATOR_SUBSYSTEM);
-        this._targetEncoderPosition = encoderPosition;
+        _targetEncoderPosition = encoderPosition;
     }
 
     // Called just before this Command runs the first time
@@ -24,7 +24,7 @@ public class ElevatorMoveToHeightCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ELEVATOR_SUBSYSTEM.setMotorsPID(this._targetEncoderPosition);
+        Robot.ELEVATOR_SUBSYSTEM.setMotorsPID(_targetEncoderPosition);
     }
 
     // Make this return true when this Command no longer needs to run execute()
