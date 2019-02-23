@@ -6,8 +6,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Spliterator;
+import java.util.stream.*;
 
-public class exportCSV {
+public class exportCSV{
 	
 	BufferedWriter writes;
 	BufferedWriter writinger;
@@ -16,7 +19,11 @@ public class exportCSV {
 	String line;
 	String tmp;
 	
-	String[] infoLines = new String[5];
+	ArrayList<String> allData     = new ArrayList<String>();
+	ArrayList<String> infoData    = new ArrayList<String>();
+	ArrayList<String> eventData   = new ArrayList<String>();
+	ArrayList<String> commentData = new ArrayList<String>();
+	ArrayList<String> output      = new ArrayList<String>();
 	
 	//These are specially for timesUsed()
 	boolean habLvlOne = false;
@@ -60,19 +67,24 @@ public class exportCSV {
 			writes.close();
 			reads = new BufferedReader(new FileReader(new File(fileName)));
 			writinger = new BufferedWriter(new FileWriter(new File((fileName.replace(".txt",".csv")))));
-			for(int i = 0;i < 5; i++) {
-				infoLines[i] = reads.readLine();
-			}
+			//For the first 5 non-event values
 			while(reads.ready()) {
-				timesUsed(reads.readLine());
+				//This reads fileName.txt
+				allData.add(reads.readLine());
 			}
-			//Purposely skips infoLines[1 and 2]
-			writinger.write("Team number: " + infoLines[0] + ";Match type: " + infoLines[3] + ";Round: " + infoLines[4] + ";" + eventTimesToString());
+			allData.remove(6);
+			allData.remove(5);
+			allData.remove(3);
+			allData.remove(2);
+			splinitialize(allData);
+			fillOutputArray();
+			writinger.write(listOffOutList());
 			writinger.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
 	public void halt() {
 		try {
 			writes.close();
@@ -81,119 +93,29 @@ public class exportCSV {
 		}
 	}
 	
-/*	
-*	Old code that doesn't work right. Saved for glossary-like use
-*
-*	public String fix(String line) {
-*		return line.replace("cargoCount", "11881188").replace("hatchCount", "1818")
-*		.replace("a", "Scored on Hab side 1 at").replace("b", "Scored on Hab side 2 at").replace("c", "Cargo has gone up at")
-*		.replace("d", "Cargo dropped at").replace("e", "Hatch went up at").replace("f", "Hatch was dropped at")
-*		.replace("g", "Ship scored sucessfully at").replace("h", "Ship score attempt made, they failed, at")
-*		.replace("i", "Rocket one was scored on sucessfully at").replace("j", "Rocket one was attempted on at")
-*		.replace("k", "Rocket 2 was scored on").replace("l", "Rocket 2 was attempted on at").replace("m", "Rocket 3 was scored on at")
-*		.replace("n", "Rocket 3 was attempted at").replace("o", "Hab one was climbed at").replace("p", "Hab 2 was climbed at")
-*		.replace("q", "Hab 3 was climbed at").replace("r", "A hab was attempted, though failed, at").replace("s", "A robot defended at")
-*		.replace("t", "A robot crossed the feild at").replace("11881188", "Cargo Count").replace("1818", "Hatch Count");
-*	}
-*
-*	
-*	public String betterFix(String line) {
-*		if (line.contains("cargoCount")) {
-*			
-*			return(line.replace("cargoCount", "Cargo Count"));
-*			
-*		} else if (line.contains("hatchCount")) {
-*			
-*			return(line.replace("hatchCount", "Hatch Count"));
-*			
-*		} else if (line.contains("a")) {
-*			
-*			return(line.replace("a", "Scored on hab side 1"));
-*			
-*			
-*		} else if (line.contains("b")) {
-*			
-*			return(line.replace("b", "Scored on hab side 2"));
-*			
-*		} else if (line.contains("c")) {
-*			
-*			return(line.replace("c", "Cargo has gone up at"));
-*			
-*		} else if (line.contains("d")) {
-*			
-*			return(line.replace("d", "Cargo dropped at"));
-*			
-*		} else if (line.contains("e")) {
-*			
-*			return(line.replace("e", "Hatch went up at"));
-*			
-*		} else if (line.contains("f")) {
-*			
-*			return(line.replace("f", "Hatch was dropped at"));
-*			
-*		} else if (line.contains("g")) {
-*			
-*			return(line.replace("g", "Ship scored succesfully at"));
-*			
-*		} else if (line.contains("h")) {
-*			
-*			return(line.replace("h", "Ship scoring attempt made and failed at"));
-*			
-*		} else if (line.contains("i")) {
-*			
-*			return(line.replace("i", "Rocket one was scored successfully at"));
-*			
-*		} else if (line.contains("j")) {
-*			
-*			return(line.replace("j", "Rocket one was attempted on at"));
-*			
-*		} else if (line.contains("k")) {
-*			
-*			return(line.replace("k", "Rocket two was scored successfully at"));
-*		
-*		} else if (line.contains("l")) {
-*			
-*			return(line.replace("l", "Rocket two was attempted on at"));
-*			
-*		} else if (line.contains("m")) {
-*			
-*			return(line.replace("m", "Rocket three was scored successfully at"));
-*			
-*		} else if (line.contains("n")) {
-*			
-*			return(line.replace("n", "Rocket three was attempted on at"));
-*			
-*		} else if (line.contains("o")) {
-*			
-*			return(line.replace("o", "Hab one was climbed at"));
-*			
-*		} else if (line.contains("p")) {
-*			
-*			return(line.replace("p", "Hab two was climbed at"));
-*			
-*		} else if (line.contains("q")) {
-*			
-*			return(line.replace("q", "Hab three was climbed at"));
-*			
-*		} else if (line.contains("r")) {
-*			
-*			return(line.replace("r", "A hab climb was failed at"));
-*			
-*		} else if (line.contains("s")) {
-*			
-*			return(line.replace("s", "Robot defended at"));
-*			
-*		} else if (line.contains("t")) {
-*			
-*			return(line.replace("t", "Robot crossed the field at"));
-*			
-*		} else {
-*			
-*			return(line);
-*			
-*		}
-*/		
-		
+	private void splinitialize(ArrayList<String> allData) {
+		System.out.println("Data to parse: " + allData);
+		int dataSize = allData.size();
+		infoData.add(allData.get(0));
+		infoData.add(allData.get(1));
+		infoData.add(allData.get(2));
+		for(int backPlace = 5; backPlace > 0; backPlace--) {
+			commentData.add(allData.get(dataSize - backPlace));
+		}
+		for(int place = 3; place <= (dataSize - 6); place++) {
+			eventData.add(allData.get(place));
+		}
+		System.out.println("Info data: " + infoData + "\nEvent data: " + eventData + "\nCommented data: " + commentData);
+	}
+	
+	private String listOffOutList() {
+		String outputString = output.get(0) + ",";
+		for (int i = 1; i < output.size(); i++) {
+            outputString = outputString + output.get(i)+",";
+    	}
+		return(outputString);
+	}
+	
 	public void timesUsed(String line) {
 		if (line.contains("a")) {
 			habLvlOne = true;
@@ -240,8 +162,16 @@ public class exportCSV {
 		}
 	}
 	
-	private String boolToString(boolean value) {
+	public String boolToString(boolean value) {
 		return(value ? "true" : "false");
+	}
+	
+	public boolean stringToBool(String string) {
+		boolean out = false;
+		if(string == "true") {
+			out = true;
+		}
+		return(out);
 	}
 	
 	private String eventTimesToString() {
@@ -274,5 +204,127 @@ public class exportCSV {
 	
 	private String encapsulateEvent(String prefix, int data) {
 		return(prefix + ": " + data + ";");
+	}
+	
+	public void fillOutputArray() {
+		//Add user's name
+		output.add(commentData.get(0) + " " + commentData.get(1));
+		//Add user's team #
+		output.add(infoData.get(0));
+		//Add match #
+		output.add(infoData.get(2));
+		//Add robot's #
+		output.add(infoData.get(1));
+		//Add robot's color
+		output.add(commentData.get(2));
+		//Run timesUsed on all events
+		for(String string : eventData) {	timesUsed(string);	}
+		//Add hatch grab attempts
+		output.add((hatchesHeld + hatchesDropped) + "");
+		//Add hatch grab successes
+		output.add(hatchesHeld + "");
+		//Add cargo grab attempts
+		output.add((cargoesHeld + cargoesDropped) + "");
+		//Add cargo grab successes
+		output.add(cargoesHeld + "");
+		//Add cargoship attempts
+		output.add((shipsScored + shipsFailed) + "");
+		//Add cargoship successes
+		output.add(shipsScored + "");
+		//Add rocket1 attempts
+		output.add((rocketOneScored + rocketOneFailed) + "");
+		//Add rocket1 successes
+		output.add(rocketOneScored + "");
+		//Add rocket2 attempts
+		output.add((rocketTwoScored + rocketTwoFailed) + "");
+		//Add rocket2 successes
+		output.add(rocketTwoScored + "");
+		//Add rocket3 attempts
+		output.add((rocketThreeScored + rocketThreeFailed) + "");
+		//Add rocket3 successes
+		output.add(rocketThreeScored + "");
+		//Add hab climb level
+		output.add(habClimbTier + "");
+		//Add boolean for if robot can collect cargo
+		if (cargoesHeld > 0) {
+			output.add("true");
+		} else {
+			output.add("false");
+		}
+		//Add boolean for if robot can collect hatches from the floor
+		output.add(commentData.get(3));
+		//Add boolean for if robot can collect hatches from the station
+		output.add(commentData.get(4));
+		//Add attempts to score on cargo ship AUTONOMOUSLY
+		output.add(getInAutonomous(true, 0));
+		//Add successful AUTONOMOUS cargo ship score events
+		output.add(getInAutonomous(false, 0));
+		//Add attempts to score on rocket lvl1 AUTONOMOUSLY
+		output.add(getInAutonomous(true, 1));
+		//Add successful AUTONOMOUS rocket lvl1 score events
+		output.add(getInAutonomous(false, 1));
+		//Add attempts to score on rocket lvl2 AUTONOMOUSLY
+		output.add(getInAutonomous(true, 2));
+		//Add successful AUTONOMOUS rocket lvl2 score events
+		output.add(getInAutonomous(false, 2));
+		//Add attempts to score on rocket lvl3 AUTONOMOUSLY
+		output.add(getInAutonomous(true, 3));
+		//Add successful AUTONOMOUS rocket lvl3 score events
+		output.add(getInAutonomous(false, 3));
+	}
+	
+	private String getInAutonomous(boolean outputAttempts, int floor) {
+		int goals = 0;
+		int fails = 0;
+		String output = "Preminger strikes again!";
+		if(floor == 0) {
+			for(String event : eventData) {
+				if(Double.parseDouble(event.substring((event.indexOf(':') + 1 ))) < 15) {
+					if(event.startsWith("g")) {
+						goals++;
+					} else if(event.startsWith("h")) {
+						fails++;
+					}
+				}
+			}
+		} else if(floor == 1) {
+			for(String event : eventData) {
+				if(Double.parseDouble(event.substring((event.indexOf(':') + 1 ))) < 15) {
+					if(event.startsWith("i")) {
+						goals++;
+					} else if(event.startsWith("j")) {
+						fails++;
+					}
+				}
+			}
+		} else if(floor == 2) {
+			for(String event : eventData) {
+				if(Double.parseDouble(event.substring((event.indexOf(':') + 1 ))) < 15) {
+					if(event.startsWith("k")) {
+						goals++;
+					} else if(event.startsWith("l")) {
+						fails++;
+					}
+				}
+			}
+		} else if(floor == 3) {
+			for(String event : eventData) {
+				if(Double.parseDouble(event.substring((event.indexOf(':') + 1 ))) < 15) {
+					if(event.startsWith("m")) {
+						goals++;
+					} else if(event.startsWith("n")) {
+						fails++;
+					}
+				}
+			}
+		}
+		if(outputAttempts) {
+			//Output attempts
+			output = (goals + fails) + "";
+		} else {
+			//Output successes
+			output = goals + "";
+		}
+		return(output);
 	}
 }

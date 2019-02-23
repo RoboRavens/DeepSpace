@@ -1,0 +1,13 @@
+Dear team [INSERT_TEAM_NUMBER_HERE],
+
+This file will tell you how FMTtoCSV exports so you can easily set up an excel sheet or a google sheet! To stick this in a google sheet,
+paste all of these into a high-up cell, go to data, hit "Split Text To Columns", and then have the seperator be ";"! You will probably want to turn
+word wrap, center horizontal align and center vertical align on for all cells, too.
+
+May all of your radios connect! 
+
+- Erik [REDACTED] Paananen, Team 1188
+
+The thing to copy/paste:
+
+NAME;TEAM #;MATCH #;ROBOT #;ALLIANCE;HATCH GRAB ATTEMPTS;HATCH GRAB SUCCESSES;CARGO GRAB ATTEMPTS;CARGO GRAB SUCCESSES;CARGOSHIP ATTEMPTS;CARGOSHIP SUCCESSES;ROCKET1 ATTEMPTS;ROCKET1 SUCCESSES;ROCKET2 ATTEMPTS;ROCKET2 SUCCESSES;ROCKET3 ATTEMPTS;ROCKET3 SUCCESSES;HAB CLIMB LEVEL;CAN COLLECT CARGO?;CAN COLLECT HATCHES FROM GROUND?;CAN COLLECT HATCHES FROM STATION?;AUTO CARGO SHIP ATTEMPTS;AUTO CARGO SHIP SUCCESSES;AUTO ROCKET1 ATTEMPTS;AUTO ROCKET1 SUCCESSES;AUTO ROCKET2 ATTEMPTS;AUTO ROCKET2 SUCCESSES;AUTO ROCKET3 ATTEMPTS;AUTO ROCKET3 SUCCESSES
