@@ -136,10 +136,10 @@ public class ArmSubsystem extends Subsystem {
 
 		encoderLimit = isEncoderAtRetractionLimit();
 
-		/*if (this.getArmRetractionLimitSwitchValue() == true) {
+		if (this.getArmRetractionLimitSwitchValue() == true) {
 			switchLimit = true;
 			this.resetEncodersToRetractionLimit();
-		}*/
+		}
 
 		return Robot.OVERRIDE_SYSTEM_ARM_RETRACT.getIsAtLimit(encoderLimit, switchLimit);
 	}
@@ -185,10 +185,10 @@ public class ArmSubsystem extends Subsystem {
 
 		encoderLimit = this.isEncoderAtExtensionLimit();
 
-		/*if (this.getExtensionLimitSwitchValue() == true) {
+		if (this.getExtensionLimitSwitchValue() == true) {
 			switchLimit = true;
 			this.resetEncodersToExtendedLimit();
-		}*/
+		}
 
 		isAtLimit = Robot.OVERRIDE_SYSTEM_ARM_EXTEND.getIsAtLimit(encoderLimit, switchLimit);
 
