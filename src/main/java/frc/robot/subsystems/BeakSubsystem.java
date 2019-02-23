@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Relay.Value;
-import frc.robot.commands.beak.BeakHoldHatchPanelCommand;
+import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
 import frc.util.PCDashboardDiagnostics;
 import frc.robot.RobotMap;
 import frc.ravenhardware.BufferedDigitalInput;
@@ -27,36 +27,33 @@ public class BeakSubsystem extends Subsystem {
   private Timer _hasHatchPanelDurationTimer = new Timer();
 
   public BeakSubsystem() {
-    this.beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);
-    this.beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
-		this.hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
+    beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);
+    beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
+		hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
 		_hasHatchPanelDurationTimer.start();
   }
 
   public void initDefaultCommand() {
-    //setDefaultCommand(new BeakHoldHatchPanelCommand());
+    //setDefaultCommand(new BeakCaptureHatchPanelCommand());
   }
 
   public boolean hasHatchPanel() {
-		boolean otherLimit = false;
-		boolean hasHatchPanel = hatchPanelSensor.get() == false;
+  //boolean hasHatchPanel = !hatchPanelSensor.get();
 
-		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(hasHatchPanel, otherLimit);
+		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(
+      !hatchPanelSensor.get(), 
+      false); // otherLimit
   }
   
   public void periodic()  {
-    if (this.hasHatchPanel() == false) {
-			_hasHatchPanelDurationTimer.reset();
-		}
-
-		if (this.hasHatchPanel()) {
+		if (hasHatchPanel()) {
 			Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kForward);
 		} else {
-			Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kOff);
+      _hasHatchPanelDurationTimer.reset();
+      Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kOff);    
     }
     
     PCDashboardDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", this.hasHatchPanel());
-
   }
   
 

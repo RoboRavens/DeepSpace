@@ -26,6 +26,7 @@ import frc.ravenhardware.RavenLighting;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
 import frc.robot.commands.arm.ArmExtendFullyCommand;
 import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
+import frc.robot.commands.arm.ArmMoveToHeightCommand;
 import frc.robot.commands.arm.ArmResetEncodersToExtendedCommand;
 import frc.robot.commands.arm.ArmRetractWhileHeldCommand;
 import frc.robot.commands.automatedscoring.RunAutomatedCommand;
@@ -46,7 +47,7 @@ import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.misc.SetOverride1Command;
-import frc.robot.commands.beak.BeakHoldHatchPanelCommand;
+import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
 import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.BeakSubsystem;
@@ -133,6 +134,8 @@ public class Robot extends TimedRobot {
 		// down.
 		Robot.ELEVATOR_SUBSYSTEM.resetEncodersToRetractedLimit();
 		Robot.ARM_SUBSYSTEM.resetEncodersToRetractionLimit();
+
+		Robot.BEAK_SUBSYSTEM.capture();
 
 		this.setupDriveController();
 		this.setupOperationPanel();
@@ -311,6 +314,17 @@ public class Robot extends TimedRobot {
 
 		diagnostics.outputTeleopDiagnostics();
 
+		if (DRIVE_TRAIN_SUBSYSTEM.ravenTank.userControlOfCutPower) {
+			if (DRIVE_CONTROLLER.getAxis(AxisCode.RIGHTTRIGGER) > .25) {
+				System.out.println("CUT POWER TRUE");
+			  DRIVE_TRAIN_SUBSYSTEM.ravenTank.setCutPower(true);
+			}
+			else {
+			  DRIVE_TRAIN_SUBSYSTEM.ravenTank.setCutPower(false);
+			}
+		}
+
+
 		if (getMatchIsAtTime(90)) {
 			LEDBlinkFor2SecondsCommand command = new LEDBlinkFor2SecondsCommand(4, false);
 			command.start();
@@ -341,12 +355,17 @@ public class Robot extends TimedRobot {
 	}
 
 	public void setupDriveController() {
-		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakHoldHatchPanelCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.A).whileHeld(new CargoWheelSuckCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new DriveTrainTurnTargetCommand());
-		if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > 0.5) {
+		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakReleaseHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whileHeld(new CargoWheelSpitCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new BeakCaptureHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSuckCommand());
+
+		//DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new DriveTrainTurnTargetCommand());
+		/*if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > 0.5) {
 			new SetCutPowerTrue();
-		}
+		}*/
+		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new SetCutPowerTrue());//was new SetGyroTargetHeading(180)
+		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenReleased(new SetCutPowerFalse());
 
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new DriveTrainDriveLimeLightCommand());
 	}
@@ -381,7 +400,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new SetRocketHeightLowCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
 
-		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ArmResetEncodersToExtendedCommand()); //USE WHEN TESTING NEW COMMANDS
+		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ArmMoveToHeightCommand(Calibrations.armMidHatchEncoderValue)); //USE WHEN TESTING NEW COMMANDS
 
 		/*if (OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).get() == true) {
 			ARM_SUBSYSTEM.resetEncodersToExtendedLimit();

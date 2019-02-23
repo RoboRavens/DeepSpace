@@ -26,13 +26,13 @@ public class ArmSubsystem extends Subsystem {
 	private Timer _safetyTimer = new Timer();
 
 	public ArmSubsystem() {
-		this.armMotor = new TalonSRX(RobotMap.armMotor);
+		armMotor = new TalonSRX(RobotMap.armMotor);
 		//this.retractionLimitSwitch = new BufferedDigitalInput(RobotMap.armRetractionLimitSwitch);
 		//this.extensionLimitSwitch = new BufferedDigitalInput(RobotMap.armExtensionLimitSwitch);
-		this.armMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkF, TalonSRXConstants.kTimeoutMs);
-		this.armMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkP, TalonSRXConstants.kTimeoutMs);
-		this.armMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkI, TalonSRXConstants.kTimeoutMs);
-		this.armMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkD, TalonSRXConstants.kTimeoutMs);
+		armMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkF, TalonSRXConstants.kTimeoutMs);
+		armMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkP, TalonSRXConstants.kTimeoutMs);
+		armMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkI, TalonSRXConstants.kTimeoutMs);
+		armMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkD, TalonSRXConstants.kTimeoutMs);
 
 		NetworkTableDiagnostics.SubsystemNumber("Arm", "Encoder", () -> this.getEncoderPosition());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitEncoderExtension", () -> this.isEncoderAtExtensionLimit());
@@ -52,20 +52,20 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public void extend(double magnitude) {
-    	if (this.getIsAtExtensionLimit()) {
-    		this.stop();
+    	if (getIsAtExtensionLimit()) {
+    		stop();
     	}
     	else {
-        	this.set(magnitude);
+        	set(magnitude);
     	}
     }
     
     public void retract(double magnitude) {
-    	if (this.getIsAtRetractionLimit()) {
-    		this.stop();
+    	if (getIsAtRetractionLimit()) {
+    		stop();
     	}
     	else {
-    		this.set(-1 * magnitude);
+    		set(-1 * magnitude);
     	}
     }
     
@@ -74,62 +74,54 @@ public class ArmSubsystem extends Subsystem {
     	magnitude = Math.max(magnitude, -1);
     	magnitude *= 1;
     	
-    	this.armMotor.set(ControlMode.PercentOutput, magnitude);
+    	armMotor.set(ControlMode.PercentOutput, magnitude);
     }
 
 	public void periodic() {
 		//retractionLimitSwitch.maintainState();
 		//extensionLimitSwitch.maintainState();
-		this.getIsAtExtensionLimit();
-		this.getIsAtRetractionLimit();
+		getIsAtExtensionLimit();
+		getIsAtRetractionLimit();
 	}
 
 	public boolean encoderAndLimitsMatchExtended() {
-		boolean match = true;
-
-		if (this.getEncoderPosition() < Calibrations.armEncoderExtendedValue
-				&& this.getExtensionLimitSwitchValue() == false) {
-			match = false;
+		if (getExtensionLimitSwitchValue() == false
+				&& getEncoderPosition() < Calibrations.armEncoderExtendedValue) {
+			return false;
 		}
 
-		/*if (this.getExtensionLimitSwitchValue() == true
-				&& this.getEncoderPosition() < Calibrations.armEncoderMaximumValue - Calibrations.ARM_ENCODER_BUFFER) {
-			match = false;
-		}*/
+		if (getExtensionLimitSwitchValue() == true
+				&& getEncoderPosition() > Calibrations.armEncoderExtendedValue + Calibrations.ARM_ENCODER_BUFFER) {
+			return false;
+		}
 
-		return match;
+		return true;
 	}
 
 	public boolean encoderAndLimitsMatchRetracted() {
-		boolean match = true;
-
-		if (this.getEncoderPosition() > Calibrations.armEncoderRetractedValue
-				&& this.getArmRetractionLimitSwitchValue() == false) {
-			match = false;
+		if (getArmRetractionLimitSwitchValue() == false
+				&& getEncoderPosition() > Calibrations.armEncoderRetractedValue) {
+			return false;
 		}
 
-		/*if (this.getArmRetractionLimitSwitchValue() == true
-				&& this.getEncoderPosition() > Calibrations.armEncoderMinimumValue + Calibrations.ARM_ENCODER_BUFFER) {
-			match = false;
-		}*/
+		if (getArmRetractionLimitSwitchValue() == true
+				&& getEncoderPosition() < Calibrations.armEncoderRetractedValue - Calibrations.ARM_ENCODER_BUFFER) {
+			return false;
+		}
 
-		return match;
+		return true;
 	}
 
 	public boolean getExtensionLimitSwitchValue() {
-		boolean extensionLimitSwitchValue = false;
+		//return !extensionLimitSwitch.get();
 
-		//extensionLimitSwitchValue = !extensionLimitSwitch.get();
-
-		return extensionLimitSwitchValue;
+		return false;
 	}
 
 	public boolean getArmRetractionLimitSwitchValue() {
-		boolean armRetractionLimitSwitchValue = false;
+		//return !retractionLimitSwitch.get();
 
-		//retractionLimitSwitchValue = !retractionLimitSwitch.get();
-
-		return armRetractionLimitSwitchValue;
+		return false;
 	}
 
 	/*
@@ -144,7 +136,7 @@ public class ArmSubsystem extends Subsystem {
 		boolean encoderLimit = false;
 		boolean switchLimit = false;
 
-		encoderLimit = this.isEncoderAtRetractionLimit();
+		encoderLimit = isEncoderAtRetractionLimit();
 
 		/*if (this.getArmRetractionLimitSwitchValue() == true) {
 			switchLimit = true;

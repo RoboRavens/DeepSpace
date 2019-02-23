@@ -10,8 +10,8 @@ package frc.robot.commands.beak;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class BeakHoldHatchPanelCommand extends Command {
-  public BeakHoldHatchPanelCommand() {
+public class BeakCaptureHatchPanelCommand extends Command {
+  public BeakCaptureHatchPanelCommand() {
     requires(Robot.BEAK_SUBSYSTEM);
   }
 

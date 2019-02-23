@@ -127,7 +127,7 @@ public class Calibrations {
     public static final int armEncoderExtendedValue = -10000;
 
     public static final int armLowHatchEncoderValue = 2000;
-    public static final int armMidHatchEncoderValue = 4000;
+    public static final int armMidHatchEncoderValue = -5000;
     public static final int armHighHatchEncoderValue = 11000;
 
     public static final int armCargoShipPortEncoderValue = 2000;
