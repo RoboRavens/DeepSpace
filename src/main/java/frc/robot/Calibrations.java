@@ -123,8 +123,8 @@ public class Calibrations {
 	public static final double armkD = 170.0;
 	public static final double armHoldPositionPowerMagnitude = 0.04;
 	
-	public static final int armEncoderMinimumValue = 0;
-    public static final int armEncoderMaximumValue = 12000;
+	public static final int armEncoderRetractedValue = 0;
+    public static final int armEncoderExtendedValue = -10000;
 
     public static final int armLowHatchEncoderValue = 2000;
     public static final int armMidHatchEncoderValue = 4000;

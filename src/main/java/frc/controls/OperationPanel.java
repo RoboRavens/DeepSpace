@@ -22,6 +22,18 @@ public class OperationPanel {
 		int buttonNumber;
 
 		switch (button) {
+		case ELEVATORDOUBLEOVERRIDERETRACT:
+			buttonNumber = 1;
+			break;
+		case ELEVATORDOUBLEOVERRIDEEXTEND:
+			buttonNumber = 2;
+			break;
+		case ARMDOUBLEOVERRIDERETRACT:
+			buttonNumber = 3;
+			break;
+		case ARMDOUBLEOVERRIDEEXTEND:
+			buttonNumber = 4;
+			break;
 		case ELEVATOROVERRIDERETRACT:
 			buttonNumber = 5;
 			break;

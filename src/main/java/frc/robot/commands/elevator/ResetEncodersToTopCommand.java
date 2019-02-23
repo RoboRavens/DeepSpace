@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ResetEncodersToTopCommand extends Command {
 
     public ResetEncodersToTopCommand() {
-        
+        requires(Robot.ELEVATOR_SUBSYSTEM);
     }
 
     // Called just before this Command runs the first time

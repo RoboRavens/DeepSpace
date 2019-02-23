@@ -19,7 +19,8 @@ public class RobotMap {
 
 	public static final int climberMotor = 6;
 
-	public static final int beakSolenoid = 0;
+	public static final int beakCaptureSolenoid = 0;
+	public static final int beakReleaseSolenoid = 1;
 
 	// DIO PORTS
 

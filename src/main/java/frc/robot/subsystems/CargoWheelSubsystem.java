@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.ravenhardware.BufferedDigitalInput;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.cargowheel.CargoWheelHoldCommand;
 import frc.robot.commands.cargowheel.CargoWheelStopCommand;
 import frc.util.PCDashboardDiagnostics;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -36,6 +37,11 @@ public class CargoWheelSubsystem extends Subsystem {
 	public void spit(double magnitude) {
 		this.set(magnitude);
 	}
+
+	public void hold() {
+		this.set(-0.5);
+	}
+
 
 	public void idle() {
 		this.set(0.1);
