@@ -9,7 +9,7 @@ package frc.robot.commands.hatchpanel;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.commands.beak.BeakHoldHatchPanelCommand;
+import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
 
 public class HatchPanelCheckCommand extends Command {
   private Command _command = new Command() {
@@ -32,7 +32,7 @@ public class HatchPanelCheckCommand extends Command {
   @Override
   protected void execute() {
     if (Robot.BEAK_SUBSYSTEM.hasHatchPanel()) {
-      new BeakHoldHatchPanelCommand();
+      new BeakCaptureHatchPanelCommand();
       this._command.start();
   } else {
     isFinished();
