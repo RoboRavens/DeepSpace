@@ -3,7 +3,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.ravenhardware.BufferedValue;
 import frc.robot.Calibrations;
+import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
 import frc.robot.commands.drivetrain.DriveTrainStopCommand;
 import frc.util.PCDashboardDiagnostics;
@@ -30,14 +32,15 @@ public class LimelightSubsystem extends Subsystem {
   	double timeoutSeconds = Calibrations.DriveTrainDriveInchesSafetyTimerSeconds;
   	DriveTrainDriveInchesCommand driveTrainDriveInchesCommand = new DriveTrainDriveInchesCommand(this._distanceToDrive, this._powerMagnitude, this._direction);
 
+	private BufferedValue bufferedAngleOffHorizontal = new BufferedValue(9);
+
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
 
 	}
 
 	public void periodic() {
-		table.getEntry("ledMode").setNumber(1);
+		table.getEntry("ledMode").setNumber(0);
+		table.getEntry("camMode").setNumber(0);
 		PCDashboardDiagnostics.SubsystemNumber("Limelight", "TargetArea", this.getTargetArea());
 		PCDashboardDiagnostics.SubsystemNumber("Limelight", "angleOffHorizontal", this.angleOffHorizontal());
 		PCDashboardDiagnostics.SubsystemNumber("Limelight", "angleOffVertical", this.angleOffVertical());
@@ -45,6 +48,8 @@ public class LimelightSubsystem extends Subsystem {
 		PCDashboardDiagnostics.AdHocNumber("Vision Tracking Distance (Inches)", (_heightDifference / _angleToTargetFromHorizontal));
 		PCDashboardDiagnostics.AdHocNumber("Height Difference", _heightDifference);
 		PCDashboardDiagnostics.AdHocNumber("Angle From Crosshair to Target", _angleToTargetFromHorizontal);
+	
+		bufferedAngleOffHorizontal.maintainState(this.angleOffHorizontal());
 	}
 
 	public double getTargetArea() {
@@ -73,14 +78,11 @@ public class LimelightSubsystem extends Subsystem {
 
 	}
 
-	public static void limeLightDetect() {
-
-		// if( A*B^(targetArea+C) +D < Limit) {
-
-		// }
+	public void turnToTarget() {
+		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + (tx.getDouble(0.0) - 12));
 	}
 
-	public void DriveToTarget(double distanceDesiredFromTarget) {
+	public void driveToTarget(double distanceDesiredFromTarget) {
 		this._distanceDesiredFromTarget = distanceDesiredFromTarget;
 
 		if (_inchesToTarget > (this._distanceDesiredFromTarget + 18)) {

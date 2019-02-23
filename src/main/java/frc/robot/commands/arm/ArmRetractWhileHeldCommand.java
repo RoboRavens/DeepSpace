@@ -1,6 +1,4 @@
 package frc.robot.commands.arm;
-
-import frc.robot.Calibrations;
 import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -20,9 +18,7 @@ public class ArmRetractWhileHeldCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ARM_SUBSYSTEM.setMotorsPID(Calibrations.armEncoderMinimumValue);
-        // System.out.println("RETRACTING ARM.RETRACTING ARM.RETRACTING ARM.RETRACTING
-        // ARM.RETRACTING ARM.RETRACTING ARM.RETRACTING ARM.RETRACTING ARM.");
+        Robot.ARM_SUBSYSTEM.retract(0.4);
     }
 
     // Make this return true when this Command no longer needs to run execute()

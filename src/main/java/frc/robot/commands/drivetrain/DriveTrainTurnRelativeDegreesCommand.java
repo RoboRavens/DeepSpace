@@ -20,8 +20,7 @@ public class DriveTrainTurnRelativeDegreesCommand extends Command {
     double previousGyroScaleFactor;
     private double _timeoutSeconds;
 
-    public DriveTrainTurnRelativeDegreesCommand(DriveTrainSubsystem driveTrain, double degreesToTurn,
-            double gyroScaleFactor, double timeoutSeconds) {
+    public DriveTrainTurnRelativeDegreesCommand(DriveTrainSubsystem driveTrain, double degreesToTurn, double gyroScaleFactor, double timeoutSeconds) {
         requires(driveTrain);
         this.ravenTank = driveTrain.ravenTank;
         this.degreesToTurn = degreesToTurn;
@@ -31,8 +30,7 @@ public class DriveTrainTurnRelativeDegreesCommand extends Command {
         _timeoutSeconds = timeoutSeconds;
     }
 
-    public DriveTrainTurnRelativeDegreesCommand(DriveTrainSubsystem driveTrain, double degreesToTurn,
-            double gyroScaleFactor) {
+    public DriveTrainTurnRelativeDegreesCommand(DriveTrainSubsystem driveTrain, double degreesToTurn, double gyroScaleFactor) {
         this(driveTrain, degreesToTurn, gyroScaleFactor, Calibrations.DriveTrainTurnRelativeDegreesSafetyTimerSeconds);
     }
 

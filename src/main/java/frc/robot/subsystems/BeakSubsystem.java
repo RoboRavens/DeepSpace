@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Relay.Value;
 import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
+import frc.util.PCDashboardDiagnostics;
 import frc.robot.RobotMap;
 import frc.ravenhardware.BufferedDigitalInput;
 
@@ -20,50 +21,49 @@ import frc.ravenhardware.BufferedDigitalInput;
  * Add your docs here.
  */
 public class BeakSubsystem extends Subsystem {
-  //Solenoid beak = new Solenoid(RobotMap.beakSolenoid);
-  //BufferedDigitalInput hatchPanelSensor;
+  Solenoid beakCapture;
+  Solenoid beakRelease;
+  BufferedDigitalInput hatchPanelSensor;
   private Timer _hasHatchPanelDurationTimer = new Timer();
 
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
   public BeakSubsystem() {
-		//this.beak = new Solenoid(RobotMap.beakSolenoid);
-		//this.hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
+    beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);
+    beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
+		hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
 		_hasHatchPanelDurationTimer.start();
   }
 
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new BeakCaptureHatchPanelCommand());
+    //setDefaultCommand(new BeakCaptureHatchPanelCommand());
   }
 
   public boolean hasHatchPanel() {
-		boolean otherLimit = false;
-		boolean hasHatchPanel = false;
+  //boolean hasHatchPanel = !hatchPanelSensor.get();
 
-		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(hasHatchPanel, otherLimit);
+		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(
+      !hatchPanelSensor.get(), 
+      false); // otherLimit
   }
   
   public void periodic()  {
-    if (this.hasHatchPanel() == false) {
-			_hasHatchPanelDurationTimer.reset();
-		}
-
-		if (this.hasHatchPanel()) {
+		if (hasHatchPanel()) {
 			Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kForward);
 		} else {
-			Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kOff);
-		}
+      _hasHatchPanelDurationTimer.reset();
+      Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kOff);    
+    }
+    
+    PCDashboardDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", this.hasHatchPanel());
   }
   
 
   public void release() {
-    //beak.set(false);
+    beakRelease.set(true);
+    beakCapture.set(false);
   }
 
   public void capture() {
-    //beak.set(true);
+    beakCapture.set(true);
+    beakRelease.set(false);
   }
 }

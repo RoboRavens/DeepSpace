@@ -18,7 +18,6 @@ public class ForAutonomousCargoWheelSuckCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         Robot.CARGO_WHEEL_SUBSYSTEM.suck(magnitude);
-        // System.out.println("CargoWheelSubsystem.spit();CargoWheelSubsystem.spit();CargoWheelSubsystem.spit();CargoWheelSubsystem.spit();CargoWheelSubsystem.spit();CargoWheelSubsystem.spit();CargoWheelSubsystem.spit();CargoWheelSubsystem.spit();CargoWheelSubsystem.spit();");
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -28,7 +27,7 @@ public class ForAutonomousCargoWheelSuckCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-        // Robot.CARGO_WHEEL_SUBSYSTEM.stop();
+        Robot.CARGO_WHEEL_SUBSYSTEM.stop();
     }
 
     // Called when another command which requires one or more of the same

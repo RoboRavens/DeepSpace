@@ -31,9 +31,6 @@ public class RavenTank {
 	protected int gyroMode;
 	private boolean _cutPower;
 	protected double gyroTargetHeading;
-	// protected double orientation = 0;
-
-	// Joystick calibrationStick = new Joystick(RobotMap.calibrationJoystick);
 
 	protected double targetNetInchesTraveled = 0;
 	protected boolean automatedDrivingEnabled = false;
@@ -67,6 +64,11 @@ public class RavenTank {
 	private void initializeRavenTank() {
 		_slewRate = Calibrations.slewRateMaximum;
 
+		Encoder leftWpiEncoder = new Encoder(RobotMap.leftDriveEncoder1, RobotMap.leftDriveEncoder2);
+        Encoder rightWpiEncoder = new Encoder(RobotMap.rightDriveEncoder1, RobotMap.rightDriveEncoder2);
+        leftRavenEncoder = new RavenEncoder(leftWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
+        rightRavenEncoder = new RavenEncoder(rightWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
+
 		gyroCooldownTimer = new Timer();
 
 		setDriveMode(Calibrations.defaultDriveMode);
@@ -74,11 +76,6 @@ public class RavenTank {
 
 		setGyroMode(Calibrations.defaultGyroMode);
 		gyroTargetHeading = setGyroTargetHeadingToCurrentHeading();
-
-		Encoder leftWpiEncoder = new Encoder(RobotMap.leftDriveEncoder1, RobotMap.leftDriveEncoder2);
-		Encoder rightWpiEncoder = new Encoder(RobotMap.rightDriveEncoder1, RobotMap.rightDriveEncoder2);
-		leftRavenEncoder = new RavenEncoder(leftWpiEncoder, Calibrations.leftEncoderCyclesPerRevolution, Calibrations.driveWheelDiameterInches, false);
-		rightRavenEncoder = new RavenEncoder(rightWpiEncoder, Calibrations.rightEncoderCyclesPerRevolution, Calibrations.driveWheelDiameterInches, true);
 	}
 
 	public void setDriveMode(int driveMode) {
@@ -162,6 +159,23 @@ public class RavenTank {
 		this.driveRightSide(right);
 	}
 
+	public void fpsTankLimelight(double translation) {
+		// This method simply sets the gyro target, it doesn't actually turn the robot.
+		// As a result, the gyro adjust value below will effectually turn the robot.
+		Robot.LIMELIGHT_SUBSYSTEM.turnToTarget();
+	
+		if (_cutPower) {
+			translation *= Calibrations.cutPowerModeMovementRatio;
+		}
+	
+		double gyroAdjust = getStaticGyroAdjustment();
+		double leftFinal = translation * -1 - gyroAdjust;
+		double rightFinal = translation - gyroAdjust;
+
+		this.driveLeftSide(leftFinal);
+		this.driveRightSide(rightFinal);
+	}
+
 	public void fpsTank(double translation, double turn) {
 
 		if (_cutPower) {
@@ -175,23 +189,16 @@ public class RavenTank {
 
 		double gyroAdjust = getTurnableGyroAdjustment(turn);
 
-		// System.out.println("Gyro adjust: " + gyroAdjust + " gyro: " +
-		// this.orientationGyro.getAngle());
+		// System.out.println("Gyro adjust: " + gyroAdjust + " gyro: " + this.orientationGyro.getAngle());
 
 		double leftFinal = (translation - turn) * -1 - gyroAdjust;
 		double rightFinal = (translation + turn) - gyroAdjust;
-
-		// double leftFinalRounded = Math.round(leftFinal * 100);
-		// double rightFinalRounded = Math.round(rightFinal * 100);
-		// System.out.println("Left drive value: " + leftFinalRounded + " Right drive
-		// value: " + rightFinalRounded);
 
 		this.driveLeftSide(leftFinal);
 		this.driveRightSide(rightFinal);
 	}
 
 	public boolean detectCollisions() {
-		// shiftedToLowGearLighting.maintainSecondsState();
 		boolean collisionDetected = false;
 
 		double currentAccelerationX = orientationGyro.getWorldLinearAccelX();
@@ -243,7 +250,7 @@ public class RavenTank {
 
 	public void driveRightSide(double magnitude) {
 		driveRight.set(magnitude);
-		// System.out.println("Driving Right At " + magnitude);
+		// System.out.println("Driving right side. Magnitude: " + magnitude);
 	}
 
 	public double getScaledTurnFromTranslation(double translation, double turn) {
@@ -259,8 +266,7 @@ public class RavenTank {
 	}
 
 	public double getDriveGyro() {
-		// System.out.println("Gyro angle: " + Math.round(orientationGyro.getAngle()) +
-		// " Gyro mode: " + gyroMode);
+		// System.out.println("Gyro angle: " + Math.round(orientationGyro.getAngle()) + " Gyro mode: " + gyroMode);
 		return orientationGyro.getAngle();
 	}
 
@@ -270,12 +276,11 @@ public class RavenTank {
 
 	public double setGyroTargetHeadingToCurrentHeading() {
 		this.gyroTargetHeading = getCurrentHeading();
-
 		return gyroTargetHeading;
 	}
 
 	public double setGyroTargetHeading(double angle) {
-		gyroTargetHeading = angle;
+		this.gyroTargetHeading = angle;
 		return gyroTargetHeading;
 	}
 
@@ -309,7 +314,6 @@ public class RavenTank {
 		}
 
 		return getStaticGyroAdjustment();
-		// return 0;
 	}
 
 	public double getStaticGyroAdjustment() {
@@ -350,11 +354,9 @@ public class RavenTank {
 
 		gyroAdjust *= _gyroAdjustmentScaleFactor;
 
-		// System.out.println("Gyro adjust: " + gyroAdjust + " gyro: " +
-		// this.orientationGyro.getAngle() + "Zero" + gyroZero);
+		// System.out.println("Gyro adjust: " + gyroAdjust + " gyro: " + this.orientationGyro.getAngle() + "Zero" + gyroZero);
 
-		// System.out.println("Gyro adjust: " + gyroAdjust + " heading: " +
-		// getCurrentHeading());
+		// System.out.println("Gyro adjust: " + gyroAdjust + " heading: " + getCurrentHeading());
 		// System.out.println("-1 mod 360: " + (-1 % 360));
 		return gyroAdjust;
 	}
@@ -427,8 +429,6 @@ public class RavenTank {
 
 	public void stop() {
 		this.fpsTank(0, 0);
-		// this.setGyroTargetHeadingToCurrentHeading();
-		// this.resetGyroAdjustmentScaleFactor();
 	}
 
 	public void gyroStop() {
@@ -493,7 +493,7 @@ public class RavenTank {
 	public double getNetInchesTraveled() {
 		double leftInches = this.leftRavenEncoder.getNetInchesTraveled();
 		double rightInches = this.rightRavenEncoder.getNetInchesTraveled();
-		double netInchesTraveled = (leftInches * rightInches)/2;
+		double netInchesTraveled = (leftInches + rightInches)/2;
 		
 		return netInchesTraveled;
 	}

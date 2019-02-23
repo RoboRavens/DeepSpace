@@ -1,0 +1,50 @@
+Here's the totally rad guide on how to use the scouting app!
+Tip: Don't Panic!
+
+---------INTRO----SCREEN--------------
+YOUR TEAM NUMBER -> The number of the team that you are on. If you aren't technically on a team, enter 0
+EN -> Language, do not touch
+ROBOT TEAM NUMBER -> The team number of the robot you are scouting
+TEST -> A list of game types (Qualification, final, etc.). Choose the type that represents what type of match it is
+MATCH NUMBER -> The match number (E.X. 12)
+
+When these are all filled out, press Start
+If nothing happens, either your device is being slow or one of the fields has an invalid character or nothing in it
+
+---------COLORFUL----SCREEN-----------
+You should now be at a very colorful screen with a whole lot of buttons
+When the match begins, smack the [ TIME: 150.00         CARGO: 0          HATCH: 0 ] bar!
+When a robot does something, hit the corresponding button!
+If a robot fails something, hit a failed button in the same row!
+If your fingers slip, hit the big blue UNDO button at the bottom right corner!
+
+Even after the match finishes, the screen won't change. Don't panic! Once the timer hits -10.00, the screen will suddenly become a series of QR codes...
+
+---------QR----SCREEN-----------------
+A wild text box appeared! Please insert some info as follows:
+TEAMCOLOR = Either blue or red depending on what alliance the robot was on (First Letter Capitalized)
+FNAME = Your first name, capitalized correctly
+LNAME = Your last name, capitalized correctly
+G_HATCH = "true" or "false" depending on if the robot can collect hatches from the ground
+S_HATCH = "true" or "false" depending on if the robot can receive hatches from the loading station
+
+FORMAT: FNAME;LNAME;TEAMCOLOR;G_HATCH;S_HATCH;
+
+Example: I'm John DeGenericson, and I'm scouting a blue robot who can't grab hatches from the ground but can grab hatches from the station
+John;DeGenericson;Blue;false;true;
+
+Wow! The screen sure is going crazy, it is now flashing "random" qr codes!
+If you have time before the next match, go to the scanning station and scan in your QRs.
+
+IMPORTANT!: If you have a phone which has a curved-edge screen, you may have to follow the recording steps.
+
+Recording steps:
+Most phones have some sort of screen recorder. Make sure you have one! It doesn't even need to record sound.
+You should follow these steps if you either don't have enough time OR have a curved screen where the edges of the QR conflict with the actual phone.
+Try to sort of memorize the pattern of QRs
+While recording, if you see the same QR for a second time, you can stop recording.
+Send the recording to "creeperinthegarden@gmail.com" ASAP
+-----------FINISHING----UP------------
+Hit BACK to go to the intro screen!
+Inhale and exhale
+Repeat the entire thing for the next match.

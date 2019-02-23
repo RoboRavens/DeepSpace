@@ -1,8 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.controls.Gamepad;
 import frc.ravenhardware.RavenTank;
@@ -19,8 +16,6 @@ public class DriveTrainSubsystem extends Subsystem {
 	public Robot robot;
 	Gamepad driveController;
 	public RavenTank ravenTank;
-	NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-	NetworkTableEntry tx = table.getEntry("tx");
 
 	public DriveTrainSubsystem() {
 		this.ravenTank = new RavenTank();
@@ -28,13 +23,7 @@ public class DriveTrainSubsystem extends Subsystem {
 		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderAvgInchesTraveledNew", () -> Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled());
 	}
 
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
-
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-
-		// setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new DriveTrainDriveFPSCommand());
 	}
 
@@ -44,8 +33,6 @@ public class DriveTrainSubsystem extends Subsystem {
 		double powerSubtractor = (1 - Calibrations.DRIVETRAIN_MAXPOWER_AT_MAX_ELEVEATOR_HEIGHT) * elevatorHeightPercentage;
 		double maxPower = Math.min(1, 1 - powerSubtractor);
 		this.ravenTank.setMaxPower(maxPower);
-
-		this.ravenTank.setGyroTargetHeading(this.ravenTank.getCurrentHeading() + tx.getDouble(0.0));
 
 		double slewRateDifference = Calibrations.slewRateMaximum - Calibrations.slewRateMinimum;
 		double slewRateSubtraction = slewRateDifference * elevatorHeightPercentage;

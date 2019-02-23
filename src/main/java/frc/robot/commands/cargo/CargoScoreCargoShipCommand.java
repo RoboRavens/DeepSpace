@@ -12,18 +12,17 @@ import frc.robot.Calibrations;
 import frc.robot.commands.arm.ArmMoveToHeightCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckOrSpitCommand;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
-import frc.robot.commands.drivetrain.DriveTrainDriveTargetCommand;
+
 import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 
 public class CargoScoreCargoShipCommand extends CommandGroup {
   
   public CargoScoreCargoShipCommand() {
-    addParallel(new DriveTrainDriveTargetCommand(Calibrations.distanceDesiredFromCargoShip));
     addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorCargoShipPortEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armCargoShipPortEncoderValue));
     addSequential(new CargoWheelSuckOrSpitCommand(Calibrations.cargoSpitPowerMagnitude, "Spit"));
     addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorEncoderMinimumValue));
-    addParallel(new ArmMoveToHeightCommand(Calibrations.armEncoderMinimumValue));
+    addParallel(new ArmMoveToHeightCommand(Calibrations.armEncoderRetractedValue));
     addSequential(new DriveTrainDriveInchesCommand(24, .6, Calibrations.drivingBackward));
   }
 }

@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot;
 import frc.robot.commands.cargo.CargoScoreCargoShipCommand;
 import frc.robot.commands.cargo.CargoScoreHighRocketCommand;
 import frc.robot.commands.cargo.CargoScoreLowRocketCommand;
@@ -25,7 +24,7 @@ public class SetCommandSubsystem extends Subsystem {
   private String _location;
   private String _rocketHeight;
 
-  public void setCargoOrHatchPanel(String cargoOrHatchPanel) {
+  public void SetCargoOrHatchPanelCommand(String cargoOrHatchPanel) {
     this._cargoOrHatchPanel = cargoOrHatchPanel;
   }
 

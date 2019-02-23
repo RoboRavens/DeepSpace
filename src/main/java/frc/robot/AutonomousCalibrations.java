@@ -22,7 +22,7 @@ public class AutonomousCalibrations {
 	public static final double AutonomousScoreLeftSwitchGrabCubePosition3FirstDriveForwardInches = 118;
 	public static final double AutonomousScoreLeftSwitchGrabCubePosition3SecondDriveForwardInches = 132;
 
-	public static final double AutonomousDriveStraightToScaleForwardElevatorDownSegmentInches = 150; // Was 288
+	public static final double AutonomousDriveStraightToScaleForwardElevatorDownSegmentInches = 150;
 	public static final double AutonomousDriveStraightToScaleForwardElevatorLiftingSegmentInches = 138;
 	public static final double AutonomousDriveStraightToScaleApproachScaleInches = 8;
 	public static final double AutonomousDriveLeftScalePosition1Inches = 77;

@@ -1,6 +1,4 @@
 package frc.robot.commands.elevator;
-
-import frc.robot.Calibrations;
 import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,12 +15,11 @@ public class ElevatorExtendWhileHeldCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        System.out.println("ElevatorExtendCommand init");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ELEVATOR_SUBSYSTEM.setMotorsPID(Calibrations.elevatorEncoderMaximumValue);
+        Robot.ELEVATOR_SUBSYSTEM.extend(0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()

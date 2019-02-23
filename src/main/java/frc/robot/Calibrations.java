@@ -25,7 +25,6 @@ public class Calibrations {
 	
 	public static final double cutPowerModeMovementRatio = .3;
 	public static final double cutPowerModeTurnRatio = .5;
-	//public static final double gyroAdjustmentScaleFactor = .011; // Could possibly cause gyro issues
 	public static final double gyroAdjustmentDefaultScaleFactor = .03;
 	public static final double driveTrainTurnRelativeDegreesGyroAdjustmentScaleFactor = .009;
 	public static final double gyroCooldownTimerTime = .5;
@@ -37,9 +36,8 @@ public class Calibrations {
 	public static final double DriveTrainCollisionJerkThreshold = 4;
 
 	// 2019 and newer robots use talonSRX instead talon
-	public static final Boolean UseTalonSRXForDriveController = false;
+	public static final Boolean UseTalonSRXForDriveController = true;
 
-	
 	// Drive and gyro modes
 	public static final int bulldozerTank = 0;
 	public static final int fpsTank = 1;
@@ -62,18 +60,14 @@ public class Calibrations {
 	
 	
 	// DRIVE ENCODERS
-	// The *3 is for low gear. In high gear, it would just be 4096. Run all autonomous modes in low gear.
-	public static final int encoderCUI103CyclesPerRevolution = 4096 * 3;
+	public static final int encoderCUI103CyclesPerRevolution = 4096; 
 	// public static final int encoderE4TCyclesPerRevolution = 360;
 	// public static final int encoderE4PCyclesPerRevolution = 250;
-	public static final double driveWheelDiameterInches = 6;
-	public static final double driveWheelCircumferenceInches = Calibrations.driveWheelDiameterInches * Math.PI;
-	//public static final double driveEncoderE4TCyclesPerInch = (double) Calibrations.encoderE4TCyclesPerRevolution / Calibrations.driveWheelCircumferenceInches;
-	//public static final double driveEncoderE4PCyclesPerInch = (double) Calibrations.encoderE4PCyclesPerRevolution / Calibrations.driveWheelCircumferenceInches;
+	public static final double wheelDiameterInches = 4;
+	public static final double wheelCircumferenceInches = Calibrations.wheelDiameterInches * Math.PI;
 	
 	// We're using CUI 103 encoders on both sides of the drivetrain.
-	public static final int leftEncoderCyclesPerRevolution = Calibrations.encoderCUI103CyclesPerRevolution;
-	public static final int rightEncoderCyclesPerRevolution = Calibrations.encoderCUI103CyclesPerRevolution;
+	public static final int encoderCyclesPerRevolution = Calibrations.encoderCUI103CyclesPerRevolution;
 	
 	// Direction magic numbers
 	public static final int drivingForward = -1;
@@ -84,31 +78,33 @@ public class Calibrations {
     
 
 	//ELEVATOR
-	public static final double elevatorkF = 0.1;
+	public static final double elevatorHoldPositionPowerMagnitude = .15;
+
+	public static final double elevatorkF = Calibrations.elevatorHoldPositionPowerMagnitude;
     public static final double elevatorkP = 12.0;
     public static final double elevatorkI = 0.0;
-    public static final double elevatorkD = 170.0;
-
-    public static final double elevatorHoldPositionPowerMagnitude = .05;
+    public static final double elevatorkD = 230.0;
+	
+	public static final double elevatorWheelDiameterInches = 1.25;
 	
 	public static final int elevatorEncoderMinimumValue = 0;
-    public static final int elevatorEncoderMaximumValue = 27000;
+    public static final int elevatorEncoderMaximumValue = 51000;
 
-    public static final int elevatorLowHatchEncoderValue = 4000;
-    public static final int elevatorMidHatchEncoderValue = 18000;
-    public static final int elevatorHighHatchEncoderValue = 24000;
+    public static final int elevatorLowHatchEncoderValue = 8000;
+    public static final int elevatorMidHatchEncoderValue = 27000;
+    public static final int elevatorHighHatchEncoderValue = 33200;
 
-    public static final int elevatorCargoShipPortEncoderValue = 24000;
-    public static final int elevatorLowRocketPortEncoderValue = 24000;
-    public static final int elevatorMidRocketPortEncoderValue = 18000;
-    public static final int elevatorHighRocketPortEncoderValue = 24000;
+    public static final int elevatorCargoShipPortEncoderValue = 31000;
+    public static final int elevatorLowRocketPortEncoderValue = 20000;
+    public static final int elevatorMidRocketPortEncoderValue = 45000;
+    public static final int elevatorHighRocketPortEncoderValue = 50000;
 
     // The safety margin is how far away from the end of travel the encoders will stop the lift.
 	// At low speeds (max of .3), and a lift max value of 30k, 1500 maxes out the elevator.
 	// At higher speeds, a higher value is needed because the elevator will overshoot the target until we have PID.
 	
-	public static final int elevatorLiftUpwardSafetyMargin = 1300;
-	public static final int elevatorLiftDownwardSafetyMargin = 700;
+	public static final int elevatorLiftUpwardSafetyMargin = 400;
+	public static final int elevatorLiftDownwardSafetyMargin = 400;
 	public static final int ELEVATOR_AT_POSITION_BUFFER = 500;
 	
 	public static final double elevatorConsideredMovingEncoderRate = 0;
@@ -127,17 +123,17 @@ public class Calibrations {
 	public static final double armkD = 170.0;
 	public static final double armHoldPositionPowerMagnitude = 0.04;
 	
-	public static final int armEncoderMinimumValue = 0;
-    public static final int armEncoderMaximumValue = 12000;
+	public static final int armEncoderRetractedValue = 0;
+    public static final int armEncoderExtendedValue = 10000;
 
-    public static final int armLowHatchEncoderValue = 4000;
-    public static final int armMidHatchEncoderValue = 18000;
-    public static final int armHighHatchEncoderValue = 24000;
+    public static final int armLowHatchEncoderValue = 2500;
+    public static final int armMidHatchEncoderValue = 5000;
+    public static final int armHighHatchEncoderValue = 7500;
 
-    public static final int armCargoShipPortEncoderValue = 24000;
-    public static final int armLowRocketPortEncoderValue = 24000;
-    public static final int armMidRocketPortEncoderValue = 24000;
-    public static final int armHighRocketPortEncoderValue = 24000;
+    public static final int armCargoShipPortEncoderValue = 2000;
+    public static final int armLowRocketPortEncoderValue = 6000;
+    public static final int armMidRocketPortEncoderValue = 8000;
+    public static final int armHighRocketPortEncoderValue = 11000;
 
 	public static final int ARM_ENCODER_BUFFER = 300;
 	// This value represents the buffer that the arm can be *on either side* of midway,
