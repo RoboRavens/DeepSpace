@@ -26,6 +26,7 @@ import frc.ravenhardware.RavenLighting;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
 import frc.robot.commands.arm.ArmExtendFullyCommand;
 import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
+import frc.robot.commands.arm.ArmResetEncodersToExtendedCommand;
 import frc.robot.commands.arm.ArmRetractWhileHeldCommand;
 import frc.robot.commands.automatedscoring.RunAutomatedCommand;
 import frc.robot.commands.automatedscoring.SetCargoOrHatchPanelCommand;
@@ -34,6 +35,7 @@ import frc.robot.commands.automatedscoring.SetLocationRocketCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightHighCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightLowCommand;
 import frc.robot.commands.automatedscoring.SetRocketHeightMidCommand;
+import frc.robot.commands.cargowheel.CargoWheelHoldCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.drivetrain.DriveTrainTurnTargetCommand;
@@ -374,16 +376,16 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.SETCARGO).whenPressed(new SetCargoOrHatchPanelCommand("Cargo"));
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONCARGOSHIP).whenPressed(new SetLocationCargoShipCommand());
 		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONROCKET).whenPressed(new SetLocationRocketCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorHighRocketPortEncoderValue));
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorMidRocketPortEncoderValue));
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new ElevatorMoveToHeightCommand(Calibrations.elevatorLowRocketPortEncoderValue));
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new SetRocketHeightHighCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new SetRocketHeightMidCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new SetRocketHeightLowCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
 
-		//OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(); //USE WHEN TESTING NEW COMMANDS
+		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ArmResetEncodersToExtendedCommand()); //USE WHEN TESTING NEW COMMANDS
 
-		if (OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).get() == true) {
+		/*if (OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).get() == true) {
 			ARM_SUBSYSTEM.resetEncodersToExtendedLimit();
-		}
+		}*/
 	}
 	
 

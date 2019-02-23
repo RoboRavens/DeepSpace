@@ -4,6 +4,7 @@ import frc.ravenhardware.BufferedDigitalInput;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.cargowheel.CargoWheelHoldCommand;
+import frc.robot.commands.cargowheel.CargoWheelStopCommand;
 import frc.util.PCDashboardDiagnostics;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -26,7 +27,7 @@ public class CargoWheelSubsystem extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new CargoWheelHoldCommand());
+		setDefaultCommand(new CargoWheelStopCommand());
 	}
 
 	public void suck(double magnitude) {
@@ -38,7 +39,7 @@ public class CargoWheelSubsystem extends Subsystem {
 	}
 
 	public void hold() {
-		this.set(-0.1);
+		this.set(-0.5);
 	}
 
 
