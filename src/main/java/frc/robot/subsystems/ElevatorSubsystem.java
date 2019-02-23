@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.ravenhardware.BufferedDigitalInput;
 import frc.ravenhardware.RavenEncoder;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
@@ -17,6 +16,8 @@ import frc.robot.commands.elevator.ElevatorHoldPositionCommand;
 import frc.util.PCDashboardDiagnostics;
 import frc.robot.TalonSRXConstants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -24,8 +25,6 @@ public class ElevatorSubsystem extends Subsystem {
 	public TalonSRX elevatorMotor;
 	public TalonSRX elevatorMotorFollower;
 	public RavenEncoder elevatorEncoder;
-	BufferedDigitalInput extensionLimitSwitch;
-	BufferedDigitalInput retractionLimitSwitch;
 	private Timer _safetyTimer = new Timer();
 	private double _expectedPower;
 
@@ -33,14 +32,17 @@ public class ElevatorSubsystem extends Subsystem {
 		this.elevatorMotor = new TalonSRX(RobotMap.elevatorMotor);
 		this.elevatorMotorFollower = new TalonSRX(RobotMap.elevatorMotorFollower);
 		this.elevatorMotorFollower.follow(elevatorMotor);
-		this.retractionLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorRetractionLimitSwitch);
-		this.extensionLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorExtensionLimitSwitch);
 		this.elevatorMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkF, TalonSRXConstants.kTimeoutMs);
 		this.elevatorMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkP, TalonSRXConstants.kTimeoutMs);
 		this.elevatorMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkI, TalonSRXConstants.kTimeoutMs);
 		this.elevatorMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkD, TalonSRXConstants.kTimeoutMs);
 
 		this.elevatorMotor.setSensorPhase(true);
+		this.elevatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
+		this.elevatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
+
+		/* Don't neutral motor if remote limit source is not available */
+		this.elevatorMotor.configLimitSwitchDisableNeutralOnLOS(true, TalonSRXConstants.kTimeoutMs);
 	}
 
 	public void initDefaultCommand() {
@@ -91,9 +93,6 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void periodic() {
-		retractionLimitSwitch.maintainState();
-		extensionLimitSwitch.maintainState();
-
 		this.isAtExtensionLimit();
 		this.isAtRetractionLimit();
 
@@ -284,11 +283,11 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public boolean getElevatorExtensionLimitSwitchValue() {
-		return !extensionLimitSwitch.get();
+		return this.elevatorMotor.getSensorCollection().isFwdLimitSwitchClosed();
 	}
 
 	public boolean getElevatorRetractionLimitSwitchValue() {
-		return !retractionLimitSwitch.get();
+		return this.elevatorMotor.getSensorCollection().isRevLimitSwitchClosed();
 	}
 
 	public boolean getIsExtendedPastEncoderPosition(int encoderPosition) {
