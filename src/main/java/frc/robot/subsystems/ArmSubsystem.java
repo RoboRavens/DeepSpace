@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import frc.controls.ButtonCode;
 import frc.ravenhardware.BufferedDigitalInput;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
@@ -27,6 +28,7 @@ public class ArmSubsystem extends Subsystem {
 
 	public ArmSubsystem() {
 		armMotor = new TalonSRX(RobotMap.armMotor);
+		armMotor.setSensorPhase(true);
 		//this.retractionLimitSwitch = new BufferedDigitalInput(RobotMap.armRetractionLimitSwitch);
 		//this.extensionLimitSwitch = new BufferedDigitalInput(RobotMap.armExtensionLimitSwitch);
 		armMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkF, TalonSRXConstants.kTimeoutMs);
@@ -52,7 +54,7 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public void extend(double magnitude) {
-    	if (getIsAtExtensionLimit()) {
+    	if (getIsAtExtensionLimit() && Robot.OPERATION_PANEL.getButtonValue(ButtonCode.ARMDOUBLEOVERRIDEEXTEND) == false) {
     		stop();
     	}
     	else {
@@ -61,7 +63,7 @@ public class ArmSubsystem extends Subsystem {
     }
     
     public void retract(double magnitude) {
-    	if (getIsAtRetractionLimit()) {
+    	if (getIsAtRetractionLimit() && Robot.OPERATION_PANEL.getButtonValue(ButtonCode.ARMDOUBLEOVERRIDERETRACT) == false) {
     		stop();
     	}
     	else {
