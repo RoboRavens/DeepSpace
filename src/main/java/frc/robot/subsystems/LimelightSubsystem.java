@@ -30,7 +30,7 @@ public class LimelightSubsystem extends Subsystem {
   	private double _distanceToDrive = 0.0;
 	private int _direction = 0;
   	double timeoutSeconds = Calibrations.DriveTrainDriveInchesSafetyTimerSeconds;
-  	DriveTrainDriveInchesCommand driveTrainDriveInchesCommand = new DriveTrainDriveInchesCommand(this._distanceToDrive, this._powerMagnitude, this._direction);
+  	DriveTrainDriveInchesCommand driveTrainDriveInchesCommand = new DriveTrainDriveInchesCommand(_distanceToDrive, _powerMagnitude, _direction);
 
 	private BufferedValue bufferedAngleOffHorizontal = new BufferedValue(9);
 
@@ -83,21 +83,21 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void driveToTarget(double distanceDesiredFromTarget) {
-		this._distanceDesiredFromTarget = distanceDesiredFromTarget;
+		_distanceDesiredFromTarget = distanceDesiredFromTarget;
 
-		if (_inchesToTarget > (this._distanceDesiredFromTarget + 18)) {
-			this._distanceToDrive = this._inchesToTarget - this._distanceDesiredFromTarget;
-			this._powerMagnitude = 0.6;
-			this._direction = Calibrations.drivingForward;
+		if (_inchesToTarget > (_distanceDesiredFromTarget + 18)) {
+			_distanceToDrive = _inchesToTarget - _distanceDesiredFromTarget;
+			_powerMagnitude = 0.6;
+			_direction = Calibrations.drivingForward;
 			this.driveTrainDriveInchesCommand.start();
-			System.out.println("MOVE FORWARD " + this._distanceToDrive + " INCHES");
+			System.out.println("MOVE FORWARD " + _distanceToDrive + " INCHES");
 
-		} else if (_inchesToTarget < (this._distanceDesiredFromTarget - 18)) {
-			this._distanceToDrive = this._distanceDesiredFromTarget - this._inchesToTarget;
-			this._powerMagnitude = 0.6;
-			this._direction = Calibrations.drivingForward;
+		} else if (_inchesToTarget < (_distanceDesiredFromTarget - 18)) {
+			_distanceToDrive = _distanceDesiredFromTarget - _inchesToTarget;
+			_powerMagnitude = 0.6;
+			_direction = Calibrations.drivingForward;
 			this.driveTrainDriveInchesCommand.start();
-			System.out.println("BACKING UP " + this._distanceToDrive + " INCHES");
+			System.out.println("BACKING UP " + _distanceToDrive + " INCHES");
 
 		} else if (this.hasTarget() == false) {
 			(new DriveTrainStopCommand()).start();
