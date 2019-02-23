@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-import frc.controls.ButtonCode;
 import frc.ravenhardware.BufferedDigitalInput;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
@@ -28,7 +27,6 @@ public class ArmSubsystem extends Subsystem {
 
 	public ArmSubsystem() {
 		armMotor = new TalonSRX(RobotMap.armMotor);
-		armMotor.setInverted(true);
 		//this.retractionLimitSwitch = new BufferedDigitalInput(RobotMap.armRetractionLimitSwitch);
 		//this.extensionLimitSwitch = new BufferedDigitalInput(RobotMap.armExtensionLimitSwitch);
 		armMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkF, TalonSRXConstants.kTimeoutMs);
@@ -54,20 +52,20 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public void extend(double magnitude) {
-    	if (getIsAtExtensionLimit() && Robot.OPERATION_PANEL.getButtonValue(ButtonCode.ARMDOUBLEOVERRIDEEXTEND) == false) {
+    	if (getIsAtExtensionLimit()) {
     		stop();
     	}
     	else {
-        	set(-1 * magnitude);
+        	set(magnitude);
     	}
     }
     
     public void retract(double magnitude) {
-    	if (getIsAtRetractionLimit() && Robot.OPERATION_PANEL.getButtonValue(ButtonCode.ARMDOUBLEOVERRIDERETRACT) == false) {
+    	if (getIsAtRetractionLimit()) {
     		stop();
     	}
     	else {
-    		set(magnitude);
+    		set(-1 * magnitude);
     	}
     }
     
@@ -88,12 +86,12 @@ public class ArmSubsystem extends Subsystem {
 
 	public boolean encoderAndLimitsMatchExtended() {
 		if (getExtensionLimitSwitchValue() == false
-				&& getEncoderPosition() >= Calibrations.armEncoderExtendedValue) {
+				&& getEncoderPosition() < Calibrations.armEncoderExtendedValue) {
 			return false;
 		}
 
 		if (getExtensionLimitSwitchValue() == true
-				&& getEncoderPosition() <= Calibrations.armEncoderExtendedValue - Calibrations.ARM_ENCODER_BUFFER) {
+				&& getEncoderPosition() > Calibrations.armEncoderExtendedValue + Calibrations.ARM_ENCODER_BUFFER) {
 			return false;
 		}
 
@@ -102,12 +100,12 @@ public class ArmSubsystem extends Subsystem {
 
 	public boolean encoderAndLimitsMatchRetracted() {
 		if (getArmRetractionLimitSwitchValue() == false
-				&& getEncoderPosition() <= Calibrations.armEncoderRetractedValue) {
+				&& getEncoderPosition() > Calibrations.armEncoderRetractedValue) {
 			return false;
 		}
 
 		if (getArmRetractionLimitSwitchValue() == true
-				&& getEncoderPosition() >= Calibrations.armEncoderRetractedValue + Calibrations.ARM_ENCODER_BUFFER) {
+				&& getEncoderPosition() < Calibrations.armEncoderRetractedValue - Calibrations.ARM_ENCODER_BUFFER) {
 			return false;
 		}
 
@@ -144,7 +142,7 @@ public class ArmSubsystem extends Subsystem {
 			switchLimit = true;
 			this.resetEncodersToRetractionLimit();
 		}*/
-		System.out.println("RETRACTION LIMIT RETRACTION LIMIT");
+
 		return Robot.OVERRIDE_SYSTEM_ARM_RETRACT.getIsAtLimit(encoderLimit, switchLimit);
 	}
 
@@ -168,7 +166,7 @@ public class ArmSubsystem extends Subsystem {
 
 	public boolean isEncoderAtExtensionLimit() {
 		boolean encoderLimit = false;
-		if (this.getEncoderPosition() >= Calibrations.armEncoderExtendedValue - Calibrations.ARM_ENCODER_BUFFER) {
+		if (this.getEncoderPosition() <= Calibrations.armEncoderExtendedValue + Calibrations.ARM_ENCODER_BUFFER) {
 			encoderLimit = true;
 		}
 		return encoderLimit;
@@ -176,13 +174,14 @@ public class ArmSubsystem extends Subsystem {
 
 	public boolean isEncoderAtRetractionLimit() {
 		boolean encoderLimit = false;
-		if (this.getEncoderPosition() <= Calibrations.armEncoderRetractedValue + Calibrations.ARM_ENCODER_BUFFER) {
+		if (this.getEncoderPosition() >= Calibrations.armEncoderRetractedValue - Calibrations.ARM_ENCODER_BUFFER) {
 			encoderLimit = true;
 		}
 		return encoderLimit;
 	}
 
 	public boolean getIsAtExtensionLimit() {
+		boolean isAtLimit = false;
 		boolean encoderLimit = false;
 		boolean switchLimit = false;
 
@@ -192,8 +191,10 @@ public class ArmSubsystem extends Subsystem {
 			switchLimit = true;
 			this.resetEncodersToExtendedLimit();
 		}*/
-		System.out.println("EXTENSION LIMIT EXTENSION LIMIT");
-		return Robot.OVERRIDE_SYSTEM_ARM_EXTEND.getIsAtLimit(encoderLimit, switchLimit);
+
+		isAtLimit = Robot.OVERRIDE_SYSTEM_ARM_EXTEND.getIsAtLimit(encoderLimit, switchLimit);
+
+		return isAtLimit;
 	}
 
 	public int getEncoderPosition() {
