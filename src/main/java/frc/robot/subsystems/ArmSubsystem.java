@@ -53,8 +53,23 @@ public class ArmSubsystem extends Subsystem {
 		setDefaultCommand(new ArmHoldPositionCommand());
 	}
 
+	public boolean extensionOverridden() {
+		return Robot.OPERATION_PANEL.getButtonValue(ButtonCode.ARMDOUBLEOVERRIDEEXTEND);
+	}
+
+	public boolean retractionOverridden() {
+		return Robot.OPERATION_PANEL.getButtonValue(ButtonCode.ARMDOUBLEOVERRIDERETRACT);
+	}
+
 	public void extend(double magnitude) {
-    	if (getIsAtExtensionLimit() && Robot.OPERATION_PANEL.getButtonValue(ButtonCode.ARMDOUBLEOVERRIDEEXTEND) == false) {
+		boolean notOverridden = (this.extensionOverridden() == false);
+		
+		System.out.println("Extension not overriddeN: " + notOverridden);
+
+		System.out.println("Extend condition: " + (getIsAtExtensionLimit() &&  notOverridden));
+
+		if (getIsAtExtensionLimit() &&  notOverridden) {
+			
     		stop();
     	}
     	else {
@@ -63,7 +78,13 @@ public class ArmSubsystem extends Subsystem {
     }
     
     public void retract(double magnitude) {
-    	if (getIsAtRetractionLimit() && Robot.OPERATION_PANEL.getButtonValue(ButtonCode.ARMDOUBLEOVERRIDERETRACT) == false) {
+		boolean notOverridden = (this.retractionOverridden() == false);
+		
+		System.out.println("Retraction not overriddeN: " + notOverridden);
+
+		System.out.println("Retract condition: " + (getIsAtRetractionLimit() &&  notOverridden));
+
+    	if (getIsAtRetractionLimit() && notOverridden) {
     		stop();
     	}
     	else {
@@ -178,7 +199,7 @@ public class ArmSubsystem extends Subsystem {
 
 	public boolean isEncoderAtExtensionLimit() {
 		boolean encoderLimit = false;
-		if (this.getEncoderPosition() <= Calibrations.armEncoderExtendedValue + Calibrations.ARM_ENCODER_BUFFER) {
+		if (this.getEncoderPosition() >= Calibrations.armEncoderExtendedValue - Calibrations.ARM_ENCODER_BUFFER) {
 			encoderLimit = true;
 		}
 		return encoderLimit;
@@ -186,7 +207,7 @@ public class ArmSubsystem extends Subsystem {
 
 	public boolean isEncoderAtRetractionLimit() {
 		boolean encoderLimit = false;
-		if (this.getEncoderPosition() >= Calibrations.armEncoderRetractedValue - Calibrations.ARM_ENCODER_BUFFER) {
+		if (this.getEncoderPosition() <= Calibrations.armEncoderRetractedValue + Calibrations.ARM_ENCODER_BUFFER) {
 			encoderLimit = true;
 		}
 		return encoderLimit;
