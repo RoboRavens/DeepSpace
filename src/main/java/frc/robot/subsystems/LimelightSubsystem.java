@@ -78,8 +78,17 @@ public class LimelightSubsystem extends Subsystem {
 
 	}
 
+	public void resetBuffer() {
+		this.bufferedAngleOffHorizontal = new BufferedValue(9);
+	}
+
 	public void turnToTarget() {
 		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + (tx.getDouble(0.0) - 12));
+	}
+
+	public void bufferedTurnToTarget() {
+		double newHeading = Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + bufferedAngleOffHorizontal.getMedian();
+		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(newHeading);
 	}
 
 	public void driveToTarget(double distanceDesiredFromTarget) {
