@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.ravenhardware.RavenEncoder;
+import frc.controls.ButtonCode;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj.Timer;
 public class ElevatorSubsystem extends Subsystem {
 	public TalonSRX elevatorMotor;
 	public TalonSRX elevatorMotorFollower;
-	public RavenEncoder elevatorEncoder;
 	private Timer _safetyTimer = new Timer();
 	private double _expectedPower;
 
@@ -32,10 +31,10 @@ public class ElevatorSubsystem extends Subsystem {
 		this.elevatorMotor = new TalonSRX(RobotMap.elevatorMotor);
 		this.elevatorMotorFollower = new TalonSRX(RobotMap.elevatorMotorFollower);
 		this.elevatorMotorFollower.follow(elevatorMotor);
-		this.elevatorMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkF, TalonSRXConstants.kTimeoutMs);
-		this.elevatorMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkP, TalonSRXConstants.kTimeoutMs);
-		this.elevatorMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkI, TalonSRXConstants.kTimeoutMs);
-		this.elevatorMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkD, TalonSRXConstants.kTimeoutMs);
+		elevatorMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkF, TalonSRXConstants.kTimeoutMs);
+		elevatorMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkP, TalonSRXConstants.kTimeoutMs);
+		elevatorMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkI, TalonSRXConstants.kTimeoutMs);
+		elevatorMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkD, TalonSRXConstants.kTimeoutMs);
 
 		this.elevatorMotor.setSensorPhase(true);
 		this.elevatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
@@ -50,7 +49,7 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void extend(double magnitude) {
-		if (isAtExtensionLimit()) {
+		if (isAtExtensionLimit() && Robot.OPERATION_PANEL.getButtonValue(ButtonCode.ELEVATORDOUBLEOVERRIDEEXTEND) == false) {
 			stop();
 		} else {
 			set(magnitude);
@@ -58,7 +57,7 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void retract(double magnitude) {
-		if (isAtRetractionLimit()) {
+		if (isAtRetractionLimit() && Robot.OPERATION_PANEL.getButtonValue(ButtonCode.ELEVATORDOUBLEOVERRIDERETRACT) == false) {
 			stop();
 		} else {
 			set(-1 * magnitude);
@@ -299,26 +298,23 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public boolean getIsRetractedBeforeEncoderPosition(int encoderPosition) {
-		boolean isPastMidway = false;
-
 		if (getEncoderPosition() < encoderPosition - Calibrations.ELEVATOR_AT_POSITION_BUFFER) {
-			isPastMidway = true;
+			return true;
 		}
 
-		return isPastMidway;
+		return false;
 	}
 
 	public boolean getIsAtPosition(int encoderPosition) {
-		boolean isAtMidway = false;
 
 		boolean notOverExtended = getIsExtendedPastEncoderPosition(encoderPosition);
 		boolean notOverRetracted = getIsRetractedBeforeEncoderPosition(encoderPosition);
 
 		if (notOverExtended == false && notOverRetracted == false) {
-			isAtMidway = true;
+			return true;
 		}
 
-		return isAtMidway;
+		return false;
 	}
 
 	public void resetSafetyTimer() {

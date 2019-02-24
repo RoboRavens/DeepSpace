@@ -14,36 +14,36 @@ import frc.robot.Robot;
 public class CargoWheelSuckOrSpitCommand extends Command {
   private double _magnitude;
   private String _suckOrSpit;
-  private Timer timer;
+  private Timer _timer;
 
   public CargoWheelSuckOrSpitCommand(double magnitude, String suckOrSpit) {
     requires(Robot.CARGO_WHEEL_SUBSYSTEM);
-    this._magnitude = magnitude;
-    this._suckOrSpit = suckOrSpit;
+    _magnitude = magnitude;
+    _suckOrSpit = suckOrSpit;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    timer.reset();
-    timer.start();
+    _timer.reset();
+    _timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (this._suckOrSpit == "Suck" || this._suckOrSpit == "suck") {
-      Robot.CARGO_WHEEL_SUBSYSTEM.suck(this._magnitude);
+    if (_suckOrSpit == "Suck" || _suckOrSpit == "suck") {
+      Robot.CARGO_WHEEL_SUBSYSTEM.suck(_magnitude);
     }
-    if (this._suckOrSpit == "Spit" || this._suckOrSpit == "spit") {
-      Robot.CARGO_WHEEL_SUBSYSTEM.spit(this._magnitude);
+    if (_suckOrSpit == "Spit" || _suckOrSpit == "spit") {
+      Robot.CARGO_WHEEL_SUBSYSTEM.spit(_magnitude);
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (timer.get() > 1.0) {
+    if (_timer.get() > 1.0) {
       return true;
     }
     return false;

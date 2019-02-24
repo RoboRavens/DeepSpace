@@ -32,13 +32,9 @@ public class RavenTank {
 	private boolean _cutPower;
 	protected double gyroTargetHeading;
 
-	protected double targetNetInchesTraveled = 0;
 	protected boolean automatedDrivingEnabled = false;
 	protected int automatedDrivingDirection = Calibrations.drivingForward;
 	protected double automatedDrivingSpeed = 0;
-
-	protected double leftEncoderReferencePoint = 0;
-	protected double rightEncoderReferencePoint = 0;
 
 	protected boolean hasHitObstacle = false;
 	protected boolean drivingThroughObstacle = false;
@@ -53,10 +49,6 @@ public class RavenTank {
 	RavenTalon driveLeft = new RavenTalon(RobotMap.leftDriveChannel, "MotorLeft", _slewRate, RobotMap.leftFollower1, RobotMap.leftFollower2);
 	RavenTalon driveRight = new RavenTalon(RobotMap.rightDriveChannel, "MotorRight", _slewRate, RobotMap.rightFollower1, RobotMap.rightFollower2);
 
-	protected boolean isInHighGear = Calibrations.driveTrainStartingIsInHighGear;
-
-	RavenLighting shiftedToLowGearLighting;
-
 	public RavenTank() {
 		initializeRavenTank();
 	}
@@ -65,9 +57,9 @@ public class RavenTank {
 		_slewRate = Calibrations.slewRateMaximum;
 
 		Encoder leftWpiEncoder = new Encoder(RobotMap.leftDriveEncoder1, RobotMap.leftDriveEncoder2);
-        Encoder rightWpiEncoder = new Encoder(RobotMap.rightDriveEncoder1, RobotMap.rightDriveEncoder2);
-        leftRavenEncoder = new RavenEncoder(leftWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
-        rightRavenEncoder = new RavenEncoder(rightWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
+		Encoder rightWpiEncoder = new Encoder(RobotMap.rightDriveEncoder1, RobotMap.rightDriveEncoder2);
+		leftRavenEncoder = new RavenEncoder(leftWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
+		rightRavenEncoder = new RavenEncoder(rightWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
 
 		gyroCooldownTimer = new Timer();
 
@@ -103,7 +95,7 @@ public class RavenTank {
 	}
 
 	public void resetGyroAdjustmentScaleFactor() {
-		this.setGyroAdjustmentScaleFactor(Calibrations.gyroAdjustmentDefaultScaleFactor);
+		setGyroAdjustmentScaleFactor(Calibrations.gyroAdjustmentDefaultScaleFactor);
 	}
 
 	public double deadband(double input) {
@@ -118,8 +110,8 @@ public class RavenTank {
 
 	public void setSlewRate(double slewRate) {
 		_slewRate = slewRate;
-		this.driveRight.setSlewRate(_slewRate);
-		this.driveLeft.setSlewRate(_slewRate);
+		driveRight.setSlewRate(_slewRate);
+		driveLeft.setSlewRate(_slewRate);
 	}
 
 	public void setMaxPower(double maxPower) {
@@ -128,8 +120,8 @@ public class RavenTank {
 	}
 
 	public void resetDriveEncoders() {
-		this.leftRavenEncoder.resetEncoder();
-		this.rightRavenEncoder.resetEncoder();
+		leftRavenEncoder.resetEncoder();
+		rightRavenEncoder.resetEncoder();
 	}
 
 	public void drive(double left, double rightY, double rightX) {
@@ -249,8 +241,8 @@ public class RavenTank {
 	}
 
 	public void driveRightSide(double magnitude) {
-		driveRight.set(magnitude);
 		// System.out.println("Driving right side. Magnitude: " + magnitude);
+		driveRight.set(magnitude);
 	}
 
 	public double getScaledTurnFromTranslation(double translation, double turn) {
@@ -261,9 +253,7 @@ public class RavenTank {
 		return netTurn;
 	}
 
-	public void driveOutput() {
-
-	}
+	public void driveOutput() {}
 
 	public double getDriveGyro() {
 		// System.out.println("Gyro angle: " + Math.round(orientationGyro.getAngle()) + " Gyro mode: " + gyroMode);
@@ -402,9 +392,7 @@ public class RavenTank {
 	 */
 
 	public void turnRelativeDegrees(double degrees) {
-
 		this.setGyroTargetHeading(this.gyroTargetHeading + degrees);
-
 	}
 
 	public void enableAutomatedDriving(int direction, double speed) {
@@ -475,7 +463,6 @@ public class RavenTank {
 			automatedDrivingEnabled = false;
 			turning = false;
 		}
-
 	}
 
 	public double getCurrentHeading() {
@@ -499,7 +486,7 @@ public class RavenTank {
 	}
 
 	public double getSlewRate() {
-		return this._slewRate;
+		return _slewRate;
 	}
 
 	/*
@@ -521,7 +508,6 @@ public class RavenTank {
 
 	public void resetOrientationGyro() {
 		orientationGyro.reset();
-
 	}
 
 	public double getGyroAngle() {
