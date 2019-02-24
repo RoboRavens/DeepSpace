@@ -78,7 +78,7 @@ public class Calibrations {
     
 
 	//ELEVATOR
-	public static final double elevatorHoldPositionPowerMagnitude = .15;
+	public static final double elevatorHoldPositionPowerMagnitude = .13;
 
 	public static final double elevatorkF = Calibrations.elevatorHoldPositionPowerMagnitude;
     public static final double elevatorkP = 12.0;
@@ -88,16 +88,16 @@ public class Calibrations {
 	public static final double elevatorWheelDiameterInches = 1.25;
 	
 	public static final int elevatorEncoderMinimumValue = 0;
-    public static final int elevatorEncoderMaximumValue = 51000;
+    public static final int elevatorEncoderMaximumValue = 53000;
 
-    public static final int elevatorLowHatchEncoderValue = 8000;
-    public static final int elevatorMidHatchEncoderValue = 27000;
-    public static final int elevatorHighHatchEncoderValue = 33200;
+    public static final int elevatorLowHatchEncoderValue = 0;
+    public static final int elevatorMidHatchEncoderValue = 21000;
+    public static final int elevatorHighHatchEncoderValue = 40000;
 
-    public static final int elevatorCargoShipPortEncoderValue = 31000;
-    public static final int elevatorLowRocketPortEncoderValue = 20000;
-    public static final int elevatorMidRocketPortEncoderValue = 45000;
-    public static final int elevatorHighRocketPortEncoderValue = 50000;
+    public static final int elevatorCargoShipPortEncoderValue = 35800;
+    public static final int elevatorLowRocketPortEncoderValue = 17000;
+    public static final int elevatorMidRocketPortEncoderValue = 47500;
+    public static final int elevatorHighRocketPortEncoderValue = 50300;
 
     // The safety margin is how far away from the end of travel the encoders will stop the lift.
 	// At low speeds (max of .3), and a lift max value of 30k, 1500 maxes out the elevator.
@@ -126,14 +126,14 @@ public class Calibrations {
 	public static final int armEncoderRetractedValue = 0;
     public static final int armEncoderExtendedValue = 10000;
 
-    public static final int armLowHatchEncoderValue = 2500;
-    public static final int armMidHatchEncoderValue = 5000;
+    public static final int armLowHatchEncoderValue = 10000;
+    public static final int armMidHatchEncoderValue = 10000;
     public static final int armHighHatchEncoderValue = 1600;
 
     public static final int armCargoShipPortEncoderValue = 2000;
     public static final int armLowRocketPortEncoderValue = 6000;
     public static final int armMidRocketPortEncoderValue = 8000;
-    public static final int armHighRocketPortEncoderValue = 11000;
+    public static final int armHighRocketPortEncoderValue = 0;
 
 	public static final int ARM_ENCODER_BUFFER = 300;
 	// This value represents the buffer that the arm can be *on either side* of midway,
