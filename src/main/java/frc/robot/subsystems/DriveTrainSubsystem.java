@@ -6,6 +6,7 @@ import frc.ravenhardware.RavenTank;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveFPSCommand;
+import frc.util.NetworkTableDiagnostics;
 import frc.util.PCDashboardDiagnostics;
 
 /**
@@ -38,11 +39,11 @@ public class DriveTrainSubsystem extends Subsystem {
 		slewRate = Math.min(Calibrations.slewRateMaximum, slewRate);
 		this.ravenTank.setSlewRate(slewRate);
 
-		PCDashboardDiagnostics.SubsystemNumber("DriveTrain", "PowerMax", maxPower);
-		PCDashboardDiagnostics.SubsystemNumber("DriveTrain", "EncoderLeftInchesTraveled", this.ravenTank.leftRavenEncoder.getNetInchesTraveled());
-		PCDashboardDiagnostics.SubsystemNumber("DriveTrain", "EncoderRightInchesTraveled", this.ravenTank.rightRavenEncoder.getNetInchesTraveled());
-		PCDashboardDiagnostics.SubsystemNumber("DriveTrain", "EncoderAvgInchesTraveled", Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled());
+		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "PowerMax", () -> maxPower);
+		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderLeftInchesTraveled", () -> this.ravenTank.leftRavenEncoder.getNetInchesTraveled());
+		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderRightInchesTraveled", () -> this.ravenTank.rightRavenEncoder.getNetInchesTraveled());
+		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderAvgInchesTraveled", () -> Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled());
 		PCDashboardDiagnostics.SubsystemNumber("DriveTrain", "SlewRate", slewRate);
-		PCDashboardDiagnostics.SubsystemBoolean("DriveTrain", "CutPower", this.ravenTank.getCutPower());
+		NetworkTableDiagnostics.SubsystemBoolean("DriveTrain", "CutPower", () -> this.ravenTank.getCutPower());
 	}
 }

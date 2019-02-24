@@ -8,7 +8,7 @@ import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
 import frc.robot.commands.drivetrain.DriveTrainStopCommand;
-import frc.util.PCDashboardDiagnostics;
+import frc.util.NetworkTableDiagnostics;
 
 /**
  *
@@ -29,6 +29,7 @@ public class LimelightSubsystem extends Subsystem {
   	private double _distanceDesiredFromTarget = 0.0;
   	private double _distanceToDrive = 0.0;
 	private int _direction = 0;
+	private double _newHeading;
   	double timeoutSeconds = Calibrations.DriveTrainDriveInchesSafetyTimerSeconds;
   	DriveTrainDriveInchesCommand driveTrainDriveInchesCommand = new DriveTrainDriveInchesCommand(_distanceToDrive, _powerMagnitude, _direction);
 
@@ -41,13 +42,14 @@ public class LimelightSubsystem extends Subsystem {
 	public void periodic() {
 		table.getEntry("ledMode").setNumber(0);
 		table.getEntry("camMode").setNumber(0);
-		PCDashboardDiagnostics.SubsystemNumber("Limelight", "TargetArea", this.getTargetArea());
-		PCDashboardDiagnostics.SubsystemNumber("Limelight", "angleOffHorizontal", this.angleOffHorizontal());
-		PCDashboardDiagnostics.SubsystemNumber("Limelight", "angleOffVertical", this.angleOffVertical());
-		PCDashboardDiagnostics.SubsystemBoolean("Limelight", "hasTarget", this.hasTarget());
-		PCDashboardDiagnostics.AdHocNumber("Vision Tracking Distance (Inches)", (_heightDifference / _angleToTargetFromHorizontal));
-		PCDashboardDiagnostics.AdHocNumber("Height Difference", _heightDifference);
-		PCDashboardDiagnostics.AdHocNumber("Angle From Crosshair to Target", _angleToTargetFromHorizontal);
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "TargetArea", () -> this.getTargetArea());
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "angleOffHorizontal", () -> this.angleOffHorizontal());
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "angleOffVertical", () -> this.angleOffVertical());
+		NetworkTableDiagnostics.SubsystemBoolean("Limelight", "hasTarget", () -> this.hasTarget());
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "Vision Tracking Distance (Inches)", () -> (_heightDifference / _angleToTargetFromHorizontal));
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "Height Difference", () -> _heightDifference);
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "Angle From Crosshair to Target", () -> _angleToTargetFromHorizontal);
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "Limelight Heading", () -> _newHeading);
 	
 		bufferedAngleOffHorizontal.maintainState(this.angleOffHorizontal());
 	}
@@ -83,12 +85,13 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void turnToTarget() {
-		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + (tx.getDouble(0.0) - 12));
+		_newHeading = Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + (tx.getDouble(0.0));
+		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(_newHeading);
 	}
 
 	public void bufferedTurnToTarget() {
-		double newHeading = Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + bufferedAngleOffHorizontal.getMedian();
-		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(newHeading);
+		_newHeading = Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + bufferedAngleOffHorizontal.getMedian();
+		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(_newHeading);
 	}
 
 	public void driveToTarget(double distanceDesiredFromTarget) {

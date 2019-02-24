@@ -4,7 +4,7 @@ import frc.ravenhardware.BufferedDigitalInput;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.cargowheel.CargoWheelStopCommand;
-import frc.util.PCDashboardDiagnostics;
+import frc.util.NetworkTableDiagnostics;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Relay.Value;
@@ -65,9 +65,9 @@ public class CargoWheelSubsystem extends Subsystem {
 	public void periodic() {
 		_cargoSensor.maintainState();
 
-		PCDashboardDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", this.hasCargo());
-		PCDashboardDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoSensorRaw", _cargoSensor.get());
-		//PCDashboardDiagnostics.SubsystemNumber("CargoWheel", "MotorOutputPercent", cargoMotor.getMotorOutputPercent());
+		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", () -> this.hasCargo());
+		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoSensorRaw", () -> _cargoSensor.get());
+		//NetworkTableDiagnostics.SubsystemNumber("CargoWheel", "MotorOutputPercent", cargoMotor.getMotorOutputPercent());
 
 		if (this.hasCargo() == false) {
 			_hasCargoDurationTimer.reset();
