@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Relay.Value;
-import frc.util.PCDashboardDiagnostics;
+import frc.util.NetworkTableDiagnostics;
 import frc.robot.RobotMap;
 import frc.ravenhardware.BufferedDigitalInput;
 
@@ -29,7 +29,9 @@ public class BeakSubsystem extends Subsystem {
     _beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);
     _beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
 		_hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
-		_hasHatchPanelDurationTimer.start();
+    _hasHatchPanelDurationTimer.start();
+    
+    NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel",() ->  this.hasHatchPanel());
   }
 
   public void initDefaultCommand() {
@@ -51,8 +53,6 @@ public class BeakSubsystem extends Subsystem {
       _hasHatchPanelDurationTimer.reset();
       Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kOff);    
     }
-    
-    PCDashboardDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", this.hasHatchPanel());
   }
   
 

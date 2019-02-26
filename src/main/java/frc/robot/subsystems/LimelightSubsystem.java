@@ -8,7 +8,7 @@ import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
 import frc.robot.commands.drivetrain.DriveTrainStopCommand;
-import frc.util.PCDashboardDiagnostics;
+import frc.util.NetworkTableDiagnostics;
 
 /**
  *
@@ -34,6 +34,16 @@ public class LimelightSubsystem extends Subsystem {
 
 	private BufferedValue bufferedAngleOffHorizontal = new BufferedValue(9);
 
+	public LimelightSubsystem() {
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "TargetArea", () -> this.getTargetArea());
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "angleOffHorizontal", () -> this.angleOffHorizontal());
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "angleOffVertical", () -> this.angleOffVertical());
+		NetworkTableDiagnostics.SubsystemBoolean("Limelight", "hasTarget", () -> this.hasTarget());
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "Vision Tracking Distance (Inches)", () -> (_heightDifference / _angleToTargetFromHorizontal));
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "Height Difference", () -> _heightDifference);
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "Angle From Crosshair to Target", () -> _angleToTargetFromHorizontal);
+	}
+
 	public void initDefaultCommand() {
 
 	}
@@ -41,13 +51,6 @@ public class LimelightSubsystem extends Subsystem {
 	public void periodic() {
 		table.getEntry("ledMode").setNumber(0);
 		table.getEntry("camMode").setNumber(0);
-		PCDashboardDiagnostics.SubsystemNumber("Limelight", "TargetArea", this.getTargetArea());
-		PCDashboardDiagnostics.SubsystemNumber("Limelight", "angleOffHorizontal", this.angleOffHorizontal());
-		PCDashboardDiagnostics.SubsystemNumber("Limelight", "angleOffVertical", this.angleOffVertical());
-		PCDashboardDiagnostics.SubsystemBoolean("Limelight", "hasTarget", this.hasTarget());
-		PCDashboardDiagnostics.AdHocNumber("Vision Tracking Distance (Inches)", (_heightDifference / _angleToTargetFromHorizontal));
-		PCDashboardDiagnostics.AdHocNumber("Height Difference", _heightDifference);
-		PCDashboardDiagnostics.AdHocNumber("Angle From Crosshair to Target", _angleToTargetFromHorizontal);
 	
 		bufferedAngleOffHorizontal.maintainState(this.angleOffHorizontal());
 	}
