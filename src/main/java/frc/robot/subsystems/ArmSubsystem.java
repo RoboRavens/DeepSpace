@@ -28,7 +28,7 @@ public class ArmSubsystem extends Subsystem {
 
 	public ArmSubsystem() {
 		armMotor = new TalonSRX(RobotMap.armMotor);
-		armMotor.setSensorPhase(true);
+		armMotor.setSensorPhase(false);
 		_armRetractionLimitSwitch = new BufferedDigitalInput(RobotMap.armRetractionLimitSwitch);
 		_armExtensionLimitSwitch = new BufferedDigitalInput(RobotMap.armExtensionLimitSwitch);
 		armMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkF, TalonSRXConstants.kTimeoutMs);

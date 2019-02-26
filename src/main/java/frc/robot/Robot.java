@@ -350,7 +350,7 @@ public class Robot extends TimedRobot {
 		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakReleaseHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whileHeld(new CargoWheelSpitCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new BeakCaptureHatchPanelCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSuckCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.A).whileHeld(new CargoWheelSuckCommand());
 
 		//DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new DriveTrainTurnTargetCommand());
 		/*if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > 0.5) {
