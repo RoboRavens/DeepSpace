@@ -25,6 +25,7 @@ public class LimelightSubsystem extends Subsystem {
 	private double _heightDifference = Calibrations.FLOOR_TO_TARGET_CENTER_HEIGHT - Calibrations.FLOOR_TO_LIMELIGHT_LENS_HEIGHT;
 	private double _angleToTargetFromHorizontal = Math.tan(Math.toRadians(Calibrations.CAMERA_ANGLE_OFFSET_FROM_HORIZONTAL + ty.getDouble(0.0)));
 	private double _inchesToTarget = _heightDifference/_angleToTargetFromHorizontal;
+	private double _targetAngle = 90 - (Math.acos(Calibrations.LIMELIGHT_LENS_TO_ROBOT_CENTER_OFFSET_INCHES/_inchesToTarget));
 	private double _powerMagnitude = 0.0;
   	private double _distanceDesiredFromTarget = 0.0;
   	private double _distanceToDrive = 0.0;

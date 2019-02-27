@@ -158,6 +158,7 @@ public class Calibrations {
 	public static final double CAMERA_ANGLE_OFFSET_FROM_HORIZONTAL = 27.75;
 	public static final double MINIMUM_DISTANCE_FROM_LIMELIGHT = 46.0;
 	public static final double MAXIMUM_DISTANCE_FROM_LIMELIGHT = 240.0;
+	public static final double LIMELIGHT_LENS_TO_ROBOT_CENTER_OFFSET_INCHES = 5;
 	public static final int desiredTargetBuffer = 16;
 	public static final int distanceDesiredFromHPS = 72;
 	public static final int distanceDesiredFromRocket = 72;
