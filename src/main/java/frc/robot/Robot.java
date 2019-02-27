@@ -105,6 +105,8 @@ public class Robot extends TimedRobot {
 	public static final OverrideSystem OVERRIDE_SYSTEM_ELEVATOR_RETRACT = new OverrideSystem();
 	public static final OverrideSystem OVERRIDE_SYSTEM_ARM_RETRACT = new OverrideSystem();
 	public static final OverrideSystem OVERRIDE_SYSTEM_CARGO = new OverrideSystem();
+	public static final OverrideSystem OVERRIDE_SYSTEM_CLIMBER_EXTEND = new OverrideSystem();
+	public static final OverrideSystem OVERRIDE_SYSTEM_CLIMBER_RETRACT = new OverrideSystem();
 
 	Command autonomousCommand;
 
@@ -347,10 +349,14 @@ public class Robot extends TimedRobot {
 	}
 
 	public void setupDriveController() {
-		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakReleaseHatchPanelCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whileHeld(new CargoWheelSpitCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new BeakCaptureHatchPanelCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.A).whileHeld(new CargoWheelSuckCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new BeakReleaseHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSpitCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new CargoWheelSuckCommand());
+
+		if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
+			new DriveTrainDriveLimeLightCommand();
+		}
 
 		//DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new DriveTrainTurnTargetCommand());
 		/*if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > 0.5) {
@@ -359,7 +365,7 @@ public class Robot extends TimedRobot {
 		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new SetCutPowerTrue());//was new SetGyroTargetHeading(180)
 		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenReleased(new SetCutPowerFalse());
 
-		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new DriveTrainDriveLimeLightCommand());
+		//DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new DriveTrainDriveLimeLightCommand());
 	}
 
 	public void setupOperationPanel() {

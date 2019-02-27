@@ -113,7 +113,35 @@ public class Calibrations {
     public static final double ELEVATOR_SAFETY_TIMER_TIMEOUT = 5;
 	
 	public static final int elevatorInchesToEncoderTicksConversionValue = 411;
-    public static final int elevatorInchesToEncoderTicksOffsetValue = 10;
+	public static final int elevatorInchesToEncoderTicksOffsetValue = 10;
+	
+
+	//CLIMBER (ALL VALUES ARE INCORRECT)
+	public static final double climberHoldPositionPowerMagnitude = .13;
+
+	public static final double climberkF = Calibrations.climberHoldPositionPowerMagnitude;
+    public static final double climberkP = 12.0;
+    public static final double climberkI = 0.0;
+    public static final double climberkD = 230.0;
+	
+	public static final int climberEncoderMinimumValue = 0;
+    public static final int climberEncoderMaximumValue = 53000;
+
+    // The safety margin is how far away from the end of travel the encoders will stop the lift.
+	// At low speeds (max of .3), and a lift max value of 30k, 1500 maxes out the climber.
+	// At higher speeds, a higher value is needed because the climber will overshoot the target until we have PID.
+	
+	public static final int climberLiftUpwardSafetyMargin = 400;
+	public static final int climberLiftDownwardSafetyMargin = 400;
+	public static final int CLIMBER_AT_POSITION_BUFFER = 500;
+	
+	public static final double climberConsideredMovingEncoderRate = 0;
+	
+    public static final double CLIMBER_MOVE_TO_POSITION_TIMEOUT = 2;
+    public static final double CLIMBER_SAFETY_TIMER_TIMEOUT = 5;
+	
+	public static final int climberInchesToEncoderTicksConversionValue = 411;
+    public static final int climberInchesToEncoderTicksOffsetValue = 10;
 	
 
 	//ARM
