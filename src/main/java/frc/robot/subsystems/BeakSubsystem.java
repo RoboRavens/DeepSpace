@@ -30,7 +30,9 @@ public class BeakSubsystem extends Subsystem {
     _beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);
     _beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
 		_hatchPanelSensor = new DigitalInput(RobotMap.hatchPanelSensor);
-		_hasHatchPanelDurationTimer.start();
+    _hasHatchPanelDurationTimer.start();
+    
+    NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", () -> hasHatchPanel());
   }
 
   public void initDefaultCommand() {
@@ -42,8 +44,6 @@ public class BeakSubsystem extends Subsystem {
   }
   
   public void periodic()  {
-    NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", () -> hasHatchPanel());
-
 		if (hasHatchPanel()) {
 			Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kForward);
 		} else {

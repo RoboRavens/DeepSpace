@@ -13,7 +13,7 @@ import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.elevator.ElevatorHoldPositionCommand;
-import frc.util.PCDashboardDiagnostics;
+import frc.util.NetworkTableDiagnostics;
 import frc.robot.TalonSRXConstants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
@@ -42,6 +42,8 @@ public class ElevatorSubsystem extends Subsystem {
 
 		/* Don't neutral motor if remote limit source is not available */
 		this.elevatorMotor.configLimitSwitchDisableNeutralOnLOS(true, TalonSRXConstants.kTimeoutMs);
+
+		this.registerDiagnostics();
 	}
 
 	public void initDefaultCommand() {
@@ -95,26 +97,25 @@ public class ElevatorSubsystem extends Subsystem {
 		this.isAtExtensionLimit();
 		this.isAtRetractionLimit();
 
-		elevatorSubsystemDiagnostics();
 		checkExpectedSpeedVersusPower();
 	}
 
-	public void elevatorSubsystemDiagnostics() {
-		PCDashboardDiagnostics.SubsystemNumber("Elevator", "Encoder", getEncoderPosition());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitEncoderExtended", isEncoderAtExtensionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitEncoderRetracted", isEncoderAtRetractionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchExtended", getElevatorExtensionLimitSwitchValue());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchRetracted", getElevatorRetractionLimitSwitchValue());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitFinalExtension", isAtExtensionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitFinalRetraction", isAtRetractionLimit());
+	public void registerDiagnostics() {
+		NetworkTableDiagnostics.SubsystemNumber("Elevator", "Encoder", () -> getEncoderPosition());
+		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "LimitEncoderExtended", () -> isEncoderAtExtensionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "LimitEncoderRetracted", () -> isEncoderAtRetractionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchExtended", () -> getElevatorExtensionLimitSwitchValue());
+		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchRetracted", () -> getElevatorRetractionLimitSwitchValue());
+		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "LimitFinalExtension", () -> isAtExtensionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "LimitFinalRetraction", () -> isAtRetractionLimit());
 
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "OverrideExtend", Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND.getOverride1());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "OverrideRetract", Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT.getOverride1());
+		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "OverrideExtend", () -> Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND.getOverride1());
+		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "OverrideRetract", () -> Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT.getOverride1());
 		// Measure power sent to elevator
-		PCDashboardDiagnostics.SubsystemNumber("Elevator", "EncoderExpectedPower", _expectedPower);
+		NetworkTableDiagnostics.SubsystemNumber("Elevator", "EncoderExpectedPower", () -> _expectedPower);
 
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchAndEncoderAgreeRetracted", encoderAndLimitsMatchRetracted());
-		PCDashboardDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchAndEncoderAgreeExtended", encoderAndLimitsMatchExtended());
+		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchAndEncoderAgreeRetracted", () -> encoderAndLimitsMatchRetracted());
+		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "LimitSwitchAndEncoderAgreeExtended", () -> encoderAndLimitsMatchExtended());
 	}
 
 	public boolean encoderAndLimitsMatchRetracted() {

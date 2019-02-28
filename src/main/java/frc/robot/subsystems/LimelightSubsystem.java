@@ -8,6 +8,7 @@ import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
 import frc.robot.commands.drivetrain.DriveTrainStopCommand;
+import frc.util.NetworkTableDiagnostics;
 import frc.util.PCDashboardDiagnostics;
 
 /**
@@ -33,9 +34,21 @@ public class LimelightSubsystem extends Subsystem {
 	private int _direction = 0;
 	private double _offsetFromTargetAngle = 0.0;
   	double timeoutSeconds = Calibrations.DriveTrainDriveInchesSafetyTimerSeconds;
-	  DriveTrainDriveInchesCommand driveTrainDriveInchesCommand = new DriveTrainDriveInchesCommand(_distanceToDrive, _powerMagnitude, _direction);
+	DriveTrainDriveInchesCommand driveTrainDriveInchesCommand = new DriveTrainDriveInchesCommand(_distanceToDrive, _powerMagnitude, _direction);
 
 	private BufferedValue bufferedAngleOffHorizontal = new BufferedValue(9);
+
+	public LimelightSubsystem() {
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "TargetArea", () -> this.getTargetArea());
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "angleOffHorizontal", () -> this.angleOffHorizontal());
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "angleOffVertical", () -> this.angleOffVertical());
+		NetworkTableDiagnostics.SubsystemBoolean("Limelight", "hasTarget", () -> this.hasTarget());
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "Vision Tracking Distance (Inches)", () -> _inchesToTarget);
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "Height Difference", () -> _heightDifference);
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "Angle From Crosshair to Target", () -> _angleToTargetFromHorizontal);
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "TargetAngle", () -> _targetAngle);
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "TargetAngleOffset", () -> _offsetFromTargetAngle);
+	}
 
 	public void initDefaultCommand() {
 
@@ -57,15 +70,6 @@ public class LimelightSubsystem extends Subsystem {
 
 		table.getEntry("ledMode").setNumber(0);
 		table.getEntry("camMode").setNumber(0);
-		PCDashboardDiagnostics.SubsystemNumber("Limelight", "TargetArea", this.getTargetArea());
-		PCDashboardDiagnostics.SubsystemNumber("Limelight", "angleOffHorizontal", this.angleOffHorizontal());
-		PCDashboardDiagnostics.SubsystemNumber("Limelight", "angleOffVertical", this.angleOffVertical());
-		PCDashboardDiagnostics.SubsystemBoolean("Limelight", "hasTarget", this.hasTarget());
-		PCDashboardDiagnostics.AdHocNumber("Vision Tracking Distance (Inches)", (_inchesToTarget));
-		PCDashboardDiagnostics.AdHocNumber("Height Difference", _heightDifference);
-		PCDashboardDiagnostics.AdHocNumber("Angle From Crosshair to Target", _angleToTargetFromHorizontal);
-		PCDashboardDiagnostics.AdHocNumber("TargetAngle", _targetAngle);
-		PCDashboardDiagnostics.AdHocNumber("TargetAngleOffset", _offsetFromTargetAngle);
 	
 		bufferedAngleOffHorizontal.maintainState(this.angleOffHorizontal());
 	}
