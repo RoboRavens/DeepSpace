@@ -28,20 +28,21 @@ import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
 import frc.robot.commands.arm.ArmMoveToHeightCommand;
 import frc.robot.commands.arm.ArmRetractWhileHeldCommand;
 import frc.robot.commands.automatedscoring.RunAutomatedCommand;
-import frc.robot.commands.automatedscoring.SetCargoOrHatchPanelCommand;
-import frc.robot.commands.automatedscoring.SetLocationCargoShipCommand;
-import frc.robot.commands.automatedscoring.SetLocationRocketCommand;
-import frc.robot.commands.automatedscoring.SetRocketHeightHighCommand;
-import frc.robot.commands.automatedscoring.SetRocketHeightLowCommand;
-import frc.robot.commands.automatedscoring.SetRocketHeightMidCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
+import frc.robot.commands.hatchpanel.HatchPanelScoreHighRocketCommand;
+import frc.robot.commands.hatchpanel.HatchPanelScoreLowCommand;
+import frc.robot.commands.hatchpanel.HatchPanelScoreMidRocketCommand;
 import frc.robot.commands.misc.SetOverride1Command;
 import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
 import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
+import frc.robot.commands.cargo.CargoScoreCargoShipCommand;
+import frc.robot.commands.cargo.CargoScoreHighRocketCommand;
+import frc.robot.commands.cargo.CargoScoreLowRocketCommand;
+import frc.robot.commands.cargo.CargoScoreMidRocketCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.BeakSubsystem;
 import frc.robot.subsystems.CargoWheelSubsystem;
@@ -104,6 +105,8 @@ public class Robot extends TimedRobot {
 	public static final OverrideSystem OVERRIDE_SYSTEM_ELEVATOR_RETRACT = new OverrideSystem();
 	public static final OverrideSystem OVERRIDE_SYSTEM_ARM_RETRACT = new OverrideSystem();
 	public static final OverrideSystem OVERRIDE_SYSTEM_CARGO = new OverrideSystem();
+	public static final OverrideSystem OVERRIDE_SYSTEM_CLIMBER_EXTEND = new OverrideSystem();
+	public static final OverrideSystem OVERRIDE_SYSTEM_CLIMBER_RETRACT = new OverrideSystem();
 
 	Command autonomousCommand;
 
@@ -346,10 +349,14 @@ public class Robot extends TimedRobot {
 	}
 
 	public void setupDriveController() {
-		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whenPressed(new BeakReleaseHatchPanelCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.Y).whileHeld(new CargoWheelSpitCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new BeakCaptureHatchPanelCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSuckCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new BeakReleaseHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSpitCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new CargoWheelSuckCommand());
+
+		/*if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
+			new DriveTrainDriveLimeLightCommand();
+		}*/
 
 		//DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new DriveTrainTurnTargetCommand());
 		/*if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > 0.5) {
@@ -358,7 +365,7 @@ public class Robot extends TimedRobot {
 		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new SetCutPowerTrue());//was new SetGyroTargetHeading(180)
 		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenReleased(new SetCutPowerFalse());
 
-		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new DriveTrainDriveLimeLightCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.A).whileHeld(new DriveTrainDriveLimeLightCommand());
 	}
 
 	public void setupOperationPanel() {
@@ -379,23 +386,19 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, true));
 		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, false));
 
-		OPERATION_PANEL_2.getButton(ButtonCode.CARGOSPITOVERRIDE).whileHeld(new CargoWheelSpitCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new BeakReleaseHatchPanelCommand());
+		//OPERATION_PANEL_2.getButton(ButtonCode.CARGOSPITOVERRIDE).whileHeld(new CargoWheelSpitCommand());
+		//OPERATION_PANEL_2.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new BeakReleaseHatchPanelCommand());
 
-		OPERATION_PANEL.getButton(ButtonCode.SETHATCH).whenPressed(new SetCargoOrHatchPanelCommand("Hatch Panel"));
-		OPERATION_PANEL.getButton(ButtonCode.SETCARGO).whenPressed(new SetCargoOrHatchPanelCommand("Cargo"));
-		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONCARGOSHIP).whenPressed(new SetLocationCargoShipCommand());
-		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONROCKET).whenPressed(new SetLocationRocketCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new SetRocketHeightHighCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new SetRocketHeightMidCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new SetRocketHeightLowCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
+		OPERATION_PANEL.getButton(ButtonCode.SETHATCH).whenPressed(new CargoScoreMidRocketCommand());
+		OPERATION_PANEL.getButton(ButtonCode.SETCARGO).whenPressed(new CargoScoreCargoShipCommand());
+		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONCARGOSHIP).whenPressed(new CargoScoreLowRocketCommand());
+		OPERATION_PANEL.getButton(ButtonCode.SETLOCATIONROCKET).whenPressed(new CargoScoreHighRocketCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new HatchPanelScoreHighRocketCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new HatchPanelScoreMidRocketCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new HatchPanelScoreLowCommand());
+		//OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
 
-		OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ArmMoveToHeightCommand(Calibrations.armHighHatchEncoderValue)); //USE WHEN TESTING NEW COMMANDS
-
-		/*if (OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).get() == true) {
-			ARM_SUBSYSTEM.resetEncodersToExtendedLimit();
-		}*/
+		//OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ArmMoveToHeightCommand(Calibrations.armMidHatchEncoderValue)); //USE WHEN TESTING NEW COMMANDS
 	}
 	
 	/**

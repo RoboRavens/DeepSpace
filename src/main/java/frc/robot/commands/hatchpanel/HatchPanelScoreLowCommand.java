@@ -21,7 +21,7 @@ public class HatchPanelScoreLowCommand extends CommandGroup {
     
     addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorLowHatchEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armLowHatchEncoderValue));
-    addSequential(new BeakReleaseHatchPanelCommand());
-    addSequential(new DriveTrainDriveInchesCommand(24, .6, Calibrations.drivingBackward));
+    //addSequential(new BeakReleaseHatchPanelCommand());
+    //addSequential(new DriveTrainDriveInchesCommand(24, .6, Calibrations.drivingBackward));
   }
 }
