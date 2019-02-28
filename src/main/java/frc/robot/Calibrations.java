@@ -25,8 +25,8 @@ public class Calibrations {
 	
 	public static final double cutPowerModeMovementRatio = .3;
 	public static final double cutPowerModeTurnRatio = .5;
-	public static final double gyroAdjustmentDefaultScaleFactor = .03;
-	public static final double driveTrainTurnRelativeDegreesGyroAdjustmentScaleFactor = .009;
+	public static final double gyroAdjustmentDefaultScaleFactor = .05;
+	public static final double driveTrainTurnRelativeDegreesGyroAdjustmentScaleFactor = .03;
 	public static final double gyroCooldownTimerTime = .5;
 	public static final double translationMaxTurnScaling = .5;
 	public static final double gyroAutoTurnAcceptableErrorDegrees = 1;
@@ -78,7 +78,7 @@ public class Calibrations {
     
 
 	//ELEVATOR
-	public static final double elevatorHoldPositionPowerMagnitude = .13;
+	public static final double elevatorHoldPositionPowerMagnitude = .08;
 
 	public static final double elevatorkF = Calibrations.elevatorHoldPositionPowerMagnitude;
     public static final double elevatorkP = 12.0;
@@ -152,10 +152,10 @@ public class Calibrations {
 	public static final double armHoldPositionPowerMagnitude = 0.04;
 	
 	public static final int armEncoderRetractedValue = 0;
-    public static final int armEncoderExtendedValue = 10000;
+    public static final int armEncoderExtendedValue = 7700;
 
-    public static final int armLowHatchEncoderValue = 10000;
-    public static final int armMidHatchEncoderValue = 10000;
+    public static final int armLowHatchEncoderValue = armEncoderExtendedValue;
+    public static final int armMidHatchEncoderValue = armEncoderExtendedValue;
     public static final int armHighHatchEncoderValue = 1600;
 
     public static final int armCargoShipPortEncoderValue = 2000;
@@ -181,12 +181,12 @@ public class Calibrations {
 
 	
 	//LIMELIGHT
-	public static final double FLOOR_TO_LIMELIGHT_LENS_HEIGHT = 7;
+	public static final double FLOOR_TO_LIMELIGHT_LENS_HEIGHT = 21.9;
 	public static final double FLOOR_TO_TARGET_CENTER_HEIGHT = 28.0;
-	public static final double CAMERA_ANGLE_OFFSET_FROM_HORIZONTAL = 27.75;
+	public static final double CAMERA_ANGLE_OFFSET_FROM_HORIZONTAL = 1; // degrees
 	public static final double MINIMUM_DISTANCE_FROM_LIMELIGHT = 46.0;
 	public static final double MAXIMUM_DISTANCE_FROM_LIMELIGHT = 240.0;
-	public static final double LIMELIGHT_LENS_TO_ROBOT_CENTER_OFFSET_INCHES = 5;
+	public static final double LIMELIGHT_LENS_TO_ROBOT_CENTER_OFFSET_INCHES = 8.5;
 	public static final int desiredTargetBuffer = 16;
 	public static final int distanceDesiredFromHPS = 72;
 	public static final int distanceDesiredFromRocket = 72;
