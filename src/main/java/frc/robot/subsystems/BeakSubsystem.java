@@ -50,11 +50,6 @@ public class BeakSubsystem extends Subsystem {
       _hasHatchPanelDurationTimer.reset();
       Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kOff);
     }
-<<<<<<< HEAD
-    
-    NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", () -> this.hasHatchPanel());
-=======
->>>>>>> master
   }
   
 
