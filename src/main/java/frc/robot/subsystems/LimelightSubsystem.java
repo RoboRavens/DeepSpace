@@ -59,7 +59,7 @@ public class LimelightSubsystem extends Subsystem {
 		_inchesToTarget = _heightDifference/_angleToTargetFromHorizontal;
 		_angleComplimenting90 = Calibrations.LIMELIGHT_LENS_TO_ROBOT_CENTER_OFFSET_INCHES/_inchesToTarget;
 		_targetAngle = 90 - Math.toDegrees(Math.acos(_angleComplimenting90));
-		_targetAngle = _targetAngle - 4.2;
+		_targetAngle = _targetAngle - 4.2; // limelight was mounted at a slight angle, this is the correcting number
 		
 		if (this.hasTarget()) {
 			_offsetFromTargetAngle = _targetAngle - angleOffHorizontal();
