@@ -9,10 +9,11 @@ package frc.robot.subsystems;
 
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Relay.Value;
-import frc.util.PCDashboardDiagnostics;
+import frc.util.NetworkTableDiagnostics;
 import frc.robot.RobotMap;
 import frc.ravenhardware.BufferedDigitalInput;
 
@@ -22,13 +23,13 @@ import frc.ravenhardware.BufferedDigitalInput;
 public class BeakSubsystem extends Subsystem {
   private Solenoid _beakCapture;
   private Solenoid _beakRelease;
-  private BufferedDigitalInput _hatchPanelSensor;
+  private DigitalInput _hatchPanelSensor;
   private Timer _hasHatchPanelDurationTimer = new Timer();
 
   public BeakSubsystem() {
     _beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);
     _beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
-		_hatchPanelSensor = new BufferedDigitalInput(RobotMap.hatchPanelSensor);
+		_hatchPanelSensor = new DigitalInput(RobotMap.hatchPanelSensor);
 		_hasHatchPanelDurationTimer.start();
   }
 
@@ -37,22 +38,18 @@ public class BeakSubsystem extends Subsystem {
   }
 
   public boolean hasHatchPanel() {
-  //boolean hasHatchPanel = !hatchPanelSensor.get();
-
-		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(
-      !_hatchPanelSensor.get(), 
-      false); // otherLimit
+		return !_hatchPanelSensor.get();
   }
   
   public void periodic()  {
+    NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", () -> hasHatchPanel());
+
 		if (hasHatchPanel()) {
 			Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kForward);
 		} else {
       _hasHatchPanelDurationTimer.reset();
-      Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kOff);    
+      Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kOff);
     }
-    
-    PCDashboardDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", this.hasHatchPanel());
   }
   
 
