@@ -20,9 +20,9 @@ public class CargoScoreHighRocketCommand extends CommandGroup {
   public CargoScoreHighRocketCommand() {
     addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorHighRocketPortEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armHighRocketPortEncoderValue));
-    addSequential(new CargoWheelSuckOrSpitCommand(Calibrations.cargoSpitPowerMagnitude, "Spit"));
-    addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorEncoderMinimumValue));
-    addParallel(new ArmMoveToHeightCommand(Calibrations.armEncoderRetractedValue));
-    addSequential(new DriveTrainDriveInchesCommand(24, .6, Calibrations.drivingBackward));
+    //addSequential(new CargoWheelSuckOrSpitCommand(Calibrations.cargoSpitPowerMagnitude, "Spit"));
+    //addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorEncoderMinimumValue));
+    //addParallel(new ArmMoveToHeightCommand(Calibrations.armEncoderRetractedValue));
+    //addSequential(new DriveTrainDriveInchesCommand(24, .6, Calibrations.drivingBackward));
   }
 }
