@@ -78,7 +78,8 @@ public class Calibrations {
     
 
 	//ELEVATOR
-	public static final double elevatorHoldPositionPowerMagnitude = .08;
+	// TODO: scale this based on elevator height
+	public static final double elevatorHoldPositionPowerMagnitude = .11;
 
 	public static final double elevatorkF = Calibrations.elevatorHoldPositionPowerMagnitude;
     public static final double elevatorkP = 12.0;
@@ -160,7 +161,7 @@ public class Calibrations {
 
     public static final int armCargoShipPortEncoderValue = 2000;
     public static final int armLowRocketPortEncoderValue = 6000;
-    public static final int armMidRocketPortEncoderValue = 8000;
+    public static final int armMidRocketPortEncoderValue = 6800;
     public static final int armHighRocketPortEncoderValue = 0;
 
 	public static final int ARM_ENCODER_BUFFER = 300;
