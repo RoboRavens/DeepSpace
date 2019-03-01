@@ -17,8 +17,6 @@ import frc.robot.commands.elevator.ElevatorHoldPositionCommand;
 import frc.util.NetworkTableDiagnostics;
 import frc.robot.TalonSRXConstants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 
