@@ -1,4 +1,5 @@
 package frc.robot.commands.elevator;
+import frc.robot.Calibrations;
 import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -18,7 +19,7 @@ public class ElevatorRetractWhileHeldCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ELEVATOR_SUBSYSTEM.retract(0.3);
+        Robot.ELEVATOR_SUBSYSTEM.retract(Calibrations.elevatorRetractPowerMagnitude);
     }
 
     // Make this return true when this Command no longer needs to run execute()

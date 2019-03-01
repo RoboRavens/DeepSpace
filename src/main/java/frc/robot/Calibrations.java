@@ -81,6 +81,9 @@ public class Calibrations {
 	// TODO: scale this based on elevator height
 	public static final double elevatorHoldPositionPowerMagnitude = .11;
 
+	public static final double elevatorExtendPowerMagnitude = 0.5;
+	public static final double elevatorRetractPowerMagnitude = 0.3;
+
 	public static final double elevatorkF = Calibrations.elevatorHoldPositionPowerMagnitude;
     public static final double elevatorkP = 12.0;
     public static final double elevatorkI = 0.0;
@@ -172,9 +175,10 @@ public class Calibrations {
 
 
 	//CARGO WHEEL
-	public static final double cargoWheelSuckPowerMagnitude = 1;
+	public static final double cargoWheelSuckPowerMagnitude = .5;
 	public static final double cargoSpitPowerMagnitude = 1;
 	public static final double cargoDropPowerMagnitude = .5;
+	public static final double cargoHoldPowerMagnitude = 0.25;
 	
 	public static final double AXIS_IS_PRESSED_VALUE = .25;
 

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.ravenhardware.BufferedDigitalInput;
+import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.cargowheel.CargoWheelStopCommand;
@@ -42,7 +43,7 @@ public class CargoWheelSubsystem extends Subsystem {
 	}
 
 	public void hold() {
-		this.set(-0.5);
+		this.set(-1 * Calibrations.cargoHoldPowerMagnitude);
 	}
 
 
