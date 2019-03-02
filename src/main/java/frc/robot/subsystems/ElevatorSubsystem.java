@@ -245,7 +245,7 @@ public class ElevatorSubsystem extends Subsystem {
     	boolean encoderLimit = false;
     	boolean switchLimit = false;
     	
-    	encoderLimit = this.isEncoderAtRetractionLimit();
+		encoderLimit = this.isEncoderAtRetractionLimit();
     	
     	if (this.getElevatorRetractionLimitSwitchValue() == true) {
     		switchLimit = true;

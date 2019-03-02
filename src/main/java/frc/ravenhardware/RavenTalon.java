@@ -25,7 +25,7 @@ public class RavenTalon {
 	// as this enables changing between -1 and 1 in a single tick.
 	protected double maxSlewRate = 2;
 
-	protected double deadband = .05;
+	protected double deadband = .1;
 
 	public RavenTalon(int channel, String name, double slewRate, int follower1, int follower2) {
 		if (Calibrations.UseTalonSRXForDriveController) {

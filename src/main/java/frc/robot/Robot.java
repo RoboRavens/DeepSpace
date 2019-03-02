@@ -25,9 +25,12 @@ import frc.controls.OperationPanel2;
 import frc.ravenhardware.RavenLighting;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
 import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
+import frc.robot.commands.arm.ArmRetractFullyCommand;
 import frc.robot.commands.arm.ArmRetractWhileHeldCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
+import frc.robot.commands.climber.ClimberExtendWhileHeldCommand;
+import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
@@ -124,12 +127,12 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putData("Auto mode", m_chooser);
 		driverStation.getMatchTime();
-		// Zero the elevator encoders; the robot should always start with the elevator
+		// Zero the elevator encoders; the robot should always g with the elevator
 		// down.
 		Robot.ELEVATOR_SUBSYSTEM.resetEncodersToRetractedLimit();
 		Robot.ARM_SUBSYSTEM.resetEncodersToRetractionLimit();
 
-		Robot.BEAK_SUBSYSTEM.capture();
+		Robot.BEAK_SUBSYSTEM.release();
 
 		this.setupDriveController();
 		this.setupOperationPanel();
@@ -151,11 +154,11 @@ public class Robot extends TimedRobot {
 
 	}
 
-	/*public Robot() {
+	public Robot() {
 		server = CameraServer.getInstance();
 		// server.setQuality(Calibrations.cameraQuality);
 		server.startAutomaticCapture();
-	}*/
+	}
 
 	@Override
 	public void disabledPeriodic() {
@@ -166,8 +169,8 @@ public class Robot extends TimedRobot {
 		autoFromDashboard = SmartDashboard.getString("DB/String 0", "myDefaultData");
 		positionFromDashboard = SmartDashboard.getString("DB/String 2", "myDefaultData");
 
-		outputAutoModeToDashboardStringOne(autoFromDashboard);
-		outputPositionToDashboardStringThree(positionFromDashboard);
+		//outputAutoModeToDashboardStringOne(autoFromDashboard);
+		//outputPositionToDashboardStringThree(positionFromDashboard);
 
 		Alliance alliance = driverStation.getAlliance();
 
@@ -193,7 +196,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("DB/String 5", "TBD - Awaiting plates");
 	}
 
-	public void outputAutoModeToDashboardStringOne(String autoMode) {
+	/*public void outputAutoModeToDashboardStringOne(String autoMode) {
 		String autonomousModeConfirmation = "Confirmed - auto mode: ";
 		String autonomousModeName = "";
 
@@ -252,7 +255,7 @@ public class Robot extends TimedRobot {
 		}
 
 		putSmartDashboardStartingPosition(positionConfirmation, startingPosition);
-	}
+	}*/
 
 	public void putSmartDashboardStartingPosition(String positionConfirmation, String startingPosition) {
 		SmartDashboard.putString("DB/String 3", positionConfirmation);
@@ -281,6 +284,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		diagnostics.outputAutonomousDiagnostics();
+		this.teleopPeriodic();
 	}
 
 	@Override
@@ -308,7 +312,7 @@ public class Robot extends TimedRobot {
 		diagnostics.outputTeleopDiagnostics();
 
 		if (DRIVE_TRAIN_SUBSYSTEM.ravenTank.userControlOfCutPower) {
-			if (DRIVE_CONTROLLER.getAxis(AxisCode.RIGHTTRIGGER) > .25) {
+			if (DRIVE_CONTROLLER.getAxis(AxisCode.RIGHTTRIGGER) > .25 || OPERATION_PANEL_2.getButtonValue(ButtonCode.TESTINGBUTTON) == true) {
 				System.out.println("CUT POWER TRUE");
 			  DRIVE_TRAIN_SUBSYSTEM.ravenTank.setCutPower(true);
 			}
@@ -316,7 +320,6 @@ public class Robot extends TimedRobot {
 			  DRIVE_TRAIN_SUBSYSTEM.ravenTank.setCutPower(false);
 			}
 		}
-
 
 		if (getMatchIsAtTime(90)) {
 			LEDBlinkFor2SecondsCommand command = new LEDBlinkFor2SecondsCommand(4, false);
@@ -347,9 +350,9 @@ public class Robot extends TimedRobot {
 	}
 
 	public void setupDriveController() {
-		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new BeakReleaseHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSpitCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakReleaseHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new CargoWheelSuckCommand());
 
 		/*if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
@@ -384,8 +387,8 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, true));
 		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, false));
 
-		//OPERATION_PANEL_2.getButton(ButtonCode.CARGOSPITOVERRIDE).whileHeld(new CargoWheelSpitCommand());
-		//OPERATION_PANEL_2.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new BeakReleaseHatchPanelCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.CARGOSPITOVERRIDE).whileHeld(new ClimberExtendWhileHeldCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whileHeld(new ClimberRetractWhileHeldCommand());
 
 		OPERATION_PANEL.getButton(ButtonCode.SETHATCH).whenPressed(new CargoScoreMidRocketCommand());
 		OPERATION_PANEL.getButton(ButtonCode.SETCARGO).whenPressed(new CargoScoreCargoShipCommand());
@@ -394,9 +397,9 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new HatchPanelScoreHighRocketCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new HatchPanelScoreMidRocketCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new HatchPanelScoreLowCommand());
-		//OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whenPressed(new ArmRetractFullyCommand());
 
-		//OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ArmMoveToHeightCommand(Calibrations.armMidHatchEncoderValue)); //USE WHEN TESTING NEW COMMANDS
+		//OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whileHeld(new SetCutPowerTrue()); //USE WHEN TESTING NEW COMMANDS
 	}
 	
 	/**

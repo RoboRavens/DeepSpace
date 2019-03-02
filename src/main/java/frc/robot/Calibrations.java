@@ -79,7 +79,7 @@ public class Calibrations {
 
 	//ELEVATOR
 	// TODO: scale this based on elevator height
-	public static final double elevatorHoldPositionPowerMagnitude = .11;
+	public static final double elevatorHoldPositionPowerMagnitude = .15;
 
 	public static final double elevatorExtendPowerMagnitude = 0.5;
 	public static final double elevatorRetractPowerMagnitude = 0.3;
@@ -92,16 +92,16 @@ public class Calibrations {
 	public static final double elevatorWheelDiameterInches = 1.25;
 	
 	public static final int elevatorEncoderMinimumValue = 0;
-    public static final int elevatorEncoderMaximumValue = 53000;
+    public static final int elevatorEncoderMaximumValue = 49000;
 
     public static final int elevatorLowHatchEncoderValue = 0;
-    public static final int elevatorMidHatchEncoderValue = 21000;
-    public static final int elevatorHighHatchEncoderValue = 40000;
+    public static final int elevatorMidHatchEncoderValue = 11900;
+    public static final int elevatorHighHatchEncoderValue = 22640;
 
-    public static final int elevatorCargoShipPortEncoderValue = 35800;
-    public static final int elevatorLowRocketPortEncoderValue = 17000;
-    public static final int elevatorMidRocketPortEncoderValue = 47500;
-    public static final int elevatorHighRocketPortEncoderValue = 50300;
+    public static final int elevatorCargoShipPortEncoderValue = 11800;
+    public static final int elevatorLowRocketPortEncoderValue = 9600;
+    public static final int elevatorMidRocketPortEncoderValue = 27000;
+    public static final int elevatorHighRocketPortEncoderValue = 28500;
 
     // The safety margin is how far away from the end of travel the encoders will stop the lift.
 	// At low speeds (max of .3), and a lift max value of 30k, 1500 maxes out the elevator.
@@ -122,6 +122,8 @@ public class Calibrations {
 
 	//CLIMBER (ALL VALUES ARE INCORRECT)
 	public static final double climberHoldPositionPowerMagnitude = .13;
+	public static final double climberExtendPowerMagnitude = .5;
+	public static final double climberRetractPowerMagnitude = .4;
 
 	public static final double climberkF = Calibrations.climberHoldPositionPowerMagnitude;
     public static final double climberkP = 12.0;
@@ -156,13 +158,13 @@ public class Calibrations {
 	public static final double armHoldPositionPowerMagnitude = 0.04;
 	
 	public static final int armEncoderRetractedValue = 0;
-    public static final int armEncoderExtendedValue = 7700;
+    public static final int armEncoderExtendedValue = 9700;
 
     public static final int armLowHatchEncoderValue = armEncoderExtendedValue;
     public static final int armMidHatchEncoderValue = armEncoderExtendedValue;
     public static final int armHighHatchEncoderValue = 1600;
 
-    public static final int armCargoShipPortEncoderValue = 2000;
+    public static final int armCargoShipPortEncoderValue = armEncoderRetractedValue;
     public static final int armLowRocketPortEncoderValue = 6000;
     public static final int armMidRocketPortEncoderValue = 6800;
     public static final int armHighRocketPortEncoderValue = 0;
@@ -175,10 +177,10 @@ public class Calibrations {
 
 
 	//CARGO WHEEL
-	public static final double cargoWheelSuckPowerMagnitude = .5;
+	public static final double cargoWheelSuckPowerMagnitude = 1;
 	public static final double cargoSpitPowerMagnitude = 1;
 	public static final double cargoDropPowerMagnitude = .5;
-	public static final double cargoHoldPowerMagnitude = 0.25;
+	public static final double cargoHoldPowerMagnitude = 0.15;
 	
 	public static final double AXIS_IS_PRESSED_VALUE = .25;
 
@@ -186,12 +188,12 @@ public class Calibrations {
 
 	
 	//LIMELIGHT
-	public static final double FLOOR_TO_LIMELIGHT_LENS_HEIGHT = 21.9;
+	public static final double FLOOR_TO_LIMELIGHT_LENS_HEIGHT = 19.5;
 	public static final double FLOOR_TO_TARGET_CENTER_HEIGHT = 28.0;
-	public static final double CAMERA_ANGLE_OFFSET_FROM_HORIZONTAL = 1; // degrees
+	public static final double CAMERA_ANGLE_OFFSET_FROM_HORIZONTAL = 2; // degrees
 	public static final double MINIMUM_DISTANCE_FROM_LIMELIGHT = 46.0;
 	public static final double MAXIMUM_DISTANCE_FROM_LIMELIGHT = 240.0;
-	public static final double LIMELIGHT_LENS_TO_ROBOT_CENTER_OFFSET_INCHES = 8.5;
+	public static final double LIMELIGHT_LENS_TO_ROBOT_CENTER_OFFSET_INCHES = 6.25;
 	public static final int desiredTargetBuffer = 16;
 	public static final int distanceDesiredFromHPS = 72;
 	public static final int distanceDesiredFromRocket = 72;

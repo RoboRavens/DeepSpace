@@ -35,7 +35,11 @@ public class CargoWheelSubsystem extends Subsystem {
 	}
 
 	public void suck(double magnitude) {
-		this.set(-1 * magnitude);
+		if (hasCargo() == false) {
+			this.set(-1 * magnitude);
+		} else {
+			this.stop();
+		}
 	}
 
 	public void spit(double magnitude) {
@@ -58,7 +62,7 @@ public class CargoWheelSubsystem extends Subsystem {
 	private void set(double magnitude) {
 		// System.out.println("Setting cargo motors: " + magnitude);
 		_cargoMotor.set(ControlMode.PercentOutput, magnitude);
-	}
+	}  
 
 	public boolean hasCargo() {
 		boolean otherLimit = false;

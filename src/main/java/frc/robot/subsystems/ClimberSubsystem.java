@@ -32,12 +32,12 @@ public class ClimberSubsystem extends Subsystem {
 		climberMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkI, TalonSRXConstants.kTimeoutMs);
 		climberMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkD, TalonSRXConstants.kTimeoutMs);
 
-		this.climberMotor.setSensorPhase(false);
-		this.climberMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
-		this.climberMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
+		//this.climberMotor.setSensorPhase(false);
+		//this.climberMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
+		//this.climberMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
 
 		/* Don't neutral motor if remote limit source is not available */
-		this.climberMotor.configLimitSwitchDisableNeutralOnLOS(true, TalonSRXConstants.kTimeoutMs);
+		//this.climberMotor.configLimitSwitchDisableNeutralOnLOS(true, TalonSRXConstants.kTimeoutMs);
 	}
 
 	public void initDefaultCommand() {
@@ -45,19 +45,21 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public void extend(double magnitude) {
-		if (isAtExtensionLimit() /*&& Robot.OPERATION_PANEL.getButtonValue(ButtonCode.CLIMBERDOUBLEOVERRIDEEXTEND) == false*/) {
-			stop();
-		} else {
-			set(magnitude);
-		}
-	}
-
-	public void retract(double magnitude) {
-		if (isAtRetractionLimit() /*&& Robot.OPERATION_PANEL.getButtonValue(ButtonCode.CLIMBERDOUBLEOVERRIDERETRACT) == false*/) {
+		set(-1 * magnitude);
+		/*if (isAtExtensionLimit() /*&& Robot.OPERATION_PANEL.getButtonValue(ButtonCode.CLIMBERDOUBLEOVERRIDEEXTEND) == false) {
 			stop();
 		} else {
 			set(-1 * magnitude);
-		}
+		}*/
+	}
+
+	public void retract(double magnitude) {
+		set(magnitude);
+		/*if (isAtRetractionLimit() /*&& Robot.OPERATION_PANEL.getButtonValue(ButtonCode.CLIMBERDOUBLEOVERRIDERETRACT) == false) {
+			stop();
+		} else {
+			set(magnitude);
+		}*/
 	}
 
 	private void set(double magnitude) {
@@ -65,12 +67,12 @@ public class ClimberSubsystem extends Subsystem {
 		magnitude = Math.max(magnitude, -1);
 		magnitude *= 1;
 
-		if (isAtExtensionLimit() && Math.signum(magnitude) == 1) {
+		/*if (isAtExtensionLimit() && Math.signum(magnitude) == 1) {
 			magnitude = 0;
 		}
 		if (isAtRetractionLimit() && Math.signum(magnitude) == -1) {
 			magnitude = 0;
-		}
+		}*/
 
 		_expectedPower = magnitude;
 
