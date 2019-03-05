@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Relay.Value;
 import frc.util.NetworkTableDiagnostics;
 import frc.robot.RobotMap;
-import frc.ravenhardware.BufferedDigitalInput;
 
 /**
  * Add your docs here.

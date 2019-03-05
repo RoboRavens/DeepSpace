@@ -10,16 +10,14 @@ package frc.robot.commands.cargo;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Calibrations;
 import frc.robot.commands.arm.ArmMoveToHeightCommand;
-import frc.robot.commands.cargowheel.CargoWheelSuckOrSpitCommand;
-import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
 
 import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 
 public class CargoScoreCargoShipCommand extends CommandGroup {
   
   public CargoScoreCargoShipCommand() {
-    addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorCargoShipPortEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armCargoShipPortEncoderValue));
+    addSequential(new ElevatorMoveToHeightCommand(Calibrations.elevatorCargoShipPortEncoderValue));
     //addSequential(new CargoWheelSuckOrSpitCommand(Calibrations.cargoSpitPowerMagnitude, "Spit"));
     //addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorEncoderMinimumValue));
     //addParallel(new ArmMoveToHeightCommand(Calibrations.armEncoderRetractedValue));

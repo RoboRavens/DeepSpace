@@ -1,4 +1,4 @@
-package frc.robot.commands.elevator;
+package frc.robot.commands.climber;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
 
@@ -7,10 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ElevatorRetractWhileHeldCommand extends Command {
+public class ClimberRetractWhileHeldCommand extends Command {
 
-    public ElevatorRetractWhileHeldCommand() {
-        requires(Robot.ELEVATOR_SUBSYSTEM);
+    public ClimberRetractWhileHeldCommand() {
+        requires(Robot.CLIMBER_SUBSYSTEM);
+
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +20,7 @@ public class ElevatorRetractWhileHeldCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ELEVATOR_SUBSYSTEM.retract(Calibrations.elevatorRetractPowerMagnitude);
+        Robot.CLIMBER_SUBSYSTEM.retract(Calibrations.climberRetractPowerMagnitude);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -29,6 +30,7 @@ public class ElevatorRetractWhileHeldCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+
     }
 
     // Called when another command which requires one or more of the same

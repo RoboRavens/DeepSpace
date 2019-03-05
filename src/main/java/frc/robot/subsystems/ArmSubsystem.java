@@ -222,7 +222,6 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public void resetEncodersToExtendedLimit() {
-		System.out.println("CRINGLEMINGEREUFBUEBFWUIH");
 		this.armMotor.setSelectedSensorPosition(Calibrations.armEncoderExtendedValue, 0, 0);
 	}
 

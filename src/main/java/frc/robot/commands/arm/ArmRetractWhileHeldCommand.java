@@ -18,7 +18,7 @@ public class ArmRetractWhileHeldCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ARM_SUBSYSTEM.retract(0.4);
+        Robot.ARM_SUBSYSTEM.retract(0.7);
     }
 
     // Make this return true when this Command no longer needs to run execute()
