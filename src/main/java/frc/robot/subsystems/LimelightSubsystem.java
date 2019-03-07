@@ -32,7 +32,6 @@ public class LimelightSubsystem extends Subsystem {
   	private double _distanceToDrive = 0.0;
 	private int _direction = 0;
 	private double _offsetFromTargetAngle = 0.0;
-  	double timeoutSeconds = Calibrations.DriveTrainDriveInchesSafetyTimerSeconds;
 	DriveTrainDriveInchesCommand driveTrainDriveInchesCommand = new DriveTrainDriveInchesCommand(_distanceToDrive, _powerMagnitude, _direction);
 
 	private BufferedValue bufferedAngleOffHorizontal = new BufferedValue(9);

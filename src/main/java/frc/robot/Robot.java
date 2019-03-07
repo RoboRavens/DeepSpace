@@ -67,13 +67,13 @@ import frc.util.OverrideSystem;
  * project.
  */
 public class Robot extends TimedRobot {
-	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	public Command m_autonomousCommand;
+	public SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	public DriverStation driverStation;
 	public PowerDistributionPanel PDP = new PowerDistributionPanel();
 
-	Diagnostics diagnostics = new Diagnostics();
+	public Diagnostics diagnostics = new Diagnostics();
 	public static final LoggerOverlord LOGGER_OVERLORD = new LoggerOverlord(1f);
 
 	public static final Gamepad DRIVE_CONTROLLER = new Gamepad(0);
@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
 	public static final LineAlignmentSubsystem LINE_ALIGNMENT_SUBSYSTEM = new LineAlignmentSubsystem();
 	public static final GamePiecePossessedSubsystem GAME_PIECE_POSSESSED_SUBSYSTEM = new GamePiecePossessedSubsystem();
 
-	CameraServer server;
+	public CameraServer server;
 
 	public static final OverrideSystem OVERRIDE_SYSTEM_ELEVATOR_EXTEND = new OverrideSystem();
 	public static final OverrideSystem OVERRIDE_SYSTEM_ARM_EXTEND = new OverrideSystem();
@@ -105,12 +105,12 @@ public class Robot extends TimedRobot {
 	public static final OverrideSystem OVERRIDE_SYSTEM_CLIMBER_EXTEND = new OverrideSystem();
 	public static final OverrideSystem OVERRIDE_SYSTEM_CLIMBER_RETRACT = new OverrideSystem();
 
-	Command autonomousCommand;
+	public Command autonomousCommand;
 
 	public boolean isRedAlliance;
 
-	String autoFromDashboard;
-	String positionFromDashboard;
+	public String autoFromDashboard;
+	public String positionFromDashboard;
 
 	/**
 	 * This function is run when the robot is first started up and should be used

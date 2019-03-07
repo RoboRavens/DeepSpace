@@ -8,57 +8,57 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveTrainDriveInchesCommand extends Command {	
-	double powerMagnitude;
-	double totalInchesToTravel;
-	double driveTrainNetInchesTraveledAtStart;
-	double netInchesTraveledSoFar = 0;
-	int direction;
-	Timer timeoutTimer;
-	double timeoutSeconds = Calibrations.DriveTrainDriveInchesSafetyTimerSeconds;
+	private double _powerMagnitude;
+	private double _totalInchesToTravel;
+	private double _driveTrainNetInchesTraveledAtStart;
+	private double _netInchesTraveledSoFar = 0;
+	private int _direction;
+	private Timer _timeoutTimer;
+	private double _timeoutSeconds = Calibrations.DriveTrainDriveInchesSafetyTimerSeconds;
 	
     public DriveTrainDriveInchesCommand(double inchesToTravel, double powerMagnitude, int direction) {
     	requires(Robot.DRIVE_TRAIN_SUBSYSTEM);
-    	this.totalInchesToTravel = inchesToTravel;
-    	this.powerMagnitude = powerMagnitude *= direction;
-    	this.direction = direction;
-    	this.timeoutTimer = new Timer();
+    	this._totalInchesToTravel = inchesToTravel;
+    	this._powerMagnitude = powerMagnitude *= direction;
+    	this._direction = direction;
+    	this._timeoutTimer = new Timer();
     }
     
     public DriveTrainDriveInchesCommand(double inchesToTravel, double powerMagnitude, int direction, double timeoutSeconds) {
     	requires(Robot.DRIVE_TRAIN_SUBSYSTEM);
-    	this.totalInchesToTravel = inchesToTravel;
-    	this.powerMagnitude = powerMagnitude *= direction;
-    	this.direction = direction;
-    	this.timeoutTimer = new Timer();
-    	this.timeoutSeconds = timeoutSeconds;
+    	this._totalInchesToTravel = inchesToTravel;
+    	this._powerMagnitude = powerMagnitude *= direction;
+    	this._direction = direction;
+    	this._timeoutTimer = new Timer();
+    	this._timeoutSeconds = timeoutSeconds;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	System.out.println("RT NIT:" + Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled());
-    	driveTrainNetInchesTraveledAtStart = Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled();
-    	timeoutTimer.start();
+    	_driveTrainNetInchesTraveledAtStart = Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled();
+    	_timeoutTimer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.fpsTank(powerMagnitude, 0);
+    	Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.fpsTank(_powerMagnitude, 0);
     	
-    	if (direction == Calibrations.drivingBackward) {
-    		netInchesTraveledSoFar = driveTrainNetInchesTraveledAtStart - Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled();
+    	if (_direction == Calibrations.drivingBackward) {
+    		_netInchesTraveledSoFar = _driveTrainNetInchesTraveledAtStart - Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled();
     	} else {
-    		netInchesTraveledSoFar = Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled() - driveTrainNetInchesTraveledAtStart;
+    		_netInchesTraveledSoFar = Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled() - _driveTrainNetInchesTraveledAtStart;
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
-        boolean hasTraveledTargetDistance = (netInchesTraveledSoFar >= totalInchesToTravel); 
-        PCDashboardDiagnostics.AdHocNumber("netInchesTraveledSoFar", netInchesTraveledSoFar);
-        PCDashboardDiagnostics.AdHocNumber("totalInchesToTravel", totalInchesToTravel);
+        boolean hasTraveledTargetDistance = (_netInchesTraveledSoFar >= _totalInchesToTravel); 
+        PCDashboardDiagnostics.AdHocNumber("netInchesTraveledSoFar", _netInchesTraveledSoFar);
+        PCDashboardDiagnostics.AdHocNumber("totalInchesToTravel", _totalInchesToTravel);
         
-        if (timeoutTimer.get() > timeoutSeconds) {
+        if (_timeoutTimer.get() > _timeoutSeconds) {
         	hasTraveledTargetDistance = true;
 
         	System.out.println("TIMEOUT TIMEOUT TIMEOUT TIMEOUT");

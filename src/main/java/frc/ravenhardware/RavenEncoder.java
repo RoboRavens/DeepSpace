@@ -3,29 +3,28 @@ package frc.ravenhardware;
 import edu.wpi.first.wpilibj.Encoder;
 
 public class RavenEncoder {
-    Encoder encoder;
+    private Encoder _encoder;
 
-    int cyclesPerRevolution;
-    double wheelDiameterInches;
-    double wheelCircumferenceInches;
-    int relativeValue;
-    int encoderPositionWhenLimitIsHit;
+    private int _cyclesPerRevolution;
+    private double _wheelDiameterInches;
+    private double _wheelCircumferenceInches;
+    private int _encoderPositionWhenLimitIsHit;
 
-    boolean inverted = false;
+    private boolean _inverted = false;
 
     public RavenEncoder(Encoder encoder, int cyclesPerRevolution, double wheelDiameterInches, boolean inverted) {
-        this.encoder = encoder;
-        this.cyclesPerRevolution = cyclesPerRevolution;
-        this.wheelDiameterInches = wheelDiameterInches;
-        this.inverted = inverted;
+        this._encoder = encoder;
+        this._cyclesPerRevolution = cyclesPerRevolution;
+        this._wheelDiameterInches = wheelDiameterInches;
+        this._inverted = inverted;
 
-        this.wheelCircumferenceInches = Math.PI * wheelDiameterInches;
+        this._wheelCircumferenceInches = Math.PI * wheelDiameterInches;
     }
 
     public double getNetRevolutions() {
-        double netRevolutions = (double) encoder.get() / cyclesPerRevolution;
+        double netRevolutions = (double) _encoder.get() / _cyclesPerRevolution;
 
-        if (inverted) {
+        if (_inverted) {
             netRevolutions *= -1;
         }
 
@@ -34,16 +33,16 @@ public class RavenEncoder {
 
     public double getNetInchesTraveled() {
         double netRevolutions = getNetRevolutions();
-        double netInchesTraveled = netRevolutions * wheelCircumferenceInches;
+        double netInchesTraveled = netRevolutions * _wheelCircumferenceInches;
 
         // I added the *2 here
         return netInchesTraveled * 2;
     }
 
     public int getCycles() {
-        int cycles = this.encoder.get();
+        int cycles = this._encoder.get();
 
-        if (inverted) {
+        if (_inverted) {
             cycles *= -1;
         }
 
@@ -51,6 +50,6 @@ public class RavenEncoder {
     }
 
     public void resetEncoder() {
-        this.encoder.reset();
+        this._encoder.reset();
     }
 }

@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveTrainTurnRelativeDegreesCommand extends Command {
-    DriveTrainSubsystem driveTrain;
     RavenTank ravenTank;
     Timer safetyTimer;
 
@@ -22,7 +21,7 @@ public class DriveTrainTurnRelativeDegreesCommand extends Command {
 
     public DriveTrainTurnRelativeDegreesCommand(DriveTrainSubsystem driveTrain, double degreesToTurn, double gyroScaleFactor, double timeoutSeconds) {
         requires(driveTrain);
-        this.ravenTank = driveTrain.ravenTank;
+        this.ravenTank = Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank;
         this.degreesToTurn = degreesToTurn;
         this.safetyTimer = new Timer();
         this.previousGyroScaleFactor = Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getGyroAdjustmentScaleFactor();

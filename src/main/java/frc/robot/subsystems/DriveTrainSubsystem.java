@@ -17,14 +17,14 @@ public class DriveTrainSubsystem extends Subsystem {
 	private double _slewRateFinal;
 
 	public DriveTrainSubsystem() {
-		this.ravenTank = new RavenTank();
+		ravenTank = new RavenTank();
 
 		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "PowerMax", () -> _maxPower);
-		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderLeftInchesTraveled", () -> this.ravenTank.leftRavenEncoder.getNetInchesTraveled());
-		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderRightInchesTraveled", () -> this.ravenTank.rightRavenEncoder.getNetInchesTraveled());
+		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderLeftInchesTraveled", () -> ravenTank.getLeftNetInchesTraveled());
+		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderRightInchesTraveled", () -> ravenTank.getRightNetInchesTraveled());
 		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderAvgInchesTraveled", () -> Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled());
 		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "SlewRate", () -> _slewRateFinal);
-		NetworkTableDiagnostics.SubsystemBoolean("DriveTrain", "CutPower", () -> this.ravenTank.getCutPower());
+		NetworkTableDiagnostics.SubsystemBoolean("DriveTrain", "CutPower", () -> ravenTank.getCutPower());
 	}
 
 	public void initDefaultCommand() {
@@ -36,13 +36,13 @@ public class DriveTrainSubsystem extends Subsystem {
 		double elevatorHeightPercentage = Robot.ELEVATOR_SUBSYSTEM.getElevatorHeightPercentage();
 		double powerSubtractor = (1 - Calibrations.DRIVETRAIN_MAXPOWER_AT_MAX_ELEVEATOR_HEIGHT) * elevatorHeightPercentage;
 		_maxPower = Math.min(1, 1 - powerSubtractor);
-		this.ravenTank.setMaxPower(_maxPower);
+		ravenTank.setMaxPower(_maxPower);
 
 		double slewRateDifference = Calibrations.slewRateMaximum - Calibrations.slewRateMinimum;
 		double slewRateSubtraction = slewRateDifference * elevatorHeightPercentage;
 		double slewRate = Calibrations.slewRateMaximum - slewRateSubtraction;
 		slewRate = Math.max(Calibrations.slewRateMinimum, slewRate);
 		_slewRateFinal = Math.min(Calibrations.slewRateMaximum, slewRate);
-		this.ravenTank.setSlewRate(_slewRateFinal);
+		ravenTank.setSlewRate(_slewRateFinal);
 	}
 }

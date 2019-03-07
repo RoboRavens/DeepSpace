@@ -19,17 +19,17 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 
 public class ClimberSubsystem extends Subsystem {
-	public TalonSRX climberMotor;
+	private TalonSRX _climberMotor;
 	private Timer _safetyTimer = new Timer();
 	private double _expectedPower;
 
 	public ClimberSubsystem() {
 		registerDiagnostics();
-		this.climberMotor = new TalonSRX(RobotMap.climberMotor);
-		climberMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkF, TalonSRXConstants.kTimeoutMs);
-		climberMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkP, TalonSRXConstants.kTimeoutMs);
-		climberMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkI, TalonSRXConstants.kTimeoutMs);
-		climberMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkD, TalonSRXConstants.kTimeoutMs);
+		_climberMotor = new TalonSRX(RobotMap.climberMotor);
+		_climberMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkF, TalonSRXConstants.kTimeoutMs);
+		_climberMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkP, TalonSRXConstants.kTimeoutMs);
+		_climberMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkI, TalonSRXConstants.kTimeoutMs);
+		_climberMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkD, TalonSRXConstants.kTimeoutMs);
 
 		//this.climberMotor.setSensorPhase(false);
 		//this.climberMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
@@ -58,7 +58,7 @@ public class ClimberSubsystem extends Subsystem {
 
 		_expectedPower = magnitude;
 
-		climberMotor.set(ControlMode.PercentOutput, magnitude);
+		_climberMotor.set(ControlMode.PercentOutput, magnitude);
 	}
 
 	public void getPosition() {
@@ -66,7 +66,7 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public double getEncoderPosition() {
-		int EncoderPosition = climberMotor.getSelectedSensorPosition();
+		int EncoderPosition = _climberMotor.getSelectedSensorPosition();
 
 		return EncoderPosition;
 	}
@@ -133,7 +133,7 @@ public class ClimberSubsystem extends Subsystem {
 		if (Math.abs(_expectedPower) > Calibrations.climberHoldPositionPowerMagnitude) {
 			// The line below only returns as true if the climber is pushing harder than it needs to not move it
 			if (Math.abs(
-					climberMotor.getSelectedSensorVelocity()) < Calibrations.climberConsideredMovingEncoderRate) {
+					_climberMotor.getSelectedSensorVelocity()) < Calibrations.climberConsideredMovingEncoderRate) {
 				burnoutProtection();
 			}
 		}
@@ -150,19 +150,19 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public void resetEncodersToRetractedLimit() {
-		climberMotor.setSelectedSensorPosition(Calibrations.climberEncoderMinimumValue, 0, 0);
+		_climberMotor.setSelectedSensorPosition(Calibrations.climberEncoderMinimumValue, 0, 0);
 	}
 
 	public void resetEncodersToExtendedLimit() {
-		climberMotor.setSelectedSensorPosition(Calibrations.climberEncoderMaximumValue, 0, 0);
+		_climberMotor.setSelectedSensorPosition(Calibrations.climberEncoderMaximumValue, 0, 0);
 	}
 
 	public void setMotorsPID(int position) {
-		climberMotor.set(ControlMode.Position, position);
+		_climberMotor.set(ControlMode.Position, position);
 	}
 
 	public void stop() {
-		climberMotor.set(ControlMode.PercentOutput, 0);
+		_climberMotor.set(ControlMode.PercentOutput, 0);
 	}
 
 	// Right now this method just looks at the right limit switch; some combination of both should be used.
@@ -229,7 +229,7 @@ public class ClimberSubsystem extends Subsystem {
     }
 
 	public void holdPosition() {
-		climberMotor.set(ControlMode.PercentOutput, Calibrations.climberHoldPositionPowerMagnitude);
+		_climberMotor.set(ControlMode.PercentOutput, Calibrations.climberHoldPositionPowerMagnitude);
 	}
 
 	public double getClimberHeightPercentage() {
@@ -261,11 +261,11 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public boolean getClimberExtensionLimitSwitchValue() {
-		return this.climberMotor.getSensorCollection().isFwdLimitSwitchClosed();
+		return _climberMotor.getSensorCollection().isFwdLimitSwitchClosed();
 	}
 
 	public boolean getClimberRetractionLimitSwitchValue() {
-		return this.climberMotor.getSensorCollection().isRevLimitSwitchClosed();
+		return _climberMotor.getSensorCollection().isRevLimitSwitchClosed();
 	}
 
 	public boolean getIsExtendedPastEncoderPosition(int encoderPosition) {
