@@ -32,7 +32,6 @@ public class LimelightSubsystem extends Subsystem {
   	private double _distanceToDrive = 0.0;
 	private int _direction = 0;
 	private double _offsetFromTargetAngle = 0.0;
-  	double timeoutSeconds = Calibrations.DriveTrainDriveInchesSafetyTimerSeconds;
 	DriveTrainDriveInchesCommand driveTrainDriveInchesCommand = new DriveTrainDriveInchesCommand(_distanceToDrive, _powerMagnitude, _direction);
 
 	private BufferedValue bufferedAngleOffHorizontal = new BufferedValue(9);
@@ -49,9 +48,7 @@ public class LimelightSubsystem extends Subsystem {
 		NetworkTableDiagnostics.SubsystemNumber("Limelight", "TargetAngleOffset", () -> _offsetFromTargetAngle);
 	}
 
-	public void initDefaultCommand() {
-
-	}
+	public void initDefaultCommand() {}
 
 	public void periodic() {
 		_angleToTargetFromHorizontal = Math.tan(Math.toRadians(Calibrations.CAMERA_ANGLE_OFFSET_FROM_HORIZONTAL + ty.getDouble(0.0)));

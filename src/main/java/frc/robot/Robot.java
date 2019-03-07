@@ -11,7 +11,6 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,7 +21,6 @@ import frc.controls.ButtonCode;
 import frc.controls.Gamepad;
 import frc.controls.OperationPanel;
 import frc.controls.OperationPanel2;
-import frc.ravenhardware.RavenLighting;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
 import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
 import frc.robot.commands.arm.ArmRetractFullyCommand;
@@ -69,13 +67,13 @@ import frc.util.OverrideSystem;
  * project.
  */
 public class Robot extends TimedRobot {
-	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	public Command m_autonomousCommand;
+	public SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	public DriverStation driverStation;
 	public PowerDistributionPanel PDP = new PowerDistributionPanel();
 
-	Diagnostics diagnostics = new Diagnostics();
+	public Diagnostics diagnostics = new Diagnostics();
 	public static final LoggerOverlord LOGGER_OVERLORD = new LoggerOverlord(1f);
 
 	public static final Gamepad DRIVE_CONTROLLER = new Gamepad(0);
@@ -97,7 +95,7 @@ public class Robot extends TimedRobot {
 	public static final LineAlignmentSubsystem LINE_ALIGNMENT_SUBSYSTEM = new LineAlignmentSubsystem();
 	public static final GamePiecePossessedSubsystem GAME_PIECE_POSSESSED_SUBSYSTEM = new GamePiecePossessedSubsystem();
 
-	CameraServer server;
+	public CameraServer server;
 
 	public static final OverrideSystem OVERRIDE_SYSTEM_ELEVATOR_EXTEND = new OverrideSystem();
 	public static final OverrideSystem OVERRIDE_SYSTEM_ARM_EXTEND = new OverrideSystem();
@@ -107,12 +105,12 @@ public class Robot extends TimedRobot {
 	public static final OverrideSystem OVERRIDE_SYSTEM_CLIMBER_EXTEND = new OverrideSystem();
 	public static final OverrideSystem OVERRIDE_SYSTEM_CLIMBER_RETRACT = new OverrideSystem();
 
-	Command autonomousCommand;
+	public Command autonomousCommand;
 
 	public boolean isRedAlliance;
 
-	String autoFromDashboard;
-	String positionFromDashboard;
+	public String autoFromDashboard;
+	public String positionFromDashboard;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -154,7 +152,6 @@ public class Robot extends TimedRobot {
 
 	public Robot() {
 		server = CameraServer.getInstance();
-		// server.setQuality(Calibrations.cameraQuality);
 		server.startAutomaticCapture();
 	}
 
@@ -352,18 +349,6 @@ public class Robot extends TimedRobot {
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSpitCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakReleaseHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new CargoWheelSuckCommand());
-
-		/*if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
-			new DriveTrainDriveLimeLightCommand();
-		}*/
-
-		//DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new DriveTrainTurnTargetCommand());
-		/*if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > 0.5) {
-			new SetCutPowerTrue();
-		}*/
-		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new SetCutPowerTrue());//was new SetGyroTargetHeading(180)
-		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenReleased(new SetCutPowerFalse());
-
 		DRIVE_CONTROLLER.getButton(ButtonCode.A).whileHeld(new DriveTrainDriveLimeLightCommand());
 	}
 

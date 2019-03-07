@@ -17,7 +17,6 @@ public class LEDCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     public void execute() {
         Robot.LED_SUBSYSTEM.run();
-        // System.out.println("running LED Command");
     }
 
     @Override

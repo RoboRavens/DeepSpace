@@ -1,16 +1,12 @@
 package frc.robot.commands.cargowheel;
 
-import frc.robot.subsystems.CargoWheelSubsystem;
-
+import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class CargoWheelSuckIdleCommand extends Command {
 
-    CargoWheelSubsystem cargoWheelSubsystem;
-
-    public CargoWheelSuckIdleCommand(CargoWheelSubsystem cargoWheelSubsystem) {
-        requires(cargoWheelSubsystem);
-        this.cargoWheelSubsystem = cargoWheelSubsystem;
+    public CargoWheelSuckIdleCommand() {
+        requires(Robot.CARGO_WHEEL_SUBSYSTEM);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +15,7 @@ public class CargoWheelSuckIdleCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        cargoWheelSubsystem.idle();
+        Robot.CARGO_WHEEL_SUBSYSTEM.idle();
     }
 
     // Make this return true when this Command no longer needs to run execute()

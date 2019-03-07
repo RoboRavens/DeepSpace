@@ -6,18 +6,18 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class Gamepad {
-	Joystick joystick;
+	private Joystick _joystick;
 
 	public Gamepad(int port) {
-		joystick = new Joystick(port);
+		_joystick = new Joystick(port);
 	}
 
 	public boolean getButtonValue(ButtonCode button) {
-		return joystick.getRawButton(getButtonNumber(button));
+		return _joystick.getRawButton(getButtonNumber(button));
 	}
 
 	public JoystickButton getButton(ButtonCode button) {
-		return new JoystickButton(joystick, getButtonNumber(button));
+		return new JoystickButton(_joystick, getButtonNumber(button));
 	}
 
 	public boolean getAxisIsPressed(AxisCode axis) {
@@ -36,22 +36,22 @@ public class Gamepad {
 
 		switch (axis) {
 		case LEFTSTICKX:
-			axisValue = joystick.getRawAxis(0);
+			axisValue = _joystick.getRawAxis(0);
 			break;
 		case LEFTSTICKY:
-			axisValue = joystick.getRawAxis(1);
+			axisValue = _joystick.getRawAxis(1);
 			break;
 		case LEFTTRIGGER:
-			axisValue = joystick.getRawAxis(2);
+			axisValue = _joystick.getRawAxis(2);
 			break;
 		case RIGHTTRIGGER:
-			axisValue = joystick.getRawAxis(3);
+			axisValue = _joystick.getRawAxis(3);
 			break;
 		case RIGHTSTICKX:
-			axisValue = joystick.getRawAxis(4);
+			axisValue = _joystick.getRawAxis(4);
 			break;
 		case RIGHTSTICKY:
-			axisValue = joystick.getRawAxis(5);
+			axisValue = _joystick.getRawAxis(5);
 			break;
 		default:
 			axisValue = 0;

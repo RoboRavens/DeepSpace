@@ -56,13 +56,9 @@ public class Calibrations {
 	public static final int defaultDriveMode = Calibrations.fpsTank;
 	public static final int defaultGyroMode = Calibrations.gyroEnabled;
 	
-	//public static final int defaultGyroMode = Calibrations.gyroDisabled;
-	
 	
 	// DRIVE ENCODERS
 	public static final int encoderCUI103CyclesPerRevolution = 4096; 
-	// public static final int encoderE4TCyclesPerRevolution = 360;
-	// public static final int encoderE4PCyclesPerRevolution = 250;
 	public static final double wheelDiameterInches = 4;
 	public static final double wheelCircumferenceInches = Calibrations.wheelDiameterInches * Math.PI;
 	

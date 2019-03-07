@@ -11,7 +11,6 @@ public class ClimberExtendWhileHeldCommand extends Command {
 
     public ClimberExtendWhileHeldCommand() {
         requires(Robot.CLIMBER_SUBSYSTEM);
-
     }
 
     // Called just before this Command runs the first time

@@ -21,21 +21,21 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 
 public class ElevatorSubsystem extends Subsystem {
-	public TalonSRX elevatorMotor;
-	public TalonSRX elevatorMotorFollower;
+	private TalonSRX _elevatorMotor;
+	private TalonSRX _elevatorMotorFollower;
 	private BufferedDigitalInput _elevatorExtensionLimitSwitch;
 	private BufferedDigitalInput _elevatorRetractionLimitSwitch;
 	private Timer _safetyTimer = new Timer();
 	private double _expectedPower;
 
 	public ElevatorSubsystem() {
-		this.elevatorMotor = new TalonSRX(RobotMap.elevatorMotor);
-		this.elevatorMotorFollower = new TalonSRX(RobotMap.elevatorMotorFollower);
-		this.elevatorMotorFollower.follow(elevatorMotor);
-		elevatorMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkF, TalonSRXConstants.kTimeoutMs);
-		elevatorMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkP, TalonSRXConstants.kTimeoutMs);
-		elevatorMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkI, TalonSRXConstants.kTimeoutMs);
-		elevatorMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkD, TalonSRXConstants.kTimeoutMs);
+		_elevatorMotor = new TalonSRX(RobotMap.elevatorMotor);
+		_elevatorMotorFollower = new TalonSRX(RobotMap.elevatorMotorFollower);
+		_elevatorMotorFollower.follow(_elevatorMotor);
+		_elevatorMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkF, TalonSRXConstants.kTimeoutMs);
+		_elevatorMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkP, TalonSRXConstants.kTimeoutMs);
+		_elevatorMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkI, TalonSRXConstants.kTimeoutMs);
+		_elevatorMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkD, TalonSRXConstants.kTimeoutMs);
 
 		_elevatorExtensionLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorExtensionLimitSwitch);
 		_elevatorRetractionLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorRetractionLimitSwitch);
@@ -46,7 +46,7 @@ public class ElevatorSubsystem extends Subsystem {
 		/* Don't neutral motor if remote limit source is not available */
 		//this.elevatorMotor.configLimitSwitchDisableNeutralOnLOS(true, TalonSRXConstants.kTimeoutMs);
 
-		this.registerDiagnostics();
+		registerDiagnostics();
 	}
 
 	public void initDefaultCommand() {
@@ -83,7 +83,7 @@ public class ElevatorSubsystem extends Subsystem {
 
 		_expectedPower = magnitude;
 
-		elevatorMotor.set(ControlMode.PercentOutput, magnitude);
+		_elevatorMotor.set(ControlMode.PercentOutput, magnitude);
 	}
 
 	public void getPosition() {
@@ -91,7 +91,7 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public double getEncoderPosition() {
-		int EncoderPosition = elevatorMotor.getSelectedSensorPosition();
+		int EncoderPosition = _elevatorMotor.getSelectedSensorPosition();
 
 		return EncoderPosition;
 	}
@@ -160,7 +160,7 @@ public class ElevatorSubsystem extends Subsystem {
 		if (Math.abs(_expectedPower) > Calibrations.elevatorHoldPositionPowerMagnitude) {
 			// The line below only returns as true if the elevator is pushing harder than it needs to not move it
 			if (Math.abs(
-					elevatorMotor.getSelectedSensorVelocity()) < Calibrations.elevatorConsideredMovingEncoderRate) {
+					_elevatorMotor.getSelectedSensorVelocity()) < Calibrations.elevatorConsideredMovingEncoderRate) {
 				burnoutProtection();
 			}
 		}
@@ -177,19 +177,19 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void resetEncodersToRetractedLimit() {
-		elevatorMotor.setSelectedSensorPosition(Calibrations.elevatorEncoderMinimumValue, 0, 0);
+		_elevatorMotor.setSelectedSensorPosition(Calibrations.elevatorEncoderMinimumValue, 0, 0);
 	}
 
 	public void resetEncodersToExtendedLimit() {
-		elevatorMotor.setSelectedSensorPosition(Calibrations.elevatorEncoderMaximumValue, 0, 0);
+		_elevatorMotor.setSelectedSensorPosition(Calibrations.elevatorEncoderMaximumValue, 0, 0);
 	}
 
 	public void setMotorsPID(int position) {
-		elevatorMotor.set(ControlMode.Position, position);
+		_elevatorMotor.set(ControlMode.Position, position);
 	}
 
 	public void stop() {
-		elevatorMotor.set(ControlMode.PercentOutput, 0);
+		_elevatorMotor.set(ControlMode.PercentOutput, 0);
 	}
 
 	// Right now this method just looks at the right limit switch; some combination of both should be used.
@@ -256,7 +256,7 @@ public class ElevatorSubsystem extends Subsystem {
     }
 
 	public void holdPosition() {
-		elevatorMotor.set(ControlMode.PercentOutput, Calibrations.elevatorHoldPositionPowerMagnitude);
+		_elevatorMotor.set(ControlMode.PercentOutput, Calibrations.elevatorHoldPositionPowerMagnitude);
 	}
 
 	public double getElevatorHeightPercentage() {

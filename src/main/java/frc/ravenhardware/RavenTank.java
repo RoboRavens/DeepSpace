@@ -11,20 +11,19 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 
 public class RavenTank {
-	Robot robot;
 
-	public RavenEncoder leftRavenEncoder;
-	public RavenEncoder rightRavenEncoder;
+	private RavenEncoder _leftRavenEncoder;
+	private RavenEncoder _rightRavenEncoder;
 
-	Timer gyroCooldownTimer;
+	private Timer _gyroCooldownTimer;
 
 	AHRS orientationGyro = new AHRS(SPI.Port.kMXP);
 
 	AHRS.BoardYawAxis boardYawAxis;
-	double lastAccelerationX;
-	double lastAccelerationY;
-	double highestJerkX;
-	double highestJerkY;
+	private double _lastAccelerationX;
+	private double _lastAccelerationY;
+	private double _highestJerkX;
+	private double _highestJerkY;
 	private double _slewRate;
 
 	protected int driveMode;
@@ -58,10 +57,10 @@ public class RavenTank {
 
 		Encoder leftWpiEncoder = new Encoder(RobotMap.leftDriveEncoder1, RobotMap.leftDriveEncoder2);
 		Encoder rightWpiEncoder = new Encoder(RobotMap.rightDriveEncoder1, RobotMap.rightDriveEncoder2);
-		leftRavenEncoder = new RavenEncoder(leftWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
-		rightRavenEncoder = new RavenEncoder(rightWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
+		_leftRavenEncoder = new RavenEncoder(leftWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
+		_rightRavenEncoder = new RavenEncoder(rightWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
 
-		gyroCooldownTimer = new Timer();
+		_gyroCooldownTimer = new Timer();
 
 		setDriveMode(Calibrations.defaultDriveMode);
 		setCutPower(false);
@@ -120,8 +119,8 @@ public class RavenTank {
 	}
 
 	public void resetDriveEncoders() {
-		leftRavenEncoder.resetEncoder();
-		rightRavenEncoder.resetEncoder();
+		_leftRavenEncoder.resetEncoder();
+		_rightRavenEncoder.resetEncoder();
 	}
 
 	public void drive(double left, double rightY, double rightX) {
@@ -181,7 +180,7 @@ public class RavenTank {
 
 		double gyroAdjust = getTurnableGyroAdjustment(turn);
 
-		// System.out.println("Gyro adjust: " + gyroAdjust + " gyro: " + this.orientationGyro.getAngle());
+		
 
 		double leftFinal = (translation - turn) * -1 - gyroAdjust;
 		double rightFinal = (translation + turn) - gyroAdjust;
@@ -196,18 +195,18 @@ public class RavenTank {
 		double currentAccelerationX = orientationGyro.getWorldLinearAccelX();
 		double currentAccelerationY = orientationGyro.getWorldLinearAccelY();
 
-		double currentJerkX = currentAccelerationX - lastAccelerationX;
-		double currentJerkY = currentAccelerationY - lastAccelerationY;
+		double currentJerkX = currentAccelerationX - _lastAccelerationX;
+		double currentJerkY = currentAccelerationY - _lastAccelerationY;
 
-		lastAccelerationX = currentAccelerationX;
-		lastAccelerationY = currentAccelerationY;
+		_lastAccelerationX = currentAccelerationX;
+		_lastAccelerationY = currentAccelerationY;
 
-		if (currentJerkX > highestJerkX) {
-			highestJerkX = currentJerkX;
+		if (currentJerkX > _highestJerkX) {
+			_highestJerkX = currentJerkX;
 		}
 
-		if (currentJerkY > highestJerkY) {
-			highestJerkY = currentJerkY;
+		if (currentJerkY > _highestJerkY) {
+			_highestJerkY = currentJerkY;
 		}
 
 		if (Math.abs(currentJerkX) > Calibrations.DriveTrainCollisionJerkThreshold) {
@@ -225,14 +224,14 @@ public class RavenTank {
 		double currentAccelerationX = orientationGyro.getWorldLinearAccelX();
 		double currentAccelerationY = orientationGyro.getWorldLinearAccelY();
 
-		double currentJerkX = currentAccelerationX - lastAccelerationX;
-		double currentJerkY = currentAccelerationY - lastAccelerationY;
+		double currentJerkX = currentAccelerationX - _lastAccelerationX;
+		double currentJerkY = currentAccelerationY - _lastAccelerationY;
 
 		System.out.println("X Jerk: " + currentJerkX + " Y Jerk: " + currentJerkY);
 	}
 
 	public void outputHighestJerk() {
-		System.out.println("Highest X Jerk: " + highestJerkX + " Highest Y Jerk: " + highestJerkY);
+		System.out.println("Highest X Jerk: " + _highestJerkX + " Highest Y Jerk: " + _highestJerkY);
 	}
 
 	public void driveLeftSide(double magnitude) {
@@ -241,7 +240,6 @@ public class RavenTank {
 	}
 
 	public void driveRightSide(double magnitude) {
-		// System.out.println("Driving right side. Magnitude: " + magnitude);
 		driveRight.set(magnitude);
 	}
 
@@ -256,7 +254,6 @@ public class RavenTank {
 	public void driveOutput() {}
 
 	public double getDriveGyro() {
-		// System.out.println("Gyro angle: " + Math.round(orientationGyro.getAngle()) + " Gyro mode: " + gyroMode);
 		return orientationGyro.getAngle();
 	}
 
@@ -275,14 +272,14 @@ public class RavenTank {
 	}
 
 	private boolean adjustGyroDueToTimer() {
-		double time = this.gyroCooldownTimer.get();
+		double time = this._gyroCooldownTimer.get();
 
 		boolean adjust = false;
 
 		if (time > 0 && time < Calibrations.gyroCooldownTimerTime) {
 			adjust = true;
 		} else if (time > Calibrations.gyroCooldownTimerTime) {
-			gyroCooldownTimer.stop();
+			_gyroCooldownTimer.stop();
 		}
 
 		return adjust;
@@ -298,8 +295,8 @@ public class RavenTank {
 			this.setGyroTargetHeadingToCurrentHeading();
 
 			if (Math.abs(turn) > 0) {
-				this.gyroCooldownTimer.reset();
-				this.gyroCooldownTimer.start();
+				this._gyroCooldownTimer.reset();
+				this._gyroCooldownTimer.start();
 			}
 		}
 
@@ -315,16 +312,12 @@ public class RavenTank {
 
 		double heading = getCurrentHeading();
 
-		// System.out.print("GTH: " + gyroTargetHeading);
-
 		// Mod to eliminate extra rotations.
 		double gyroAdjust = (heading - gyroTargetHeading) % 360;
 
 		if (gyroAdjust < 0) {
 			gyroAdjust = 360 + gyroAdjust;
 		}
-
-		// System.out.print(" gyro adjust1: " + gyroAdjust);
 
 		// This snippet ensures that the robot will spin in the fastest direction to
 		// zero
@@ -337,59 +330,17 @@ public class RavenTank {
 			gyroAdjust *= -1;
 		}
 
-		// System.out.println("GYRO ADJUST POST_adj: " + gyroAdjust);
-
 		// Mod again in case the directional snippet was applied.
 		gyroAdjust = Math.round(gyroAdjust) % 360;
 
 		gyroAdjust *= _gyroAdjustmentScaleFactor;
 
-		// System.out.println("Gyro adjust: " + gyroAdjust + " gyro: " + this.orientationGyro.getAngle() + "Zero" + gyroZero);
-
-		// System.out.println("Gyro adjust: " + gyroAdjust + " heading: " + getCurrentHeading());
-		// System.out.println("-1 mod 360: " + (-1 % 360));
 		return gyroAdjust;
 	}
-
-	/*
-	 * public double getStaticGyroAdjustment() { // If the gyro is in disabled mode,
-	 * just return immediately. if (gyroMode == Calibrations.gyroDisabled) { return
-	 * 0; }
-	 * 
-	 * // Mod to eliminate extra rotations. double gyroAdjust =
-	 * (Math.round(orientationGyro.getAngle()) - gyroTargetHeading) % 360;
-	 * 
-	 * // This snippet ensures that the robot will spin in the fastest direction to
-	 * zero // if it ends up more than 180 degrees off of intention. if (gyroAdjust
-	 * < -180){ gyroAdjust = gyroAdjust - 360; } if (gyroAdjust > 180 || gyroAdjust
-	 * < -180){ gyroAdjust *= -1; }
-	 * 
-	 * // Mod again in case the directional snippet was applied. gyroAdjust =
-	 * Math.round(gyroAdjust) % 360;
-	 * 
-	 * gyroAdjust *= Calibrations.gyroAdjustmentScaleFactor;
-	 * 
-	 * // System.out.println("Gyro adjust: " + gyroAdjust + " gyro: " +
-	 * this.orientationGyro.getAngle() + "Zero" + gyroZero);
-	 * 
-	 * return gyroAdjust; }
-	 */
 
 	public void stopAndWait() {
 		enableAutomatedDriving(0);
 	}
-	/*
-	 * public void driveForwardInches(double inches, int direction, double speed) {
-	 * leftEncoderReferencePoint = this.leftEncoder.getNetInchesTraveled();
-	 * rightEncoderReferencePoint = this.rightEncoder.getNetInchesTraveled();
-	 * 
-	 * this.targetNetInchesTraveled = inches; enableAutomatedDriving(direction,
-	 * speed); }
-	 */
-	/*
-	 * public void driveUntilOverObstacle(int direction, double speed) {
-	 * drivingThroughObstacle = true; enableAutomatedDriving(direction, speed); }
-	 */
 
 	public void turnRelativeDegrees(double degrees) {
 		this.setGyroTargetHeading(this.gyroTargetHeading + degrees);
@@ -429,26 +380,6 @@ public class RavenTank {
 		return automatedDrivingEnabled == false;
 	}
 
-	/*
-	 * public void maintainState() { // System.out.println("Gyro: " +
-	 * orientationGyro.getAngle() + " Lencoder: " +
-	 * this.leftEncoder.getNetInchesTraveled() + " Rencoder: " +
-	 * this.rightEncoder.getNetInchesTraveled());
-	 * 
-	 * // Maintain state only does things while automated driving is enabled. if
-	 * (automatedDrivingEnabled == false) { return; }
-	 * 
-	 * // if (drivingThroughObstacle) { // maintainStateDrivingThroughObstacle(); //
-	 * return; // }
-	 * 
-	 * 
-	 * if (turning) { maintainStateTurning(); return; }
-	 * 
-	 * if (waiting) { maintainStateWaiting(); return; }
-	 * 
-	 * maintainStateDrivingStraight(); }
-	 */
-
 	public void maintainStateWaiting() {
 		this.stop();
 	}
@@ -478,8 +409,8 @@ public class RavenTank {
 	}
 
 	public double getNetInchesTraveled() {
-		double leftInches = this.leftRavenEncoder.getNetInchesTraveled();
-		double rightInches = this.rightRavenEncoder.getNetInchesTraveled();
+		double leftInches = _leftRavenEncoder.getNetInchesTraveled();
+		double rightInches = _rightRavenEncoder.getNetInchesTraveled();
 		double netInchesTraveled = (leftInches + rightInches)/2;
 		
 		return netInchesTraveled;
@@ -488,24 +419,6 @@ public class RavenTank {
 	public double getSlewRate() {
 		return _slewRate;
 	}
-
-	/*
-	 * public void maintainStateDrivingStraight() { //this.maintainEncoders();
-	 * 
-	 * // Check if we've made it to the destination. if (netInchesTraveled <=
-	 * targetNetInchesTraveled) { automatedDrivingEnabled = false; return; }
-	 * 
-	 * // Automated driving: confirm direction, and set power based on speed. //
-	 * But, if within deceleration zone, start decelerating using "poor man's PID".
-	 * double powerCoefficient = getPowerCoefficient();
-	 * 
-	 * double power = this.automatedDrivingSpeed * powerCoefficient;
-	 * 
-	 * power *= this.automatedDrivingDirection;
-	 * 
-	 * this.fpsTank(power, 0); }
-	 */
-
 	public void resetOrientationGyro() {
 		orientationGyro.reset();
 	}
@@ -513,35 +426,12 @@ public class RavenTank {
 	public double getGyroAngle() {
 		return orientationGyro.getAngle();
 	}
-
-	/*
-	 * public double getPowerCoefficient() { double decelerationRangeInches =
-	 * Calibrations.decelerationInchesPerMotorOutputMagnitude *
-	 * this.automatedDrivingSpeed;
-	 * 
-	 * double inchesToGo = targetNetInchesTraveled - netInchesTraveled;
-	 * 
-	 * // Any power cuts will be applied through this coefficient. 1 means no cuts.
-	 * double powerCoefficient = 1;
-	 * 
-	 * // The power coefficient will be what percent of the deceleration range has
-	 * been // is yet to be traversed, but never higher than one. powerCoefficient =
-	 * Math.min(1, inchesToGo / decelerationRangeInches);
-	 * 
-	 * return powerCoefficient; }
-	 */
-
-	/*
-	 * public void maintainStateDrivingThroughObstacle() { double power =
-	 * automatedDrivingSpeed;
-	 * 
-	 * // Check if we've made hit the obstacle and are now on carpet. if
-	 * (hasHitObstacle && robotIsOnCarpet()) { // We're through; kill automated
-	 * mode. power = 0; automatedDrivingEnabled = false; hasHitObstacle = false;
-	 * drivingThroughObstacle = false; }
-	 * 
-	 * power *= automatedDrivingDirection;
-	 * 
-	 * fpsTank(power, 0); }
-	 */
+	
+	public double getRightNetInchesTraveled() {
+		return _rightRavenEncoder.getNetInchesTraveled();
+	}
+	
+	public double getLeftNetInchesTraveled() {
+		return _leftRavenEncoder.getNetInchesTraveled();
+	}
 }

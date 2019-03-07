@@ -17,9 +17,6 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- * Add your docs here.
- */
 public class CompressorSubsystem extends Subsystem {
 
   Compressor aCompressor = new Compressor();

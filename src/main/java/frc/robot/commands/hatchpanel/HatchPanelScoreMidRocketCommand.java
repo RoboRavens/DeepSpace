@@ -18,9 +18,5 @@ public class HatchPanelScoreMidRocketCommand extends CommandGroup {
     
     addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorMidHatchEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armMidHatchEncoderValue));
-    //addSequential(new BeakReleaseHatchPanelCommand());
-    //addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorLowHatchEncoderValue));
-    //addParallel(new ArmMoveToHeightCommand(Calibrations.armLowHatchEncoderValue));
-    //addSequential(new DriveTrainDriveInchesCommand(24, .6, Calibrations.drivingBackward));
   }
 }

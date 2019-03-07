@@ -8,19 +8,14 @@
 package frc.robot.subsystems;
 
 import frc.ravenhardware.RavenLighting;
-import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Relay.Value;
 import frc.util.NetworkTableDiagnostics;
 import frc.robot.RobotMap;
 
-/**
- * Add your docs here.
- */
 public class BeakSubsystem extends Subsystem {
   private Solenoid _beakCapture;
   private Solenoid _beakRelease;
@@ -43,7 +38,6 @@ public class BeakSubsystem extends Subsystem {
   }
 
   public void initDefaultCommand() {
-    //setDefaultCommand(new BeakCaptureHatchPanelCommand());
   }
 
   // True only if BOTH hatch sensors are true.
