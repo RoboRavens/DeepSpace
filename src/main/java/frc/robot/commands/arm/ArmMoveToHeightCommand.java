@@ -30,6 +30,7 @@ public class ArmMoveToHeightCommand extends Command {
 
         if (Robot.ARM_SUBSYSTEM.getSafetyTimer() > Calibrations.ELEVATOR_MOVE_TO_POSITION_TIMEOUT) {
             isFinished = true;
+            System.out.println("TIMEOUT TIMEOUT TIMEOUT TIMEOUT");
         }
 
         if (Robot.ARM_SUBSYSTEM.getIsAtTarget(_targetEncoderPosition)) {

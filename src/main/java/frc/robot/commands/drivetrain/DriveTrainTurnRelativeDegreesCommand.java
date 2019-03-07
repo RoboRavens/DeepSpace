@@ -60,6 +60,7 @@ public class DriveTrainTurnRelativeDegreesCommand extends Command {
         boolean turnComplete = (degreesAwayFromTarget < Calibrations.gyroAutoTurnAcceptableErrorDegrees);
 
         if (safetyTimer.get() > _timeoutSeconds) {
+            System.out.println("TIMEOUT TIMEOUT TIMEOUT TIMEOUT");
             turnComplete = true;
         }
 

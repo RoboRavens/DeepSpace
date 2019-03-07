@@ -49,9 +49,7 @@ public class LimelightSubsystem extends Subsystem {
 		NetworkTableDiagnostics.SubsystemNumber("Limelight", "TargetAngleOffset", () -> _offsetFromTargetAngle);
 	}
 
-	public void initDefaultCommand() {
-
-	}
+	public void initDefaultCommand() {}
 
 	public void periodic() {
 		_angleToTargetFromHorizontal = Math.tan(Math.toRadians(Calibrations.CAMERA_ANGLE_OFFSET_FROM_HORIZONTAL + ty.getDouble(0.0)));

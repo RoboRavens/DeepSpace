@@ -26,6 +26,7 @@ public class ElevatorExtendFullyCommand extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		if (Robot.ELEVATOR_SUBSYSTEM.getSafetyTimer() > Calibrations.ELEVATOR_SAFETY_TIMER_TIMEOUT) {
+			System.out.println("TIMEOUT TIMEOUT TIMEOUT TIMEOUT");
 			return true;
 		}
 

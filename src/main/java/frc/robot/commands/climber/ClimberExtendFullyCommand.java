@@ -25,6 +25,7 @@ public class ClimberExtendFullyCommand extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		if (Robot.CLIMBER_SUBSYSTEM.getSafetyTimer() > Calibrations.CLIMBER_SAFETY_TIMER_TIMEOUT) {
+			System.out.println("TIMEOUT TIMEOUT TIMEOUT TIMEOUT");
 			return true;
 		}
 

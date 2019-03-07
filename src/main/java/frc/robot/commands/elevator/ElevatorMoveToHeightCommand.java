@@ -29,6 +29,7 @@ public class ElevatorMoveToHeightCommand extends Command {
         boolean isFinished = false;
 
         if (Robot.ELEVATOR_SUBSYSTEM.getSafetyTimer() > Calibrations.ELEVATOR_MOVE_TO_POSITION_TIMEOUT) {
+            System.out.println("TIMEOUT TIMEOUT TIMEOUT TIMEOUT");
             isFinished = true;
         }
 
