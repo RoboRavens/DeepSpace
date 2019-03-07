@@ -1,20 +1,23 @@
 package frc.robot.subsystems;
 
-import frc.controls.ButtonCode;
 import frc.ravenhardware.BufferedDigitalInput;
 import frc.ravenhardware.RavenLighting;
-
+import frc.robot.RobotMap;
+import frc.robot.commands.linealignment.LineAlignmentCheckCommand;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class LineAlignmentSubsystem extends Subsystem {
 	private BufferedDigitalInput _frontLineSensor;
 	private BufferedDigitalInput _rearLineSensor;
+	private Relay _lightingRelay;
   private RavenLighting _binaryLeds;
   
-	public ArmSubsystem(BufferedDigitalInput frontLineSensor, BufferedDigitalInput rearLineSensor, RavenLighting binaryLeds) {
-		_frontLineSensor = frontLineSensor;
-		_rearLineSensor = rearLineSensor;
-    _binaryLeds = binaryLeds;
+	public LineAlignmentSubsystem() {
+		_frontLineSensor = new BufferedDigitalInput(RobotMap.frontLineSensor);
+		_rearLineSensor = new BufferedDigitalInput(RobotMap.rearLineSensor);
+		_lightingRelay= new Relay(RobotMap.lineAlignmentRelay);
+		_binaryLeds = new RavenLighting(_lightingRelay);
   }
 
 	public void initDefaultCommand() {
