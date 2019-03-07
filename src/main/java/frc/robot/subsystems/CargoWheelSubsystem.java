@@ -8,13 +8,10 @@ import frc.robot.commands.cargowheel.CargoWheelStopCommand;
 import frc.util.NetworkTableDiagnostics;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- *
- */
+
 public class CargoWheelSubsystem extends Subsystem {
 	private TalonSRX _cargoMotor;
 	private BufferedDigitalInput _cargoSensor;
@@ -76,12 +73,6 @@ public class CargoWheelSubsystem extends Subsystem {
 
 		if (this.hasCargo() == false) {
 			_hasCargoDurationTimer.reset();
-		}
-
-		if (this.hasCargo()) {
-			Robot.HAS_CARGO_LEDS_RELAY.set(Value.kForward);
-		} else {
-			Robot.HAS_CARGO_LEDS_RELAY.set(Value.kOff);
 		}
 	}
 }

@@ -32,21 +32,25 @@ public class RobotMap {
 	public static final int rightDriveEncoder1 = 2;
 	public static final int rightDriveEncoder2 = 3;
 
+	// Arm extension and retraction limit switches are deprecated.
 	public static final int armExtensionLimitSwitch = 4;
 	public static final int armRetractionLimitSwitch = 5;
 
+	public static final int frontLineSensor = 4;
+	public static final int rearLineSensor = 5;
+
+	// Elevator extension and retraction limit switches are deprecated.
 	public static final int elevatorExtensionLimitSwitch = 6;
 	public static final int elevatorRetractionLimitSwitch = 7;
 	
-	public static final int cargoSensor = 8;
+	public static final int cargoSensor = 6;
 
-	public static final int hatchPanelSensor = 9;
-
+	public static final int hatchPanelSensorLeft = 7;
+	public static final int hatchPanelSensorRight = 8;
 
 	// RELAYS
-	public static final int hasCargoLEDLightRelay = 0;
-	public static final int hasHatchPanelLEDLightRelay = 1;
-	public static final int underglowLightRelay = 2;
+	public static final int hasGamePieceRelay = 0;
+	public static final int lineAlignmentRelay = 1;
 
 	// CAMERA
 	public static final String cameraName = "cam0";

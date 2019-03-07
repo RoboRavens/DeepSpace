@@ -51,8 +51,10 @@ import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.GamePiecePossessedSubsystem;
 import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.LineAlignmentSubsystem;
 import frc.robot.subsystems.ProgrammableLEDSubsystem;
 import frc.robot.subsystems.SetCommandSubsystem;
 import frc.util.LoggerOverlord;
@@ -92,12 +94,8 @@ public class Robot extends TimedRobot {
 	public static final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
 	public static final ProgrammableLEDSubsystem LED_SUBSYSTEM = new ProgrammableLEDSubsystem();
 	public static final SetCommandSubsystem SET_COMMAND_SUBSYSTEM = new SetCommandSubsystem();
-
-	public static final Relay HAS_HATCH_PANEL_LEDS_RELAY = new Relay(RobotMap.hasHatchPanelLEDLightRelay);
-	public static final Relay HAS_CARGO_LEDS_RELAY = new Relay(RobotMap.hasCargoLEDLightRelay);
-	public static final Relay UNDERGLOW_RELAY = new Relay(RobotMap.underglowLightRelay);
-	public static final RavenLighting HAS_CUBE_LEDS = new RavenLighting(HAS_HATCH_PANEL_LEDS_RELAY);
-	public static final RavenLighting UNDERGLOW = new RavenLighting(UNDERGLOW_RELAY);
+	public static final LineAlignmentSubsystem LINE_ALIGNMENT_SUBSYSTEM = new LineAlignmentSubsystem();
+	public static final GamePiecePossessedSubsystem GAME_PIECE_POSSESSED_SUBSYSTEM = new GamePiecePossessedSubsystem();
 
 	CameraServer server;
 

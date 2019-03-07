@@ -14,7 +14,7 @@ import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
 public class HatchPanelCheckCommand extends Command {
   private Command _command = new Command() {
     protected boolean isFinished() {
-      return Robot.BEAK_SUBSYSTEM.hasHatchPanel() == false;
+      return Robot.BEAK_SUBSYSTEM.hasHatchPanelStrict() == false;
     }
   };
 
@@ -31,7 +31,7 @@ public class HatchPanelCheckCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.BEAK_SUBSYSTEM.hasHatchPanel()) {
+    if (Robot.BEAK_SUBSYSTEM.hasHatchPanelStrict()) {
       new BeakCaptureHatchPanelCommand();
       _command.start();
   } else {
