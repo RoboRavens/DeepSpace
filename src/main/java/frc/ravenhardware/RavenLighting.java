@@ -22,13 +22,11 @@ public class RavenLighting {
 	public void turnOn() {
 		cancelToggle();
 		_mainArray.set(Value.kOn);
-		// System.out.println("TURNING ON");
 	}
 
 	public void turnOff() {
 		cancelToggle();
 		_mainArray.set(Value.kOff);
-		// System.out.println("TURNING OFF");
 	}
 
 	public void quickToggle() {

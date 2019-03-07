@@ -143,14 +143,6 @@ public class ArmSubsystem extends Subsystem {
 		return !_armRetractionLimitSwitch.get();
 	}
 
-	/*
-	 * public boolean isAtBottomLimit() { return this.getEncoderPosition() <=
-	 * Calibrations.armEncoderValueAtBottom + Calibrations.ARM_ENCODER_BUFFER; }
-	 * 
-	 * public boolean isAtTopLimit() { return this.getEncoderPosition() >=
-	 * Calibrations.armEncoderValueAtTop - Calibrations.ARM_ENCODER_BUFFER; }
-	 */
-
 	public boolean getIsAtExtensionLimit() {
 		boolean encoderLimit = false;
 		boolean switchLimit = false;

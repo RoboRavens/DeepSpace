@@ -12,11 +12,9 @@ import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.climber.ClimberHoldPositionCommand;
-import frc.util.PCDashboardDiagnostics;
+import frc.util.NetworkTableDiagnostics;
 import frc.robot.TalonSRXConstants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -26,6 +24,7 @@ public class ClimberSubsystem extends Subsystem {
 	private double _expectedPower;
 
 	public ClimberSubsystem() {
+		registerDiagnostics();
 		this.climberMotor = new TalonSRX(RobotMap.climberMotor);
 		climberMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkF, TalonSRXConstants.kTimeoutMs);
 		climberMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkP, TalonSRXConstants.kTimeoutMs);
@@ -46,33 +45,16 @@ public class ClimberSubsystem extends Subsystem {
 
 	public void extend(double magnitude) {
 		set(-1 * magnitude);
-		/*if (isAtExtensionLimit() /*&& Robot.OPERATION_PANEL.getButtonValue(ButtonCode.CLIMBERDOUBLEOVERRIDEEXTEND) == false) {
-			stop();
-		} else {
-			set(-1 * magnitude);
-		}*/
 	}
 
 	public void retract(double magnitude) {
 		set(magnitude);
-		/*if (isAtRetractionLimit() /*&& Robot.OPERATION_PANEL.getButtonValue(ButtonCode.CLIMBERDOUBLEOVERRIDERETRACT) == false) {
-			stop();
-		} else {
-			set(magnitude);
-		}*/
 	}
 
 	private void set(double magnitude) {
 		magnitude = Math.min(magnitude, 1);
 		magnitude = Math.max(magnitude, -1);
 		magnitude *= 1;
-
-		/*if (isAtExtensionLimit() && Math.signum(magnitude) == 1) {
-			magnitude = 0;
-		}
-		if (isAtRetractionLimit() && Math.signum(magnitude) == -1) {
-			magnitude = 0;
-		}*/
 
 		_expectedPower = magnitude;
 
@@ -93,26 +75,25 @@ public class ClimberSubsystem extends Subsystem {
 		this.isAtExtensionLimit();
 		this.isAtRetractionLimit();
 
-		climberSubsystemDiagnostics();
 		checkExpectedSpeedVersusPower();
 	}
 
-	public void climberSubsystemDiagnostics() {
-		PCDashboardDiagnostics.SubsystemNumber("Climber", "Encoder", getEncoderPosition());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitEncoderExtended", isEncoderAtExtensionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitEncoderRetracted", isEncoderAtRetractionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitSwitchExtended", getClimberExtensionLimitSwitchValue());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitSwitchRetracted", getClimberRetractionLimitSwitchValue());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitFinalExtension", isAtExtensionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitFinalRetraction", isAtRetractionLimit());
+	public void registerDiagnostics() {
+		NetworkTableDiagnostics.SubsystemNumber("Climber", "Encoder", () -> getEncoderPosition());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitEncoderExtended", () -> isEncoderAtExtensionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitEncoderRetracted", () -> isEncoderAtRetractionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitSwitchExtended", () -> getClimberExtensionLimitSwitchValue());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitSwitchRetracted", () -> getClimberRetractionLimitSwitchValue());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitFinalExtension", () -> isAtExtensionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitFinalRetraction", () -> isAtRetractionLimit());
 
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "OverrideExtend", Robot.OVERRIDE_SYSTEM_CLIMBER_EXTEND.getOverride1());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "OverrideRetract", Robot.OVERRIDE_SYSTEM_CLIMBER_RETRACT.getOverride1());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "OverrideExtend", () -> Robot.OVERRIDE_SYSTEM_CLIMBER_EXTEND.getOverride1());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "OverrideRetract", () -> Robot.OVERRIDE_SYSTEM_CLIMBER_RETRACT.getOverride1());
 		// Measure power sent to climber
-		PCDashboardDiagnostics.SubsystemNumber("Climber", "EncoderExpectedPower", _expectedPower);
+		NetworkTableDiagnostics.SubsystemNumber("Climber", "EncoderExpectedPower", () -> _expectedPower);
 
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitSwitchAndEncoderAgreeRetracted", encoderAndLimitsMatchRetracted());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitSwitchAndEncoderAgreeExtended", encoderAndLimitsMatchExtended());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitSwitchAndEncoderAgreeRetracted", () -> encoderAndLimitsMatchRetracted());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitSwitchAndEncoderAgreeExtended", () -> encoderAndLimitsMatchExtended());
 	}
 
 	public boolean encoderAndLimitsMatchRetracted() {

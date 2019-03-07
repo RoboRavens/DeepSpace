@@ -57,7 +57,6 @@ public class CargoWheelSubsystem extends Subsystem {
 	}
 
 	private void set(double magnitude) {
-		// System.out.println("Setting cargo motors: " + magnitude);
 		_cargoMotor.set(ControlMode.PercentOutput, magnitude);
 	}  
 

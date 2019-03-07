@@ -3,9 +3,6 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ArmRetractWhileHeldCommand extends Command {
 
     public ArmRetractWhileHeldCommand() {
@@ -28,9 +25,7 @@ public class ArmRetractWhileHeldCommand extends Command {
     }
 
     // Called once after isFinished returns true
-    protected void end() {
-        // Robot.ARM_SUBSYSTEM.stop();
-    }
+    protected void end() {}
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run

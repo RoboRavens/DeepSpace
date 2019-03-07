@@ -93,7 +93,7 @@ public class RavenTalon {
 		// Update and set the output speed.
 		outputSpeed = newOutputSpeed;
 
-		// System.out.println("Target: " + targetOutput + " Actual: " + outputSpeed + " Slew: " + maxSlewRate);
+	
 
 		PCDashboardDiagnostics.SubsystemNumber("DriveTrain", _name + "OutputPercent", outputSpeed);
 

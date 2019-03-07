@@ -46,7 +46,7 @@ public class ElevatorSubsystem extends Subsystem {
 		/* Don't neutral motor if remote limit source is not available */
 		//this.elevatorMotor.configLimitSwitchDisableNeutralOnLOS(true, TalonSRXConstants.kTimeoutMs);
 
-		this.registerDiagnostics();
+		registerDiagnostics();
 	}
 
 	public void initDefaultCommand() {

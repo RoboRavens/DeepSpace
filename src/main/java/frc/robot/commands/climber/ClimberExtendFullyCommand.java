@@ -2,12 +2,8 @@ package frc.robot.commands.climber;
 
 import frc.robot.Calibrations;
 import frc.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ClimberExtendFullyCommand extends Command {
 
 	public ClimberExtendFullyCommand() {

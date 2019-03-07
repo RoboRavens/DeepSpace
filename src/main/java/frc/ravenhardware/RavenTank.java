@@ -181,7 +181,7 @@ public class RavenTank {
 
 		double gyroAdjust = getTurnableGyroAdjustment(turn);
 
-		// System.out.println("Gyro adjust: " + gyroAdjust + " gyro: " + this.orientationGyro.getAngle());
+		
 
 		double leftFinal = (translation - turn) * -1 - gyroAdjust;
 		double rightFinal = (translation + turn) - gyroAdjust;
@@ -241,7 +241,6 @@ public class RavenTank {
 	}
 
 	public void driveRightSide(double magnitude) {
-		// System.out.println("Driving right side. Magnitude: " + magnitude);
 		driveRight.set(magnitude);
 	}
 
@@ -256,7 +255,6 @@ public class RavenTank {
 	public void driveOutput() {}
 
 	public double getDriveGyro() {
-		// System.out.println("Gyro angle: " + Math.round(orientationGyro.getAngle()) + " Gyro mode: " + gyroMode);
 		return orientationGyro.getAngle();
 	}
 
@@ -315,16 +313,12 @@ public class RavenTank {
 
 		double heading = getCurrentHeading();
 
-		// System.out.print("GTH: " + gyroTargetHeading);
-
 		// Mod to eliminate extra rotations.
 		double gyroAdjust = (heading - gyroTargetHeading) % 360;
 
 		if (gyroAdjust < 0) {
 			gyroAdjust = 360 + gyroAdjust;
 		}
-
-		// System.out.print(" gyro adjust1: " + gyroAdjust);
 
 		// This snippet ensures that the robot will spin in the fastest direction to
 		// zero
@@ -337,59 +331,17 @@ public class RavenTank {
 			gyroAdjust *= -1;
 		}
 
-		// System.out.println("GYRO ADJUST POST_adj: " + gyroAdjust);
-
 		// Mod again in case the directional snippet was applied.
 		gyroAdjust = Math.round(gyroAdjust) % 360;
 
 		gyroAdjust *= _gyroAdjustmentScaleFactor;
 
-		// System.out.println("Gyro adjust: " + gyroAdjust + " gyro: " + this.orientationGyro.getAngle() + "Zero" + gyroZero);
-
-		// System.out.println("Gyro adjust: " + gyroAdjust + " heading: " + getCurrentHeading());
-		// System.out.println("-1 mod 360: " + (-1 % 360));
 		return gyroAdjust;
 	}
-
-	/*
-	 * public double getStaticGyroAdjustment() { // If the gyro is in disabled mode,
-	 * just return immediately. if (gyroMode == Calibrations.gyroDisabled) { return
-	 * 0; }
-	 * 
-	 * // Mod to eliminate extra rotations. double gyroAdjust =
-	 * (Math.round(orientationGyro.getAngle()) - gyroTargetHeading) % 360;
-	 * 
-	 * // This snippet ensures that the robot will spin in the fastest direction to
-	 * zero // if it ends up more than 180 degrees off of intention. if (gyroAdjust
-	 * < -180){ gyroAdjust = gyroAdjust - 360; } if (gyroAdjust > 180 || gyroAdjust
-	 * < -180){ gyroAdjust *= -1; }
-	 * 
-	 * // Mod again in case the directional snippet was applied. gyroAdjust =
-	 * Math.round(gyroAdjust) % 360;
-	 * 
-	 * gyroAdjust *= Calibrations.gyroAdjustmentScaleFactor;
-	 * 
-	 * // System.out.println("Gyro adjust: " + gyroAdjust + " gyro: " +
-	 * this.orientationGyro.getAngle() + "Zero" + gyroZero);
-	 * 
-	 * return gyroAdjust; }
-	 */
 
 	public void stopAndWait() {
 		enableAutomatedDriving(0);
 	}
-	/*
-	 * public void driveForwardInches(double inches, int direction, double speed) {
-	 * leftEncoderReferencePoint = this.leftEncoder.getNetInchesTraveled();
-	 * rightEncoderReferencePoint = this.rightEncoder.getNetInchesTraveled();
-	 * 
-	 * this.targetNetInchesTraveled = inches; enableAutomatedDriving(direction,
-	 * speed); }
-	 */
-	/*
-	 * public void driveUntilOverObstacle(int direction, double speed) {
-	 * drivingThroughObstacle = true; enableAutomatedDriving(direction, speed); }
-	 */
 
 	public void turnRelativeDegrees(double degrees) {
 		this.setGyroTargetHeading(this.gyroTargetHeading + degrees);
@@ -428,26 +380,6 @@ public class RavenTank {
 		// Just return the opposite of automatedDrivingEnabled.
 		return automatedDrivingEnabled == false;
 	}
-
-	/*
-	 * public void maintainState() { // System.out.println("Gyro: " +
-	 * orientationGyro.getAngle() + " Lencoder: " +
-	 * this.leftEncoder.getNetInchesTraveled() + " Rencoder: " +
-	 * this.rightEncoder.getNetInchesTraveled());
-	 * 
-	 * // Maintain state only does things while automated driving is enabled. if
-	 * (automatedDrivingEnabled == false) { return; }
-	 * 
-	 * // if (drivingThroughObstacle) { // maintainStateDrivingThroughObstacle(); //
-	 * return; // }
-	 * 
-	 * 
-	 * if (turning) { maintainStateTurning(); return; }
-	 * 
-	 * if (waiting) { maintainStateWaiting(); return; }
-	 * 
-	 * maintainStateDrivingStraight(); }
-	 */
 
 	public void maintainStateWaiting() {
 		this.stop();
@@ -488,24 +420,6 @@ public class RavenTank {
 	public double getSlewRate() {
 		return _slewRate;
 	}
-
-	/*
-	 * public void maintainStateDrivingStraight() { //this.maintainEncoders();
-	 * 
-	 * // Check if we've made it to the destination. if (netInchesTraveled <=
-	 * targetNetInchesTraveled) { automatedDrivingEnabled = false; return; }
-	 * 
-	 * // Automated driving: confirm direction, and set power based on speed. //
-	 * But, if within deceleration zone, start decelerating using "poor man's PID".
-	 * double powerCoefficient = getPowerCoefficient();
-	 * 
-	 * double power = this.automatedDrivingSpeed * powerCoefficient;
-	 * 
-	 * power *= this.automatedDrivingDirection;
-	 * 
-	 * this.fpsTank(power, 0); }
-	 */
-
 	public void resetOrientationGyro() {
 		orientationGyro.reset();
 	}
@@ -514,34 +428,4 @@ public class RavenTank {
 		return orientationGyro.getAngle();
 	}
 
-	/*
-	 * public double getPowerCoefficient() { double decelerationRangeInches =
-	 * Calibrations.decelerationInchesPerMotorOutputMagnitude *
-	 * this.automatedDrivingSpeed;
-	 * 
-	 * double inchesToGo = targetNetInchesTraveled - netInchesTraveled;
-	 * 
-	 * // Any power cuts will be applied through this coefficient. 1 means no cuts.
-	 * double powerCoefficient = 1;
-	 * 
-	 * // The power coefficient will be what percent of the deceleration range has
-	 * been // is yet to be traversed, but never higher than one. powerCoefficient =
-	 * Math.min(1, inchesToGo / decelerationRangeInches);
-	 * 
-	 * return powerCoefficient; }
-	 */
-
-	/*
-	 * public void maintainStateDrivingThroughObstacle() { double power =
-	 * automatedDrivingSpeed;
-	 * 
-	 * // Check if we've made hit the obstacle and are now on carpet. if
-	 * (hasHitObstacle && robotIsOnCarpet()) { // We're through; kill automated
-	 * mode. power = 0; automatedDrivingEnabled = false; hasHitObstacle = false;
-	 * drivingThroughObstacle = false; }
-	 * 
-	 * power *= automatedDrivingDirection;
-	 * 
-	 * fpsTank(power, 0); }
-	 */
 }

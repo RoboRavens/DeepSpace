@@ -61,7 +61,7 @@ public class DriveTrainDriveInchesCommand extends Command {
         if (timeoutTimer.get() > timeoutSeconds) {
         	hasTraveledTargetDistance = true;
 
-        	System.out.println("TIMEOUTTIMEOUTTIMEOUTTIMEOUTTIMEOUTTIMEOUTTIMEOUTTIMEOUTTIMEOUTTIMEOUTTIMEOUT");
+        	System.out.println("TIMEOUT TIMEOUT TIMEOUT TIMEOUT");
         }
     	
     	return hasTraveledTargetDistance;

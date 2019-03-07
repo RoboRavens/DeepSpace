@@ -5,9 +5,6 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ElevatorRetractFullyCommand extends Command {
 
 	public ElevatorRetractFullyCommand() {
