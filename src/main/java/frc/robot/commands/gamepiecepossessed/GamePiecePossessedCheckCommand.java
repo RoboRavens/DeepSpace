@@ -1,6 +1,8 @@
 package frc.robot.commands.gamepiecepossessed;
 
+import frc.robot.Calibrations;
 import frc.robot.Robot;
+import frc.robot.commands.misc.RumbleDriveControllerCommand;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GamePiecePossessedCheckCommand extends Command {
@@ -18,9 +20,17 @@ public class GamePiecePossessedCheckCommand extends Command {
         // If we possess either type of piece, turn on the lights.
         if (Robot.BEAK_SUBSYSTEM.hasHatchPanelStrict() || Robot.CARGO_WHEEL_SUBSYSTEM.hasCargo()) {
             Robot.GAME_PIECE_POSSESSED_SUBSYSTEM.turnOn();
+
+            if (Robot.GAME_PIECE_POSSESSED_SUBSYSTEM.getHasGamePiece() == false) {
+                Command rumbleCommand = new RumbleDriveControllerCommand(Calibrations.gamePieceCollectedRumbleSeconds);
+                rumbleCommand.start();
+
+                Robot.GAME_PIECE_POSSESSED_SUBSYSTEM.setHasGamePiece(true);
+            }
         }
         else {
-          Robot.GAME_PIECE_POSSESSED_SUBSYSTEM.turnOff();
+            Robot.GAME_PIECE_POSSESSED_SUBSYSTEM.turnOff();
+            Robot.GAME_PIECE_POSSESSED_SUBSYSTEM.setHasGamePiece(false);
         }
     }
 

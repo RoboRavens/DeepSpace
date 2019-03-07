@@ -203,5 +203,8 @@ public class Calibrations {
 
 	//CAMERA QUALITY
 	public static final int cameraQuality = 50;
+
+	// CONTROLLER RUMBLE
+	public static final double gamePieceCollectedRumbleSeconds = .25;
 }
 

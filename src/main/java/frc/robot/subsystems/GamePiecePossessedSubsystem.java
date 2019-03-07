@@ -11,7 +11,8 @@ public class GamePiecePossessedSubsystem extends Subsystem {
 	private BufferedDigitalInput _frontLineSensor;
 	private BufferedDigitalInput _rearLineSensor;
 	private Relay _lightingRelay;
-  private RavenLighting _binaryLeds;
+	private RavenLighting _binaryLeds;
+	private boolean _hasGamePiece = true;
   
 	public GamePiecePossessedSubsystem() {
 		_frontLineSensor = new BufferedDigitalInput(RobotMap.frontLineSensor);
@@ -54,5 +55,13 @@ public class GamePiecePossessedSubsystem extends Subsystem {
   
   public void turnOff() {
     _binaryLeds.turnOff();
-  }
+	}
+	
+	public void setHasGamePiece(boolean hasGamePiece) {
+		_hasGamePiece = hasGamePiece;
+	}
+
+	public boolean getHasGamePiece() {
+		return _hasGamePiece;
+	}
 }

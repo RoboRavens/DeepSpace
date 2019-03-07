@@ -72,7 +72,8 @@ public class BeakSubsystem extends Subsystem {
   
   public void periodic()  {
 		if (hasHatchPanelStrict()) {
-			_binaryLeds.turnOn();
+      _binaryLeds.turnOn();
+      
     }
     else {
       _hasHatchPanelDurationTimer.reset();
