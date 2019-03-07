@@ -3,6 +3,7 @@ package frc.controls;
 import frc.robot.Calibrations;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class Gamepad {
@@ -99,5 +100,15 @@ public class Gamepad {
 		}
 
 		return buttonNumber;
+	}
+
+	public void setRumbleOn() {
+        joystick.setRumble(RumbleType.kLeftRumble, 1);
+        joystick.setRumble(RumbleType.kRightRumble, 1);
+	}
+
+	public void setRumbleOff() {
+		joystick.setRumble(RumbleType.kLeftRumble, 0);
+        joystick.setRumble(RumbleType.kRightRumble, 0);
 	}
 }

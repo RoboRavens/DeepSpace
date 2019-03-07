@@ -8,13 +8,11 @@
 package frc.robot.subsystems;
 
 import frc.ravenhardware.RavenLighting;
-import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Relay.Value;
 import frc.util.NetworkTableDiagnostics;
 import frc.robot.RobotMap;
 
@@ -78,7 +76,8 @@ public class BeakSubsystem extends Subsystem {
   
   public void periodic()  {
 		if (hasHatchPanelStrict()) {
-			_binaryLeds.turnOn();
+      _binaryLeds.turnOn();
+      
     }
     else {
       _hasHatchPanelDurationTimer.reset();
