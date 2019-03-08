@@ -30,6 +30,7 @@ public class ClimberRetractFullyCommand extends Command {
 		boolean isFinished = false;
 
 		if (Robot.CLIMBER_SUBSYSTEM.getSafetyTimer() > Calibrations.CLIMBER_SAFETY_TIMER_TIMEOUT) {
+			System.out.println("TIMEOUT TIMEOUT TIMEOUT TIMEOUT");
 			isFinished = true;
 		}
 

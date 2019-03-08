@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class RavenTalon {
 
-	public Talon talon;
-	public TalonSRX talonSRX;
-	public VictorSPX victorSPX1;
-	public VictorSPX victorSPX2;
+	private Talon _talon;
+	private TalonSRX _talonSRX;
+	private VictorSPX _victorSPX1;
+	private VictorSPX _victorSPX2;
 	protected double outputSpeed;
 	private String _name;
 	private double _maxPower;
@@ -25,17 +25,17 @@ public class RavenTalon {
 	// as this enables changing between -1 and 1 in a single tick.
 	protected double maxSlewRate = 2;
 
-	protected double deadband = .05;
+	protected double deadband = .1;
 
 	public RavenTalon(int channel, String name, double slewRate, int follower1, int follower2) {
 		if (Calibrations.UseTalonSRXForDriveController) {
-			talonSRX = new TalonSRX(channel);
-			victorSPX1 = new VictorSPX(follower1);
-			victorSPX2 = new VictorSPX(follower2);
-			victorSPX1.follow(talonSRX);
-			victorSPX2.follow(talonSRX);
+			_talonSRX = new TalonSRX(channel);
+			_victorSPX1 = new VictorSPX(follower1);
+			_victorSPX2 = new VictorSPX(follower2);
+			_victorSPX1.follow(_talonSRX);
+			_victorSPX2.follow(_talonSRX);
 		} else {
-			talon = new Talon(channel);
+			_talon = new Talon(channel);
 		}
 
 		_name = name;
@@ -93,14 +93,14 @@ public class RavenTalon {
 		// Update and set the output speed.
 		outputSpeed = newOutputSpeed;
 
-		// System.out.println("Target: " + targetOutput + " Actual: " + outputSpeed + " Slew: " + maxSlewRate);
+	
 
 		PCDashboardDiagnostics.SubsystemNumber("DriveTrain", _name + "OutputPercent", outputSpeed);
 
 		if (Calibrations.UseTalonSRXForDriveController) {
-			talonSRX.set(ControlMode.PercentOutput, outputSpeed);
+			_talonSRX.set(ControlMode.PercentOutput, outputSpeed);
 		} else {
-			talon.set(outputSpeed);
+			_talon.set(outputSpeed);
 		}
 
 	}

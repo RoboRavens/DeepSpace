@@ -4,9 +4,6 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class SetGyroTargetHeading extends Command {
 
 	private int _heading;

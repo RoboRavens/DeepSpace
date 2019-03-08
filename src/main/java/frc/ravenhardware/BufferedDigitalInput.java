@@ -5,20 +5,20 @@ import java.util.LinkedList;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class BufferedDigitalInput {
-	public DigitalInput digitalInput;
+	private DigitalInput _digitalInput;
 	protected int listSize = 5;
 
 	LinkedList<Boolean> sensorValues;
 
 	public BufferedDigitalInput(int channel) {
-		digitalInput = new DigitalInput(channel);
+		 _digitalInput = new DigitalInput(channel);
 		sensorValues = new LinkedList<Boolean>();
 	}
 
 	// Adds the current sensor value to the list, and
 	// removes the first item if the list is larger than the list size.
 	public void maintainState() {
-		sensorValues.add(digitalInput.get());
+		sensorValues.add( _digitalInput.get());
 		if (sensorValues.size() > listSize) {
 			sensorValues.remove();
 		}

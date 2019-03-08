@@ -1,14 +1,16 @@
-package frc.robot.commands.cargowheel;
-
+package frc.robot.commands.climber;
+import frc.robot.Calibrations;
 import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ForAutonomousCargoWheelSuckCommand extends Command {
-    double magnitude;
+/**
+ *
+ */
+public class ClimberExtendWhileHeldCommand extends Command {
 
-    public ForAutonomousCargoWheelSuckCommand(double magnitude) {
-        this.magnitude = magnitude;
+    public ClimberExtendWhileHeldCommand() {
+        requires(Robot.CLIMBER_SUBSYSTEM);
     }
 
     // Called just before this Command runs the first time
@@ -17,21 +19,22 @@ public class ForAutonomousCargoWheelSuckCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.CARGO_WHEEL_SUBSYSTEM.suck(magnitude);
+        Robot.CLIMBER_SUBSYSTEM.extend(Calibrations.climberExtendPowerMagnitude);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.CARGO_WHEEL_SUBSYSTEM.stop();
+
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        Robot.ELEVATOR_SUBSYSTEM.stop();
     }
 }

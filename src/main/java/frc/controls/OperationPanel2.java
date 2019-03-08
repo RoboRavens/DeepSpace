@@ -4,18 +4,18 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OperationPanel2 {
-	Joystick joystick;
+	private Joystick _joystick;
 
 	public OperationPanel2(int port) {
-		joystick = new Joystick(port);
+		_joystick = new Joystick(port);
 	}
 
 	public boolean getButtonValue(ButtonCode button) {
-		return joystick.getRawButton(getButtonNumber(button));
+		return _joystick.getRawButton(getButtonNumber(button));
 	}
 
 	public JoystickButton getButton(ButtonCode button) {
-		return new JoystickButton(joystick, getButtonNumber(button));
+		return new JoystickButton(_joystick, getButtonNumber(button));
 	}
 
 	public int getButtonNumber(ButtonCode button) {

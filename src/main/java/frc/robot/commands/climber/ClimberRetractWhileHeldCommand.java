@@ -1,14 +1,17 @@
-package frc.robot.commands.arm;
-
+package frc.robot.commands.climber;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ArmRetractFullyCommand extends Command {
+/**
+ *
+ */
+public class ClimberRetractWhileHeldCommand extends Command {
 
-    public ArmRetractFullyCommand() {
-        requires(Robot.ARM_SUBSYSTEM);
+    public ClimberRetractWhileHeldCommand() {
+        requires(Robot.CLIMBER_SUBSYSTEM);
+
     }
 
     // Called just before this Command runs the first time
@@ -17,27 +20,22 @@ public class ArmRetractFullyCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ARM_SUBSYSTEM.setMotorsPID(Calibrations.armEncoderRetractedValue);
+        Robot.CLIMBER_SUBSYSTEM.retract(Calibrations.climberRetractPowerMagnitude);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        boolean isFinished = false;
-        if (Robot.ARM_SUBSYSTEM.getIsAtRetractionLimit()) {
-            Robot.ARM_SUBSYSTEM.stop();
-            isFinished = true;
-        }
-        return isFinished;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.ARM_SUBSYSTEM.expectArmToBeAtRetractionLimit();
-        Robot.ARM_SUBSYSTEM.stop();
+
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        Robot.ELEVATOR_SUBSYSTEM.stop();
     }
 }

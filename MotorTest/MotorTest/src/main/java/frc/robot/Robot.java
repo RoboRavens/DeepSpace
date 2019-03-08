@@ -26,15 +26,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-
-    // m_myRobot = new DifferentialDrive(TalonLeft, TalonRight);
     m_joystick = new Joystick(0);
-    
   }
 
   @Override
   public void teleopPeriodic() {
-    //m_myRobot.tankDrive(m_joystick.getRawAxis(1), m_joystick.getRawAxis(3));
     TalonLeft.set(m_joystick.getRawAxis(1) * -1);
     TalonRight.set(m_joystick.getRawAxis(3));
   }

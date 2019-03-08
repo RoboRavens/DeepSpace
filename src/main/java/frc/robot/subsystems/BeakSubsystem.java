@@ -1,58 +1,65 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
-import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Relay.Value;
 import frc.util.NetworkTableDiagnostics;
 import frc.robot.RobotMap;
-import frc.ravenhardware.BufferedDigitalInput;
 
-/**
- * Add your docs here.
- */
 public class BeakSubsystem extends Subsystem {
   private Solenoid _beakCapture;
   private Solenoid _beakRelease;
-  private DigitalInput _hatchPanelSensor;
+  private DigitalInput _hatchPanelSensorLeft;
+  private DigitalInput _hatchPanelSensorRight;
   private Timer _hasHatchPanelDurationTimer = new Timer();
 
   public BeakSubsystem() {
     _beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);
     _beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
-		_hatchPanelSensor = new DigitalInput(RobotMap.hatchPanelSensor);
-		_hasHatchPanelDurationTimer.start();
+    _hatchPanelSensorLeft = new DigitalInput(RobotMap.hatchPanelSensorLeft);
+    _hatchPanelSensorRight = new DigitalInput(RobotMap.hatchPanelSensorRight);
+    _hasHatchPanelDurationTimer.start();
+    
+    NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", () -> hasHatchPanelStrict());
   }
 
   public void initDefaultCommand() {
-    //setDefaultCommand(new BeakCaptureHatchPanelCommand());
   }
 
-  public boolean hasHatchPanel() {
-		return !_hatchPanelSensor.get();
+  // True only if BOTH hatch sensors are true.
+  public boolean hasHatchPanelStrict() {
+	  boolean hasPanel = false;
+		
+		if (getLeftHatchPanelSensor() && getRightHatchPanelSensor()) {
+			hasPanel = true;
+		}
+		
+		return hasPanel;
+  }
+
+  // True if EITHER hatch sensor is true.
+  public boolean hasHatchPanelLenient() {
+		boolean hasPanel = false;
+		
+		if (getLeftHatchPanelSensor() || getRightHatchPanelSensor()) {
+			hasPanel = true;
+		}
+		
+		return hasPanel;
+}
+
+  public boolean getLeftHatchPanelSensor() {
+    return _hatchPanelSensorLeft.get();
+  }
+    
+  public boolean getRightHatchPanelSensor() {
+    return _hatchPanelSensorRight.get();
   }
   
   public void periodic()  {
-    NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", () -> hasHatchPanel());
-
-		if (hasHatchPanel()) {
-			Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kForward);
-		} else {
-      _hasHatchPanelDurationTimer.reset();
-      Robot.HAS_HATCH_PANEL_LEDS_RELAY.set(Value.kOff);
-    }
   }
   
-
   public void release() {
     _beakRelease.set(true);
     _beakCapture.set(false);

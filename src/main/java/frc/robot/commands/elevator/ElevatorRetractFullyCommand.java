@@ -5,9 +5,6 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ElevatorRetractFullyCommand extends Command {
 
 	public ElevatorRetractFullyCommand() {
@@ -30,6 +27,7 @@ public class ElevatorRetractFullyCommand extends Command {
 		boolean isFinished = false;
 
 		if (Robot.ELEVATOR_SUBSYSTEM.getSafetyTimer() > Calibrations.ELEVATOR_SAFETY_TIMER_TIMEOUT) {
+			System.out.println("TIMEOUT TIMEOUT TIMEOUT TIMEOUT");
 			isFinished = true;
 		}
 

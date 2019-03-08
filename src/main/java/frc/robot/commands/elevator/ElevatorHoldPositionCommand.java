@@ -19,8 +19,6 @@ public class ElevatorHoldPositionCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		// System.out.println("Holding elevator at " +
-		// Calibrations.elevatorHoldPositionPowerMagnitude + " power.");
 		// The goal of this command is to send a very small amount of power to the
 		// elevator motors to fight against gravity - NOT to move the elevator, at all.
 		if (Robot.ELEVATOR_SUBSYSTEM.isAtRetractionLimit() == false) {

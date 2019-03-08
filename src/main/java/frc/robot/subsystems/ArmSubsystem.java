@@ -21,20 +21,20 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.TalonSRXConstants;
 
 public class ArmSubsystem extends Subsystem {
-	TalonSRX armMotor;
+	private TalonSRX _armMotor;
 	private BufferedDigitalInput _armExtensionLimitSwitch;
 	private BufferedDigitalInput _armRetractionLimitSwitch;
 	private Timer _safetyTimer = new Timer();
 
 	public ArmSubsystem() {
-		armMotor = new TalonSRX(RobotMap.armMotor);
-		armMotor.setSensorPhase(true);
+		_armMotor = new TalonSRX(RobotMap.armMotor);
+		_armMotor.setSensorPhase(true);
 		_armRetractionLimitSwitch = new BufferedDigitalInput(RobotMap.armRetractionLimitSwitch);
 		_armExtensionLimitSwitch = new BufferedDigitalInput(RobotMap.armExtensionLimitSwitch);
-		armMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkF, TalonSRXConstants.kTimeoutMs);
-		armMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkP, TalonSRXConstants.kTimeoutMs);
-		armMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkI, TalonSRXConstants.kTimeoutMs);
-		armMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkD, TalonSRXConstants.kTimeoutMs);
+		_armMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkF, TalonSRXConstants.kTimeoutMs);
+		_armMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkP, TalonSRXConstants.kTimeoutMs);
+		_armMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkI, TalonSRXConstants.kTimeoutMs);
+		_armMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkD, TalonSRXConstants.kTimeoutMs);
 
 		NetworkTableDiagnostics.SubsystemNumber("Arm", "Encoder", () -> this.getEncoderPosition());
 		NetworkTableDiagnostics.SubsystemBoolean("Arm", "LimitEncoderExtension", () -> this.isEncoderAtExtensionLimit());
@@ -97,7 +97,7 @@ public class ArmSubsystem extends Subsystem {
     	magnitude = Math.max(magnitude, -1);
     	magnitude *= 1;
     	
-    	armMotor.set(ControlMode.PercentOutput, magnitude);
+    	_armMotor.set(ControlMode.PercentOutput, magnitude);
     }
 
 	public void periodic() {
@@ -142,14 +142,6 @@ public class ArmSubsystem extends Subsystem {
 	public boolean getArmRetractionLimitSwitchValue() {
 		return !_armRetractionLimitSwitch.get();
 	}
-
-	/*
-	 * public boolean isAtBottomLimit() { return this.getEncoderPosition() <=
-	 * Calibrations.armEncoderValueAtBottom + Calibrations.ARM_ENCODER_BUFFER; }
-	 * 
-	 * public boolean isAtTopLimit() { return this.getEncoderPosition() >=
-	 * Calibrations.armEncoderValueAtTop - Calibrations.ARM_ENCODER_BUFFER; }
-	 */
 
 	public boolean getIsAtExtensionLimit() {
 		boolean encoderLimit = false;
@@ -214,24 +206,23 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public int getEncoderPosition() {
-		return (armMotor.getSelectedSensorPosition(0));
+		return (_armMotor.getSelectedSensorPosition(0));
 	}
 
 	public void resetEncodersToRetractionLimit() {
-		this.armMotor.setSelectedSensorPosition(Calibrations.armEncoderRetractedValue, 0, 0);
+		_armMotor.setSelectedSensorPosition(Calibrations.armEncoderRetractedValue, 0, 0);
 	}
 
 	public void resetEncodersToExtendedLimit() {
-		System.out.println("CRINGLEMINGEREUFBUEBFWUIH");
-		this.armMotor.setSelectedSensorPosition(Calibrations.armEncoderExtendedValue, 0, 0);
+		_armMotor.setSelectedSensorPosition(Calibrations.armEncoderExtendedValue, 0, 0);
 	}
 
 	public void setMotorsPID(int position) {
-		this.armMotor.set(ControlMode.Position, position);
+		_armMotor.set(ControlMode.Position, position);
 	}
 
 	public void stop() {
-		this.armMotor.set(ControlMode.PercentOutput, 0);
+		_armMotor.set(ControlMode.PercentOutput, 0);
 	}
 
 	public boolean getIsExtendedPastTarget(int targetEncoderValue) {
@@ -313,6 +304,6 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public void holdPosition() {
-		this.armMotor.set(ControlMode.PercentOutput, Calibrations.armHoldPositionPowerMagnitude);
+		_armMotor.set(ControlMode.PercentOutput, Calibrations.armHoldPositionPowerMagnitude);
 	}
 }

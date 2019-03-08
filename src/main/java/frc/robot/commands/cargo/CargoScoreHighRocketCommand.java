@@ -10,8 +10,6 @@ package frc.robot.commands.cargo;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Calibrations;
 import frc.robot.commands.arm.ArmMoveToHeightCommand;
-import frc.robot.commands.cargowheel.CargoWheelSuckOrSpitCommand;
-import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
 
 import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 
@@ -20,9 +18,5 @@ public class CargoScoreHighRocketCommand extends CommandGroup {
   public CargoScoreHighRocketCommand() {
     addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorHighRocketPortEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armHighRocketPortEncoderValue));
-    //addSequential(new CargoWheelSuckOrSpitCommand(Calibrations.cargoSpitPowerMagnitude, "Spit"));
-    //addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorEncoderMinimumValue));
-    //addParallel(new ArmMoveToHeightCommand(Calibrations.armEncoderRetractedValue));
-    //addSequential(new DriveTrainDriveInchesCommand(24, .6, Calibrations.drivingBackward));
   }
 }

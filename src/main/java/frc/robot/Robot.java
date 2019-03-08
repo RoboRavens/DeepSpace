@@ -11,7 +11,6 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,20 +21,21 @@ import frc.controls.ButtonCode;
 import frc.controls.Gamepad;
 import frc.controls.OperationPanel;
 import frc.controls.OperationPanel2;
-import frc.ravenhardware.RavenLighting;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
 import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
-import frc.robot.commands.arm.ArmMoveToHeightCommand;
+import frc.robot.commands.arm.ArmRetractFullyCommand;
 import frc.robot.commands.arm.ArmRetractWhileHeldCommand;
-import frc.robot.commands.automatedscoring.RunAutomatedCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
+import frc.robot.commands.climber.ClimberExtendWhileHeldCommand;
+import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.hatchpanel.HatchPanelScoreHighRocketCommand;
 import frc.robot.commands.hatchpanel.HatchPanelScoreLowCommand;
 import frc.robot.commands.hatchpanel.HatchPanelScoreMidRocketCommand;
+import frc.robot.commands.misc.RumbleDriveControllerCommand;
 import frc.robot.commands.misc.SetOverride1Command;
 import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
 import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
@@ -50,8 +50,10 @@ import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.GamePiecePossessedSubsystem;
 import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.LineAlignmentSubsystem;
 import frc.robot.subsystems.ProgrammableLEDSubsystem;
 import frc.robot.subsystems.SetCommandSubsystem;
 import frc.util.LoggerOverlord;
@@ -66,13 +68,13 @@ import frc.util.OverrideSystem;
  * project.
  */
 public class Robot extends TimedRobot {
-	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	public Command m_autonomousCommand;
+	public SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	public DriverStation driverStation;
 	public PowerDistributionPanel PDP = new PowerDistributionPanel();
 
-	Diagnostics diagnostics = new Diagnostics();
+	public Diagnostics diagnostics = new Diagnostics();
 	public static final LoggerOverlord LOGGER_OVERLORD = new LoggerOverlord(1f);
 
 	public static final Gamepad DRIVE_CONTROLLER = new Gamepad(0);
@@ -91,14 +93,10 @@ public class Robot extends TimedRobot {
 	public static final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
 	public static final ProgrammableLEDSubsystem LED_SUBSYSTEM = new ProgrammableLEDSubsystem();
 	public static final SetCommandSubsystem SET_COMMAND_SUBSYSTEM = new SetCommandSubsystem();
+	public static final LineAlignmentSubsystem LINE_ALIGNMENT_SUBSYSTEM = new LineAlignmentSubsystem();
+	public static final GamePiecePossessedSubsystem GAME_PIECE_POSSESSED_SUBSYSTEM = new GamePiecePossessedSubsystem();
 
-	public static final Relay HAS_HATCH_PANEL_LEDS_RELAY = new Relay(RobotMap.hasHatchPanelLEDLightRelay);
-	public static final Relay HAS_CARGO_LEDS_RELAY = new Relay(RobotMap.hasCargoLEDLightRelay);
-	public static final Relay UNDERGLOW_RELAY = new Relay(RobotMap.underglowLightRelay);
-	public static final RavenLighting HAS_CUBE_LEDS = new RavenLighting(HAS_HATCH_PANEL_LEDS_RELAY);
-	public static final RavenLighting UNDERGLOW = new RavenLighting(UNDERGLOW_RELAY);
-
-	CameraServer server;
+	public CameraServer server;
 
 	public static final OverrideSystem OVERRIDE_SYSTEM_ELEVATOR_EXTEND = new OverrideSystem();
 	public static final OverrideSystem OVERRIDE_SYSTEM_ARM_EXTEND = new OverrideSystem();
@@ -108,12 +106,12 @@ public class Robot extends TimedRobot {
 	public static final OverrideSystem OVERRIDE_SYSTEM_CLIMBER_EXTEND = new OverrideSystem();
 	public static final OverrideSystem OVERRIDE_SYSTEM_CLIMBER_RETRACT = new OverrideSystem();
 
-	Command autonomousCommand;
+	public Command autonomousCommand;
 
 	public boolean isRedAlliance;
 
-	String autoFromDashboard;
-	String positionFromDashboard;
+	public String autoFromDashboard;
+	public String positionFromDashboard;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -126,12 +124,12 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putData("Auto mode", m_chooser);
 		driverStation.getMatchTime();
-		// Zero the elevator encoders; the robot should always start with the elevator
+		// Zero the elevator encoders; the robot should always g with the elevator
 		// down.
 		Robot.ELEVATOR_SUBSYSTEM.resetEncodersToRetractedLimit();
 		Robot.ARM_SUBSYSTEM.resetEncodersToRetractionLimit();
 
-		Robot.BEAK_SUBSYSTEM.capture();
+		Robot.BEAK_SUBSYSTEM.release();
 
 		this.setupDriveController();
 		this.setupOperationPanel();
@@ -153,11 +151,10 @@ public class Robot extends TimedRobot {
 
 	}
 
-	/*public Robot() {
+	public Robot() {
 		server = CameraServer.getInstance();
-		// server.setQuality(Calibrations.cameraQuality);
 		server.startAutomaticCapture();
-	}*/
+	}
 
 	@Override
 	public void disabledPeriodic() {
@@ -168,8 +165,8 @@ public class Robot extends TimedRobot {
 		autoFromDashboard = SmartDashboard.getString("DB/String 0", "myDefaultData");
 		positionFromDashboard = SmartDashboard.getString("DB/String 2", "myDefaultData");
 
-		outputAutoModeToDashboardStringOne(autoFromDashboard);
-		outputPositionToDashboardStringThree(positionFromDashboard);
+		//outputAutoModeToDashboardStringOne(autoFromDashboard);
+		//outputPositionToDashboardStringThree(positionFromDashboard);
 
 		Alliance alliance = driverStation.getAlliance();
 
@@ -195,7 +192,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("DB/String 5", "TBD - Awaiting plates");
 	}
 
-	public void outputAutoModeToDashboardStringOne(String autoMode) {
+	/*public void outputAutoModeToDashboardStringOne(String autoMode) {
 		String autonomousModeConfirmation = "Confirmed - auto mode: ";
 		String autonomousModeName = "";
 
@@ -254,7 +251,7 @@ public class Robot extends TimedRobot {
 		}
 
 		putSmartDashboardStartingPosition(positionConfirmation, startingPosition);
-	}
+	}*/
 
 	public void putSmartDashboardStartingPosition(String positionConfirmation, String startingPosition) {
 		SmartDashboard.putString("DB/String 3", positionConfirmation);
@@ -283,6 +280,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		diagnostics.outputAutonomousDiagnostics();
+		this.teleopPeriodic();
 	}
 
 	@Override
@@ -310,7 +308,7 @@ public class Robot extends TimedRobot {
 		diagnostics.outputTeleopDiagnostics();
 
 		if (DRIVE_TRAIN_SUBSYSTEM.ravenTank.userControlOfCutPower) {
-			if (DRIVE_CONTROLLER.getAxis(AxisCode.RIGHTTRIGGER) > .25) {
+			if (DRIVE_CONTROLLER.getAxis(AxisCode.RIGHTTRIGGER) > .25 || OPERATION_PANEL_2.getButtonValue(ButtonCode.TESTINGBUTTON) == true) {
 				System.out.println("CUT POWER TRUE");
 			  DRIVE_TRAIN_SUBSYSTEM.ravenTank.setCutPower(true);
 			}
@@ -318,7 +316,6 @@ public class Robot extends TimedRobot {
 			  DRIVE_TRAIN_SUBSYSTEM.ravenTank.setCutPower(false);
 			}
 		}
-
 
 		if (getMatchIsAtTime(90)) {
 			LEDBlinkFor2SecondsCommand command = new LEDBlinkFor2SecondsCommand(4, false);
@@ -349,22 +346,10 @@ public class Robot extends TimedRobot {
 	}
 
 	public void setupDriveController() {
-		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new BeakReleaseHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSpitCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakReleaseHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new CargoWheelSuckCommand());
-
-		/*if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
-			new DriveTrainDriveLimeLightCommand();
-		}*/
-
-		//DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new DriveTrainTurnTargetCommand());
-		/*if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > 0.5) {
-			new SetCutPowerTrue();
-		}*/
-		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new SetCutPowerTrue());//was new SetGyroTargetHeading(180)
-		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenReleased(new SetCutPowerFalse());
-
 		DRIVE_CONTROLLER.getButton(ButtonCode.A).whileHeld(new DriveTrainDriveLimeLightCommand());
 	}
 
@@ -386,8 +371,8 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, true));
 		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, false));
 
-		//OPERATION_PANEL_2.getButton(ButtonCode.CARGOSPITOVERRIDE).whileHeld(new CargoWheelSpitCommand());
-		//OPERATION_PANEL_2.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whenPressed(new BeakReleaseHatchPanelCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.CARGOSPITOVERRIDE).whileHeld(new ClimberExtendWhileHeldCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.BEAKRELEASEOVERRIDE).whileHeld(new ClimberRetractWhileHeldCommand());
 
 		OPERATION_PANEL.getButton(ButtonCode.SETHATCH).whenPressed(new CargoScoreMidRocketCommand());
 		OPERATION_PANEL.getButton(ButtonCode.SETCARGO).whenPressed(new CargoScoreCargoShipCommand());
@@ -396,9 +381,9 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTHIGH).whenPressed(new HatchPanelScoreHighRocketCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTMID).whenPressed(new HatchPanelScoreMidRocketCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETHEIGHTLOW).whenPressed(new HatchPanelScoreLowCommand());
-		//OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whileHeld(new RunAutomatedCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.RUNAUTOMATEDCOMMAND).whenPressed(new ArmRetractFullyCommand());
 
-		//OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whenPressed(new ArmMoveToHeightCommand(Calibrations.armMidHatchEncoderValue)); //USE WHEN TESTING NEW COMMANDS
+		//OPERATION_PANEL_2.getButton(ButtonCode.TESTINGBUTTON).whileHeld(new SetCutPowerTrue()); //USE WHEN TESTING NEW COMMANDS
 	}
 	
 	/**

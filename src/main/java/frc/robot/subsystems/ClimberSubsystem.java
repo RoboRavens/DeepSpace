@@ -8,37 +8,35 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.controls.ButtonCode;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.climber.ClimberHoldPositionCommand;
-import frc.util.PCDashboardDiagnostics;
+import frc.util.NetworkTableDiagnostics;
 import frc.robot.TalonSRXConstants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 
 public class ClimberSubsystem extends Subsystem {
-	public TalonSRX climberMotor;
+	private TalonSRX _climberMotor;
 	private Timer _safetyTimer = new Timer();
 	private double _expectedPower;
 
 	public ClimberSubsystem() {
-		this.climberMotor = new TalonSRX(RobotMap.climberMotor);
-		climberMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkF, TalonSRXConstants.kTimeoutMs);
-		climberMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkP, TalonSRXConstants.kTimeoutMs);
-		climberMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkI, TalonSRXConstants.kTimeoutMs);
-		climberMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkD, TalonSRXConstants.kTimeoutMs);
+		registerDiagnostics();
+		_climberMotor = new TalonSRX(RobotMap.climberMotor);
+		_climberMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkF, TalonSRXConstants.kTimeoutMs);
+		_climberMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkP, TalonSRXConstants.kTimeoutMs);
+		_climberMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkI, TalonSRXConstants.kTimeoutMs);
+		_climberMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.climberkD, TalonSRXConstants.kTimeoutMs);
 
-		this.climberMotor.setSensorPhase(false);
-		this.climberMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
-		this.climberMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
+		//this.climberMotor.setSensorPhase(false);
+		//this.climberMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
+		//this.climberMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
 
 		/* Don't neutral motor if remote limit source is not available */
-		this.climberMotor.configLimitSwitchDisableNeutralOnLOS(true, TalonSRXConstants.kTimeoutMs);
+		//this.climberMotor.configLimitSwitchDisableNeutralOnLOS(true, TalonSRXConstants.kTimeoutMs);
 	}
 
 	public void initDefaultCommand() {
@@ -46,19 +44,11 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public void extend(double magnitude) {
-		if (isAtExtensionLimit() /*&& Robot.OPERATION_PANEL.getButtonValue(ButtonCode.CLIMBERDOUBLEOVERRIDEEXTEND) == false*/) {
-			stop();
-		} else {
-			set(magnitude);
-		}
+		set(-1 * magnitude);
 	}
 
 	public void retract(double magnitude) {
-		if (isAtRetractionLimit() /*&& Robot.OPERATION_PANEL.getButtonValue(ButtonCode.CLIMBERDOUBLEOVERRIDERETRACT) == false*/) {
-			stop();
-		} else {
-			set(-1 * magnitude);
-		}
+		set(magnitude);
 	}
 
 	private void set(double magnitude) {
@@ -66,16 +56,9 @@ public class ClimberSubsystem extends Subsystem {
 		magnitude = Math.max(magnitude, -1);
 		magnitude *= 1;
 
-		if (isAtExtensionLimit() && Math.signum(magnitude) == 1) {
-			magnitude = 0;
-		}
-		if (isAtRetractionLimit() && Math.signum(magnitude) == -1) {
-			magnitude = 0;
-		}
-
 		_expectedPower = magnitude;
 
-		climberMotor.set(ControlMode.PercentOutput, magnitude);
+		_climberMotor.set(ControlMode.PercentOutput, magnitude);
 	}
 
 	public void getPosition() {
@@ -83,7 +66,7 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public double getEncoderPosition() {
-		int EncoderPosition = climberMotor.getSelectedSensorPosition();
+		int EncoderPosition = _climberMotor.getSelectedSensorPosition();
 
 		return EncoderPosition;
 	}
@@ -92,26 +75,25 @@ public class ClimberSubsystem extends Subsystem {
 		this.isAtExtensionLimit();
 		this.isAtRetractionLimit();
 
-		climberSubsystemDiagnostics();
 		checkExpectedSpeedVersusPower();
 	}
 
-	public void climberSubsystemDiagnostics() {
-		PCDashboardDiagnostics.SubsystemNumber("Climber", "Encoder", getEncoderPosition());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitEncoderExtended", isEncoderAtExtensionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitEncoderRetracted", isEncoderAtRetractionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitSwitchExtended", getClimberExtensionLimitSwitchValue());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitSwitchRetracted", getClimberRetractionLimitSwitchValue());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitFinalExtension", isAtExtensionLimit());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitFinalRetraction", isAtRetractionLimit());
+	public void registerDiagnostics() {
+		NetworkTableDiagnostics.SubsystemNumber("Climber", "Encoder", () -> getEncoderPosition());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitEncoderExtended", () -> isEncoderAtExtensionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitEncoderRetracted", () -> isEncoderAtRetractionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitSwitchExtended", () -> getClimberExtensionLimitSwitchValue());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitSwitchRetracted", () -> getClimberRetractionLimitSwitchValue());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitFinalExtension", () -> isAtExtensionLimit());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitFinalRetraction", () -> isAtRetractionLimit());
 
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "OverrideExtend", Robot.OVERRIDE_SYSTEM_CLIMBER_EXTEND.getOverride1());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "OverrideRetract", Robot.OVERRIDE_SYSTEM_CLIMBER_RETRACT.getOverride1());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "OverrideExtend", () -> Robot.OVERRIDE_SYSTEM_CLIMBER_EXTEND.getOverride1());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "OverrideRetract", () -> Robot.OVERRIDE_SYSTEM_CLIMBER_RETRACT.getOverride1());
 		// Measure power sent to climber
-		PCDashboardDiagnostics.SubsystemNumber("Climber", "EncoderExpectedPower", _expectedPower);
+		NetworkTableDiagnostics.SubsystemNumber("Climber", "EncoderExpectedPower", () -> _expectedPower);
 
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitSwitchAndEncoderAgreeRetracted", encoderAndLimitsMatchRetracted());
-		PCDashboardDiagnostics.SubsystemBoolean("Climber", "LimitSwitchAndEncoderAgreeExtended", encoderAndLimitsMatchExtended());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitSwitchAndEncoderAgreeRetracted", () -> encoderAndLimitsMatchRetracted());
+		NetworkTableDiagnostics.SubsystemBoolean("Climber", "LimitSwitchAndEncoderAgreeExtended", () -> encoderAndLimitsMatchExtended());
 	}
 
 	public boolean encoderAndLimitsMatchRetracted() {
@@ -151,7 +133,7 @@ public class ClimberSubsystem extends Subsystem {
 		if (Math.abs(_expectedPower) > Calibrations.climberHoldPositionPowerMagnitude) {
 			// The line below only returns as true if the climber is pushing harder than it needs to not move it
 			if (Math.abs(
-					climberMotor.getSelectedSensorVelocity()) < Calibrations.climberConsideredMovingEncoderRate) {
+					_climberMotor.getSelectedSensorVelocity()) < Calibrations.climberConsideredMovingEncoderRate) {
 				burnoutProtection();
 			}
 		}
@@ -168,19 +150,19 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public void resetEncodersToRetractedLimit() {
-		climberMotor.setSelectedSensorPosition(Calibrations.climberEncoderMinimumValue, 0, 0);
+		_climberMotor.setSelectedSensorPosition(Calibrations.climberEncoderMinimumValue, 0, 0);
 	}
 
 	public void resetEncodersToExtendedLimit() {
-		climberMotor.setSelectedSensorPosition(Calibrations.climberEncoderMaximumValue, 0, 0);
+		_climberMotor.setSelectedSensorPosition(Calibrations.climberEncoderMaximumValue, 0, 0);
 	}
 
 	public void setMotorsPID(int position) {
-		climberMotor.set(ControlMode.Position, position);
+		_climberMotor.set(ControlMode.Position, position);
 	}
 
 	public void stop() {
-		climberMotor.set(ControlMode.PercentOutput, 0);
+		_climberMotor.set(ControlMode.PercentOutput, 0);
 	}
 
 	// Right now this method just looks at the right limit switch; some combination of both should be used.
@@ -247,7 +229,7 @@ public class ClimberSubsystem extends Subsystem {
     }
 
 	public void holdPosition() {
-		climberMotor.set(ControlMode.PercentOutput, Calibrations.climberHoldPositionPowerMagnitude);
+		_climberMotor.set(ControlMode.PercentOutput, Calibrations.climberHoldPositionPowerMagnitude);
 	}
 
 	public double getClimberHeightPercentage() {
@@ -279,11 +261,11 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public boolean getClimberExtensionLimitSwitchValue() {
-		return this.climberMotor.getSensorCollection().isFwdLimitSwitchClosed();
+		return _climberMotor.getSensorCollection().isFwdLimitSwitchClosed();
 	}
 
 	public boolean getClimberRetractionLimitSwitchValue() {
-		return this.climberMotor.getSensorCollection().isRevLimitSwitchClosed();
+		return _climberMotor.getSensorCollection().isRevLimitSwitchClosed();
 	}
 
 	public boolean getIsExtendedPastEncoderPosition(int encoderPosition) {

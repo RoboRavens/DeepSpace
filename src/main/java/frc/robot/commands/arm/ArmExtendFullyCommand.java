@@ -2,12 +2,8 @@ package frc.robot.commands.arm;
 
 import frc.robot.Calibrations;
 import frc.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ArmExtendFullyCommand extends Command {
 
     public ArmExtendFullyCommand() {
@@ -21,7 +17,6 @@ public class ArmExtendFullyCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         Robot.ARM_SUBSYSTEM.setMotorsPID(Calibrations.armEncoderExtendedValue);
-        // System.out.println("EXTENDING ARM FULLY");
     }
 
     // Make this return true when this Command no longer needs to run execute()

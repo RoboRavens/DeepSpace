@@ -10,9 +10,6 @@ package frc.robot.commands.hatchpanel;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Calibrations;
 import frc.robot.commands.arm.ArmMoveToHeightCommand;
-import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
-import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
-
 import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 
 public class HatchPanelScoreHighRocketCommand extends CommandGroup {
@@ -21,9 +18,5 @@ public class HatchPanelScoreHighRocketCommand extends CommandGroup {
     
     addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorHighHatchEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armHighHatchEncoderValue));
-    //addSequential(new BeakReleaseHatchPanelCommand());
-    //addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorLowHatchEncoderValue));
-    //addParallel(new ArmMoveToHeightCommand(Calibrations.armLowHatchEncoderValue));
-    // addSequential(new DriveTrainDriveInchesCommand(24, .6, Calibrations.drivingBackward));
   }
 }
