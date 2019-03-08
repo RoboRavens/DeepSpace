@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
 public class Calibrations {
@@ -73,7 +66,7 @@ public class Calibrations {
 	public static final double DRIVETRAIN_MAXPOWER_AT_MAX_ELEVEATOR_HEIGHT = .4;
     
 
-	//ELEVATOR
+	// ELEVATOR
 	// TODO: scale this based on elevator height
 	public static final double elevatorHoldPositionPowerMagnitude = .15;
 
@@ -116,7 +109,7 @@ public class Calibrations {
 	public static final int elevatorInchesToEncoderTicksOffsetValue = 10;
 	
 
-	//CLIMBER (ALL VALUES ARE INCORRECT)
+	// CLIMBER (ALL VALUES ARE INCORRECT)
 	public static final double climberHoldPositionPowerMagnitude = .13;
 	public static final double climberExtendPowerMagnitude = .5;
 	public static final double climberRetractPowerMagnitude = .4;
@@ -146,7 +139,7 @@ public class Calibrations {
     public static final int climberInchesToEncoderTicksOffsetValue = 10;
 	
 
-	//ARM
+	// ARM
 	public static final double armkF = 0.1;
 	public static final double armkP = 12.0;
 	public static final double armkI = 0.0;
@@ -172,7 +165,7 @@ public class Calibrations {
 	public static final double ARM_SAFETY_TIMER_TIMEOUT = 2;
 
 
-	//CARGO WHEEL
+	// CARGO WHEEL
 	public static final double cargoWheelSuckPowerMagnitude = 1;
 	public static final double cargoSpitPowerMagnitude = 1;
 	public static final double cargoDropPowerMagnitude = .5;
@@ -183,7 +176,7 @@ public class Calibrations {
 	public static final double cargoSpitTimer = 1;
 
 	
-	//LIMELIGHT
+	// LIMELIGHT
 	public static final double FLOOR_TO_LIMELIGHT_LENS_HEIGHT = 19.5;
 	public static final double FLOOR_TO_TARGET_CENTER_HEIGHT = 28.0;
 	public static final double CAMERA_ANGLE_OFFSET_FROM_HORIZONTAL = 2; // degrees
@@ -195,13 +188,11 @@ public class Calibrations {
 	public static final int distanceDesiredFromRocket = 72;
 	public static final int distanceDesiredFromCargoShip = 72;
 
-
-	//LIGHTING
+	// LIGHTING
 	public static final double lightingFlashTotalDurationMs = 1000;
 	public static final double lightingFlashes = 10;
-	
 
-	//CAMERA QUALITY
+	//n CAMERA QUALITY
 	public static final int cameraQuality = 50;
 
 	// CONTROLLER RUMBLE
