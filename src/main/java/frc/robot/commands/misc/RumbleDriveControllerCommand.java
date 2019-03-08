@@ -9,6 +9,8 @@ public class RumbleDriveControllerCommand extends Command {
     private Timer _timer;
 
     public RumbleDriveControllerCommand(double seconds) {
+        _seconds = seconds;
+        _timer = new Timer();
     }
 
     // Called just before this Command runs the first time

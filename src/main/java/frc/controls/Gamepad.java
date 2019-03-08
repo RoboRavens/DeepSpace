@@ -103,12 +103,13 @@ public class Gamepad {
 	}
 
 	public void setRumbleOn() {
-        joystick.setRumble(RumbleType.kLeftRumble, 1);
-        joystick.setRumble(RumbleType.kRightRumble, 1);
+        _joystick.setRumble(RumbleType.kLeftRumble, 1);
+        _joystick.setRumble(RumbleType.kRightRumble, 1);
 	}
 
 	public void setRumbleOff() {
-		joystick.setRumble(RumbleType.kLeftRumble, 0);
-        joystick.setRumble(RumbleType.kRightRumble, 0);
+		System.out.println("Setting rumble off.");
+		_joystick.setRumble(RumbleType.kLeftRumble, 0);
+        _joystick.setRumble(RumbleType.kRightRumble, 0);
 	}
 }

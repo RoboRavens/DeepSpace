@@ -93,8 +93,8 @@ public class Diagnostics {
 		PCDashboardDiagnostics.AdHocString("GyroAdjust", "" + Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.gyroAdjust);
 		PCDashboardDiagnostics.AdHocString("GyroCurrentHeading", "" + Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading());
 		PCDashboardDiagnostics.AdHocString("GyroCurrentAngle", "" + Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getGyroAngle());
-		PCDashboardDiagnostics.AdHocString("WheelLeftEncoder", "" + Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getLeftNetInchesTraveled());
-		PCDashboardDiagnostics.AdHocString("WheelRightEncoder", "" + Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getRightNetInchesTraveled());
+		//PCDashboardDiagnostics.AdHocString("WheelLeftEncoder", "" + Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getLeftNetInchesTraveled());
+		//PCDashboardDiagnostics.AdHocString("WheelRightEncoder", "" + Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getRightNetInchesTraveled());
 		// System.out.println(/* "GyroAdjust "+Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.gyroAdjust+*/"Crnt head: " + Math.round(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading()) + " Crnt Angle " + Math.round(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.orientationGyro.getAngle()) + " Target heading: " + Math.round(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getGyroTargetHeading()));
 		// PCDashboardDiagnostics.AdHocData(name, data);
 		

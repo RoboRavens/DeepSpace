@@ -35,6 +35,7 @@ import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.hatchpanel.HatchPanelScoreHighRocketCommand;
 import frc.robot.commands.hatchpanel.HatchPanelScoreLowCommand;
 import frc.robot.commands.hatchpanel.HatchPanelScoreMidRocketCommand;
+import frc.robot.commands.misc.RumbleDriveControllerCommand;
 import frc.robot.commands.misc.SetOverride1Command;
 import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
 import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
