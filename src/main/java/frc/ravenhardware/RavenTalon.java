@@ -102,6 +102,14 @@ public class RavenTalon {
 		} else {
 			_talon.set(outputSpeed);
 		}
+	}
 
+	public int getEncoderPosition() {
+		return _talonSRX.getSelectedSensorPosition();
+	}
+
+	public void resetEncoderPosition() {
+		_talonSRX.setSelectedSensorPosition(0);
 	}
 }
+

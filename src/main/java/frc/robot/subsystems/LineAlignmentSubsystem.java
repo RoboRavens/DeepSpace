@@ -40,11 +40,11 @@ public class LineAlignmentSubsystem extends Subsystem {
   }
 
 	public boolean getFrontSensorIsAligned() {
-		return _frontLineSensor.get();
+		return !_frontLineSensor.get();
 	}
 
 	public boolean getRearSensorIsAligned() {
-		return _rearLineSensor.get();
+		return !_rearLineSensor.get();
 	}
   
   public void turnOn() {

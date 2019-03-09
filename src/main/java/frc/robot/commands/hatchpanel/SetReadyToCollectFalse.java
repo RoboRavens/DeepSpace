@@ -5,14 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.beak;
+package frc.robot.commands.hatchpanel;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class BeakReleaseHatchPanelCommand extends Command {
-  public BeakReleaseHatchPanelCommand() {
-    requires(Robot.BEAK_SUBSYSTEM);
+public class SetReadyToCollectFalse extends Command {
+  public SetReadyToCollectFalse() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
@@ -24,13 +25,12 @@ public class BeakReleaseHatchPanelCommand extends Command {
   @Override
   protected void execute() {
     Robot.BEAK_SUBSYSTEM.setIsReadyToCollect(false);
-    Robot.BEAK_SUBSYSTEM.release();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

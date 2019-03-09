@@ -12,6 +12,7 @@ public class BeakSubsystem extends Subsystem {
   private Solenoid _beakRelease;
   private DigitalInput _hatchPanelSensorLeft;
   private DigitalInput _hatchPanelSensorRight;
+  private boolean _readyToCollect;
   private Timer _hasHatchPanelDurationTimer = new Timer();
 
   public BeakSubsystem() {
@@ -22,6 +23,9 @@ public class BeakSubsystem extends Subsystem {
     _hasHatchPanelDurationTimer.start();
     
     NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", () -> hasHatchPanelStrict());
+    NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "LeftHatchSensor", () -> getLeftHatchPanelSensor());
+    NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "RightHatchSensor", () -> getRightHatchPanelSensor());
+    NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "ReadyToCollect", () -> _readyToCollect);
   }
 
   public void initDefaultCommand() {
@@ -50,14 +54,20 @@ public class BeakSubsystem extends Subsystem {
 }
 
   public boolean getLeftHatchPanelSensor() {
-    return _hatchPanelSensorLeft.get();
+    return !_hatchPanelSensorLeft.get();
   }
     
   public boolean getRightHatchPanelSensor() {
-    return _hatchPanelSensorRight.get();
+    return !_hatchPanelSensorRight.get();
   }
   
   public void periodic()  {
+    if (_readyToCollect == true) {
+      if (hasHatchPanelStrict() == true) {
+        this.capture();
+        _readyToCollect = false;
+      }
+    } 
   }
   
   public void release() {
@@ -66,7 +76,12 @@ public class BeakSubsystem extends Subsystem {
   }
 
   public void capture() {
+    System.out.println("Capturing");
     _beakCapture.set(true);
     _beakRelease.set(false);
+  }
+
+  public void setIsReadyToCollect(boolean readyToCollect) {
+    _readyToCollect = readyToCollect;
   }
 }
