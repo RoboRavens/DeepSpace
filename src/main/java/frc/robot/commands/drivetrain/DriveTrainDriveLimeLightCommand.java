@@ -18,7 +18,8 @@ public class DriveTrainDriveLimeLightCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         double leftYAxisValue = Robot.DRIVE_CONTROLLER.getAxis(AxisCode.LEFTSTICKY);
-        Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.fpsTankLimelight(leftYAxisValue);
+        double rightXAxisValue = Robot.DRIVE_CONTROLLER.getAxis(AxisCode.RIGHTSTICKX);
+        Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.fpsTankChooseLimelightOrManual(leftYAxisValue, rightXAxisValue);
     }
 
     // Make this return true when this Command no longer needs to run execute()

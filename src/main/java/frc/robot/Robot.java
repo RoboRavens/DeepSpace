@@ -34,6 +34,7 @@ import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.climber.ClimberExtendWhileHeldCommand;
 import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
+import frc.robot.commands.climber.ClimberThirdLevelCommand;
 import frc.robot.commands.drivetrain.DriveTrainDriveLimeLightCommand;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
@@ -316,6 +317,13 @@ public class Robot extends TimedRobot {
 			}
 		}
 
+		/*DriveTrainDriveLimeLightCommand driveTrainDriveLimeLightCommand = new DriveTrainDriveLimeLightCommand();
+		if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
+			driveTrainDriveLimeLightCommand.start();
+		} else {
+			driveTrainDriveLimeLightCommand.close();
+		}*/
+
 		if (getMatchIsAtTime(90)) {
 			LEDBlinkFor2SecondsCommand command = new LEDBlinkFor2SecondsCommand(4, false);
 			command.start();
@@ -349,7 +357,7 @@ public class Robot extends TimedRobot {
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSpitCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new CargoWheelSuckCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.A).whileHeld(new DriveTrainDriveLimeLightCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new ClimberThirdLevelCommand());
 	}
 
 	public void setupOperationPanel() {

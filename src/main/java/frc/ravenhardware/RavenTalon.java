@@ -97,25 +97,26 @@ public class RavenTalon {
 
 		PCDashboardDiagnostics.SubsystemNumber("DriveTrain", _name + "OutputPercent", outputSpeed);
 
-		if (Calibrations.UseTalonSRXForDriveController) {
+		try {
 			_talonSRX.set(ControlMode.PercentOutput, outputSpeed);
-		} else {
+		} 
+		catch (NullPointerException exception) {
 			_talon.set(outputSpeed);
 		}
 	}
 
 	public int getEncoderPosition() {
-		if (Calibrations.UseTalonSRXForDriveController == true) {
+		try {
 			return _talonSRX.getSelectedSensorPosition();
-		} else {
+		} catch (NullPointerException exception) {
 			return 0;
 		}
 	}
 
 	public void resetEncoderPosition() {
-		if (Calibrations.UseTalonSRXForDriveController == true) {
+		try {
 			_talonSRX.setSelectedSensorPosition(0);
-		}
+		} catch (NullPointerException exception) {}
 	}
 }
 
