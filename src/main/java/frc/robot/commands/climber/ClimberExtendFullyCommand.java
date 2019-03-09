@@ -8,7 +8,6 @@ public class ClimberExtendFullyCommand extends Command {
 
 	public ClimberExtendFullyCommand() {
 		requires(Robot.CLIMBER_SUBSYSTEM);
-
 	}
 
 	// Called just before this Command runs the first time

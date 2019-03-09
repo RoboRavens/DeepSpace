@@ -46,20 +46,20 @@ public class OperationPanel {
 		case ARMOVERRIDEEXTEND:
 			buttonNumber = 8;
 			break;
-		case SETLOCATIONROCKET:
+		case ROCKETHIGH:
 			buttonNumber = 9;
 			break;
-		case SETHATCH:
+		case ROCKETMID:
 			buttonNumber = 10;
 			break;
-		case SETLOCATIONCARGOSHIP:
+		case ROCKETLOW:
 			buttonNumber = 11;
 			break;
-		case SETCARGO:
+		case CARGOSHIP:
 			buttonNumber = 12;
 			break;
 		default:
-			throw new IllegalArgumentException("Invalid Button Code");
+			throw new IllegalArgumentException("Invalid Button Code" + button);
 		}
 
 		return buttonNumber;

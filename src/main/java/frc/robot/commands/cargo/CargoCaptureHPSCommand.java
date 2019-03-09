@@ -5,17 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.hatchpanel;
+package frc.robot.commands.cargo;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Calibrations;
 import frc.robot.commands.arm.ArmMoveToHeightCommand;
-import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
+import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
 
-public class HatchPanelScoreLowCommand extends CommandGroup {
-  
-  public HatchPanelScoreLowCommand() {
-    addSequential(new ArmMoveToHeightCommand(Calibrations.armLowHatchEncoderValue));
-    addSequential(new ElevatorMoveToHeightCommand(Calibrations.elevatorLowHatchEncoderValue));
+public class CargoCaptureHPSCommand extends CommandGroup {
+ 
+  public CargoCaptureHPSCommand() {
+    addSequential(new ElevatorRetractFullyCommand());
+    addSequential(new ArmMoveToHeightCommand(Calibrations.armCargoHPSEncoderValue));
   }
 }

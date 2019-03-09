@@ -73,6 +73,11 @@ public class LimelightSubsystem extends Subsystem {
 		table.getEntry("camMode").setNumber(0);
 	
 		bufferedAngleOffHorizontal.maintainState(this.angleOffHorizontal());
+		//bufferedAngleOffHorizontal.traverse();
+		//System.out.println();
+
+		System.out.println("AOH buf: " + this.bufferedAngleOffHorizontal.getMedian());
+		System.out.println("AOH: " + this.angleOffHorizontal());
 	}
 
 	public double getTargetArea() {
@@ -106,7 +111,7 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void turnToTarget() {
-		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() - _offsetFromTargetAngle);
+		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + this.bufferedAngleOffHorizontal.getMedian());
 	}
 
 	public void driveToTarget(double distanceDesiredFromTarget) {

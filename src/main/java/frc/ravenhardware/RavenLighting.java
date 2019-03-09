@@ -21,7 +21,7 @@ public class RavenLighting {
 
 	public void turnOn() {
 		cancelToggle();
-		_mainArray.set(Value.kOn);
+		_mainArray.set(Value.kForward);
 	}
 
 	public void turnOff() {
