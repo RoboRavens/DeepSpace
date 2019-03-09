@@ -55,10 +55,8 @@ public class RavenTank {
 	private void initializeRavenTank() {
 		_slewRate = Calibrations.slewRateMaximum;
 
-		//Encoder leftWpiEncoder = new Encoder(RobotMap.leftDriveEncoder1, RobotMap.leftDriveEncoder2);
-		//Encoder rightWpiEncoder = new Encoder(RobotMap.rightDriveEncoder1, RobotMap.rightDriveEncoder2);
-		//_leftRavenEncoder = new RavenEncoder(leftWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
-		//_rightRavenEncoder = new RavenEncoder(rightWpiEncoder, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
+		_leftRavenEncoder = new RavenEncoder(driveLeft, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
+		_rightRavenEncoder = new RavenEncoder(driveRight, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
 
 		_gyroCooldownTimer = new Timer();
 
@@ -235,7 +233,6 @@ public class RavenTank {
 	}
 
 	public void driveLeftSide(double magnitude) {
-		// System.out.println("Driving left side. Magnitude: " + magnitude);
 		driveLeft.set(magnitude);
 	}
 
@@ -409,14 +406,12 @@ public class RavenTank {
 	}
 
 	public double getNetInchesTraveled() {
-		return 0;
-		/*
 		double leftInches = _leftRavenEncoder.getNetInchesTraveled();
 		double rightInches = _rightRavenEncoder.getNetInchesTraveled();
 		double netInchesTraveled = (leftInches + rightInches)/2;
 		
 		return netInchesTraveled;
-		*/
+
 	}
 
 	public double getSlewRate() {
@@ -431,14 +426,10 @@ public class RavenTank {
 	}
 	
 	public double getRightNetInchesTraveled() {
-		// Commented out actual line to free up DIO ports.
-		return 0;
-		// return _rightRavenEncoder.getNetInchesTraveled();
+		return _rightRavenEncoder.getNetInchesTraveled();
 	}
 	
 	public double getLeftNetInchesTraveled() {
-		// Commented out actual line to free up DIO ports.
-		return 0;
-		// return _leftRavenEncoder.getNetInchesTraveled();
+		return _leftRavenEncoder.getNetInchesTraveled();
 	}
 }

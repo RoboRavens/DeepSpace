@@ -1,9 +1,11 @@
 package frc.ravenhardware;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.Encoder;
 
 public class RavenEncoder {
-    private Encoder _encoder;
+    private RavenTalon _ravenTalon;
 
     private int _cyclesPerRevolution;
     private double _wheelDiameterInches;
@@ -12,17 +14,17 @@ public class RavenEncoder {
 
     private boolean _inverted = false;
 
-    public RavenEncoder(Encoder encoder, int cyclesPerRevolution, double wheelDiameterInches, boolean inverted) {
-        this._encoder = encoder;
-        this._cyclesPerRevolution = cyclesPerRevolution;
-        this._wheelDiameterInches = wheelDiameterInches;
-        this._inverted = inverted;
+    public RavenEncoder(RavenTalon ravenTalon, int cyclesPerRevolution, double wheelDiameterInches, boolean inverted) {
+        _ravenTalon = ravenTalon;
+        _cyclesPerRevolution = cyclesPerRevolution;
+        _wheelDiameterInches = wheelDiameterInches;
+        _inverted = inverted;
 
         this._wheelCircumferenceInches = Math.PI * wheelDiameterInches;
     }
 
     public double getNetRevolutions() {
-        double netRevolutions = (double) _encoder.get() / _cyclesPerRevolution;
+        double netRevolutions = (double) _ravenTalon.getEncoderPosition() / _cyclesPerRevolution;
 
         if (_inverted) {
             netRevolutions *= -1;
@@ -40,7 +42,7 @@ public class RavenEncoder {
     }
 
     public int getCycles() {
-        int cycles = this._encoder.get();
+        int cycles = _ravenTalon.getEncoderPosition();
 
         if (_inverted) {
             cycles *= -1;
@@ -50,6 +52,6 @@ public class RavenEncoder {
     }
 
     public void resetEncoder() {
-        this._encoder.reset();
+        _ravenTalon.resetEncoderPosition();
     }
 }

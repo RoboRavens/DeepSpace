@@ -29,7 +29,7 @@ public class Calibrations {
 	public static final double DriveTrainCollisionJerkThreshold = 4;
 
 	// 2019 and newer robots use talonSRX instead talon
-	public static final Boolean UseTalonSRXForDriveController = true;
+	public static final Boolean UseTalonSRXForDriveController = false;
 
 	// Drive and gyro modes
 	public static final int bulldozerTank = 0;
@@ -147,7 +147,9 @@ public class Calibrations {
 	public static final double armHoldPositionPowerMagnitude = 0.04;
 	
 	public static final int armEncoderRetractedValue = 0;
-    public static final int armEncoderExtendedValue = 9700;
+	public static final int armEncoderExtendedValue = 9700;
+	
+	public static final int armCargoHPSEncoderValue = 2000;
 
     public static final int armLowHatchEncoderValue = armEncoderExtendedValue;
     public static final int armMidHatchEncoderValue = armEncoderExtendedValue;

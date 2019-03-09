@@ -24,6 +24,7 @@ public class GamePiecePossessedCheckCommand extends Command {
             if (Robot.GAME_PIECE_POSSESSED_SUBSYSTEM.getHasGamePiece() == false) {
                 Command rumbleCommand = new RumbleDriveControllerCommand(Calibrations.gamePieceCollectedRumbleSeconds);
                 rumbleCommand.start();
+                rumbleCommand.close();
 
                 Robot.GAME_PIECE_POSSESSED_SUBSYSTEM.setHasGamePiece(true);
             }
