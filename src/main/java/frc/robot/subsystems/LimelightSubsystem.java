@@ -9,10 +9,6 @@ import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
 import frc.robot.commands.drivetrain.DriveTrainStopCommand;
 import frc.util.NetworkTableDiagnostics;
-<<<<<<< HEAD
-import frc.util.PCDashboardDiagnostics;
-=======
->>>>>>> master
 
 /**
  *

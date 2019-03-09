@@ -70,13 +70,6 @@ public class CargoWheelSubsystem extends Subsystem {
 	public void periodic() {
 		_cargoSensor.maintainState();
 
-<<<<<<< HEAD
-		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", () -> this.hasCargo());
-		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoSensorRaw", () -> _cargoSensor.get());
-		//NetworkTableDiagnostics.SubsystemNumber("CargoWheel", "MotorOutputPercent", cargoMotor.getMotorOutputPercent());
-
-=======
->>>>>>> master
 		if (this.hasCargo() == false) {
 			_hasCargoDurationTimer.reset();
 		}

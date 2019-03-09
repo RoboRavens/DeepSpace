@@ -6,10 +6,6 @@ import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveFPSCommand;
 import frc.util.NetworkTableDiagnostics;
-<<<<<<< HEAD
-import frc.util.PCDashboardDiagnostics;
-=======
->>>>>>> master
 
 /**
  *
@@ -46,19 +42,7 @@ public class DriveTrainSubsystem extends Subsystem {
 		double slewRateSubtraction = slewRateDifference * elevatorHeightPercentage;
 		double slewRate = Calibrations.slewRateMaximum - slewRateSubtraction;
 		slewRate = Math.max(Calibrations.slewRateMinimum, slewRate);
-<<<<<<< HEAD
-		slewRate = Math.min(Calibrations.slewRateMaximum, slewRate);
-		this.ravenTank.setSlewRate(slewRate);
-
-		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "PowerMax", () -> maxPower);
-		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderLeftInchesTraveled", () -> this.ravenTank.leftRavenEncoder.getNetInchesTraveled());
-		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderRightInchesTraveled", () -> this.ravenTank.rightRavenEncoder.getNetInchesTraveled());
-		NetworkTableDiagnostics.SubsystemNumber("DriveTrain", "EncoderAvgInchesTraveled", () -> Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled());
-		PCDashboardDiagnostics.SubsystemNumber("DriveTrain", "SlewRate", slewRate);
-		NetworkTableDiagnostics.SubsystemBoolean("DriveTrain", "CutPower", () -> this.ravenTank.getCutPower());
-=======
 		_slewRateFinal = Math.min(Calibrations.slewRateMaximum, slewRate);
 		ravenTank.setSlewRate(_slewRateFinal);
->>>>>>> master
 	}
 }

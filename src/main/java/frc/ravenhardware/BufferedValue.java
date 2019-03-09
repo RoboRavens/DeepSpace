@@ -44,17 +44,6 @@ public class BufferedValue {
     
     public double getMedian() {
 		double medianValue = 0;
-<<<<<<< HEAD
-
-		Comparator<Double> comp = Comparator.naturalOrder();
-		medianValue = BufferedValue.median(values, comp);
-
-        return medianValue;
-	}
-	
-
-	// Below here: code shamelessly copied from the internet.
-=======
 		Comparator<Double> comp = Comparator.naturalOrder();
 		medianValue = median(values, comp);
 		
@@ -68,7 +57,6 @@ public class BufferedValue {
 	}
 	
 		// Below here: code shamelessly copied from the internet.
->>>>>>> master
 	// From: https://stackoverflow.com/questions/11955728/how-to-calculate-the-median-of-an-array
 	// (Answer by Bruce Feist)
 	public static <T extends Number> double median(LinkedList<T> coll, Comparator<T> comp) {
@@ -90,11 +78,7 @@ public class BufferedValue {
 	 * @param n  the position of the desired object, using the ordering defined on the list elements
 	 * @return the nth smallest object
 	 *******************/
-<<<<<<< HEAD
-	 
-=======
 		 
->>>>>>> master
 	 public static <T> T nth(LinkedList<T> coll, int n, Comparator<T> comp) {
 		T result, pivot;
 		LinkedList<T> underPivot = new LinkedList<>(), overPivot = new LinkedList<>(), equalPivot = new LinkedList<>();

@@ -105,11 +105,7 @@ public class ElevatorSubsystem extends Subsystem {
 		checkExpectedSpeedVersusPower();
 	}
 
-<<<<<<< HEAD
-	public void elevatorSubsystemDiagnostics() {
-=======
 	public void registerDiagnostics() {
->>>>>>> master
 		NetworkTableDiagnostics.SubsystemNumber("Elevator", "Encoder", () -> getEncoderPosition());
 		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "LimitEncoderExtended", () -> isEncoderAtExtensionLimit());
 		NetworkTableDiagnostics.SubsystemBoolean("Elevator", "LimitEncoderRetracted", () -> isEncoderAtRetractionLimit());
