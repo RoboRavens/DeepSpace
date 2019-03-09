@@ -370,20 +370,20 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, true));
 		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, false));
 
-		OPERATION_PANEL.getButton(ButtonCode.CLIMBEROVERRIDEEXTEND).whileHeld(new ClimberExtendWhileHeldCommand());
-		OPERATION_PANEL.getButton(ButtonCode.CLIMBEROVERRIDERETRACT).whileHeld(new ClimberRetractWhileHeldCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDEEXTEND).whileHeld(new ClimberExtendWhileHeldCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDERETRACT).whileHeld(new ClimberRetractWhileHeldCommand());
 
 		OPERATION_PANEL.getButton(ButtonCode.ROCKETHIGH).whenPressed(new CargoScoreMidRocketCommand());
 		OPERATION_PANEL.getButton(ButtonCode.ROCKETMID).whenPressed(new HatchPanelScoreMidRocketCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.ROCKETLOW).whenPressed(new HatchPanelScoreLowCommand());
+		OPERATION_PANEL.getButton(ButtonCode.ROCKETLOW).whenPressed(new HatchPanelScoreLowCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.READYTOCOLLECT).whenPressed(new SetReadyToCollectTrue());
-		OPERATION_PANEL_2.getButton(ButtonCode.CARGOSHIP).whenPressed(new CargoScoreCargoShipCommand());
+		
+		OPERATION_PANEL.getButton(ButtonCode.CARGOSHIP).whenPressed(new CargoScoreCargoShipCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.HATCHOVERRIDE).whenPressed(new HatchPanelScoreLowCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOOVERRIDE).whenPressed(new ArmRetractFullyCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new ArmRetractFullyCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new ElevatorRetractFullyCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOHPS).whenPressed(new CargoCaptureHPSCommand());
-
 	}
 	
 	/**
