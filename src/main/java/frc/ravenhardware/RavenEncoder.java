@@ -1,16 +1,11 @@
 package frc.ravenhardware;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.Encoder;
-
 public class RavenEncoder {
     private RavenTalon _ravenTalon;
 
     private int _cyclesPerRevolution;
     private double _wheelDiameterInches;
     private double _wheelCircumferenceInches;
-    private int _encoderPositionWhenLimitIsHit;
 
     private boolean _inverted = false;
 
