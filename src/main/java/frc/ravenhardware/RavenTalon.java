@@ -105,7 +105,8 @@ public class RavenTalon {
 	}
 
 	public int getEncoderPosition() {
-		return _talonSRX.getSelectedSensorPosition();
+		return 0;
+		// return _talonSRX.getSelectedSensorPosition();
 	}
 
 	public void resetEncoderPosition() {
