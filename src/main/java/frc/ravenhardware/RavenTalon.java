@@ -105,12 +105,17 @@ public class RavenTalon {
 	}
 
 	public int getEncoderPosition() {
-		return 0;
-		// return _talonSRX.getSelectedSensorPosition();
+		if (Calibrations.UseTalonSRXForDriveController == true) {
+			return _talonSRX.getSelectedSensorPosition();
+		} else {
+			return 0;
+		}
 	}
 
 	public void resetEncoderPosition() {
-		_talonSRX.setSelectedSensorPosition(0);
+		if (Calibrations.UseTalonSRXForDriveController == true) {
+			_talonSRX.setSelectedSensorPosition(0);
+		}
 	}
 }
 

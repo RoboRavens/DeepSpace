@@ -15,8 +15,7 @@ import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 public class HatchPanelScoreLowCommand extends CommandGroup {
   
   public HatchPanelScoreLowCommand() {
-    
-    addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorLowHatchEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armLowHatchEncoderValue));
+    addSequential(new ElevatorMoveToHeightCommand(Calibrations.elevatorLowHatchEncoderValue));
   }
 }
