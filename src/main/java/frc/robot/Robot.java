@@ -34,6 +34,7 @@ import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.climber.ClimberExtendWhileHeldCommand;
 import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
+import frc.robot.commands.climber.ClimberThirdLevelCommand;
 import frc.robot.commands.drivetrain.DriveTrainDriveLimeLightCommand;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
@@ -113,6 +114,11 @@ public class Robot extends TimedRobot {
 	public String autoFromDashboard;
 	public String positionFromDashboard;
 
+	LEDBlinkFor2SecondsCommand command90s = new LEDBlinkFor2SecondsCommand(4, false);
+	LEDBlinkFor2SecondsCommand command60s = new LEDBlinkFor2SecondsCommand(3, false);
+	LEDBlinkFor2SecondsCommand command30s = new LEDBlinkFor2SecondsCommand(2, false);
+	LEDBlinkFor2SecondsCommand command10s = new LEDBlinkFor2SecondsCommand(1, false);
+
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
@@ -150,7 +156,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		Robot.LED_SUBSYSTEM.setDisabledPattern();
-
 	}
 
 	public Robot() {
@@ -273,7 +278,9 @@ public class Robot extends TimedRobot {
 	 * the switch structure below with additional strings & commands.
 	 */
 	@Override
-	public void autonomousInit() {}
+	public void autonomousInit() {
+		Robot.LED_SUBSYSTEM.setAutonomousPattern();
+	}
 
 	/**
 	 * This function is called periodically during autonomous.
@@ -319,32 +326,12 @@ public class Robot extends TimedRobot {
 			}
 		}
 
-		if (getMatchIsAtTime(90)) {
-			LEDBlinkFor2SecondsCommand command = new LEDBlinkFor2SecondsCommand(4, false);
-			command.start();
-			command.close();
-		} else if (getMatchIsAtTime(60)) {
-			LEDBlinkFor2SecondsCommand command = new LEDBlinkFor2SecondsCommand(3, false);
-			command.start();
-			command.close();
-		} else if (getMatchIsAtTime(30)) {
-			LEDBlinkFor2SecondsCommand command = new LEDBlinkFor2SecondsCommand(2, true);
-			command.start();
-			command.close();
-		} else if (getMatchIsAtTime(10)) {
-			LEDBlinkFor2SecondsCommand command = new LEDBlinkFor2SecondsCommand(1, true);
-			command.start();
-			command.close();
-		}
-	}
-
-	public boolean getMatchIsAtTime(int matchSecond) {
-		double matchTime = driverStation.getMatchTime();
-		if (matchTime > matchSecond - .5 && matchTime < matchSecond + .5) {
-			return true;
-		}
-
-		return false;
+		/*DriveTrainDriveLimeLightCommand driveTrainDriveLimeLightCommand = new DriveTrainDriveLimeLightCommand();
+		if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
+			driveTrainDriveLimeLightCommand.start();
+		} else {
+			driveTrainDriveLimeLightCommand.close();
+		}*/
 	}
 
 	public void setupDriveController() {
@@ -352,7 +339,7 @@ public class Robot extends TimedRobot {
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSpitCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new CargoWheelSuckCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.A).whileHeld(new DriveTrainDriveLimeLightCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new ClimberThirdLevelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.BACK).whenPressed(new LimelightToggleLEDCommand());
 	}
 

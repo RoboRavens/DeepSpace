@@ -42,7 +42,7 @@ public class DriveTrainDriveInchesCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.fpsTank(_powerMagnitude, 0);
+    	Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.fpsTankManual(_powerMagnitude, 0);
     	
     	if (_direction == Calibrations.drivingBackward) {
     		_netInchesTraveledSoFar = _driveTrainNetInchesTraveledAtStart - Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getNetInchesTraveled();

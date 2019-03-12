@@ -1,5 +1,6 @@
 package frc.ravenhardware;
 
+import frc.controls.AxisCode;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -122,27 +123,34 @@ public class RavenTank {
 		left = deadband(left);
 		rightY = deadband(rightY);
 		rightX = deadband(rightX);
+		
+		fpsTank(left, rightX);
+	}
 
-		switch (driveMode) {
-		case Calibrations.bulldozerTank:
-			bulldozerTank(left, rightY);
-			break;
-		case Calibrations.fpsTank:
-			fpsTank(left, rightX);
-			break;
+	public void fpsTank(double translation, double turn) {
+		System.out.println("Inside of FPS tank");
+		if (Robot.DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
+			System.out.println("Inside of get axis left trigger");
+		
+			fpsTankChooseLimelightOrManual(translation, turn);
+		}
+		else {
+			System.out.println("Inside of ELSE");
+		
+			fpsTankManual(translation, turn);
 		}
 	}
 
-	public void bulldozerTank(double left, double right) {
-		// Invert the left side.
-		right *= -1;
-		if (_cutPower) {
-			left *= Calibrations.cutPowerModeMovementRatio;
-			right *= Calibrations.cutPowerModeTurnRatio;
+	public void fpsTankChooseLimelightOrManual (double translation, double turn) {
+		System.out.println("Inside of choose limelight or manual");
+		
+		if (Robot.LIMELIGHT_SUBSYSTEM.hasTarget()) {
+			System.out.println("Inside of has target");
+		
+			fpsTankLimelight(translation);
+		} else {
+			fpsTankManual(translation, turn);
 		}
-
-		this.driveLeftSide(left);
-		this.driveRightSide(right);
 	}
 
 	public void fpsTankLimelight(double translation) {
@@ -162,8 +170,7 @@ public class RavenTank {
 		this.driveRightSide(rightFinal);
 	}
 
-	public void fpsTank(double translation, double turn) {
-
+	public void fpsTankManual(double translation, double turn) {
 		if (_cutPower) {
 			translation *= Calibrations.cutPowerModeMovementRatio;
 			turn *= Calibrations.cutPowerModeTurnRatio;
@@ -361,7 +368,7 @@ public class RavenTank {
 	}
 
 	public void stop() {
-		this.fpsTank(0, 0);
+		this.fpsTankManual(0, 0);
 	}
 
 	public void gyroStop() {
