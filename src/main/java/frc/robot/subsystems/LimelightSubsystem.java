@@ -9,6 +9,7 @@ import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
 import frc.robot.commands.drivetrain.DriveTrainStopCommand;
 import frc.util.NetworkTableDiagnostics;
+import frc.util.PCDashboardDiagnostics;
 
 /**
  *
@@ -22,6 +23,8 @@ public class LimelightSubsystem extends Subsystem {
 	NetworkTableEntry tv = table.getEntry("tv");
 	NetworkTableEntry ledMode = table.getEntry("ledMode");
 
+	private int _ledState = 1;
+
 	private double _heightDifference = Calibrations.FLOOR_TO_TARGET_CENTER_HEIGHT - Calibrations.FLOOR_TO_LIMELIGHT_LENS_HEIGHT;
 	private double _angleToTargetFromHorizontal = 0;
 	private double _inchesToTarget = 0;
@@ -32,6 +35,7 @@ public class LimelightSubsystem extends Subsystem {
   	private double _distanceToDrive = 0.0;
 	private int _direction = 0;
 	private double _offsetFromTargetAngle = 0.0;
+
 	DriveTrainDriveInchesCommand driveTrainDriveInchesCommand = new DriveTrainDriveInchesCommand(_distanceToDrive, _powerMagnitude, _direction);
 
 	private BufferedValue bufferedAngleOffHorizontal = new BufferedValue(9);
@@ -46,11 +50,14 @@ public class LimelightSubsystem extends Subsystem {
 		NetworkTableDiagnostics.SubsystemNumber("Limelight", "Angle From Crosshair to Target", () -> _angleToTargetFromHorizontal);
 		NetworkTableDiagnostics.SubsystemNumber("Limelight", "TargetAngle", () -> _targetAngle);
 		NetworkTableDiagnostics.SubsystemNumber("Limelight", "TargetAngleOffset", () -> _offsetFromTargetAngle);
+		NetworkTableDiagnostics.SubsystemNumber("Limelight", "LED State", () -> _ledState);
+
 	}
 
 	public void initDefaultCommand() {}
 
 	public void periodic() {
+
 		_angleToTargetFromHorizontal = Math.tan(Math.toRadians(Calibrations.CAMERA_ANGLE_OFFSET_FROM_HORIZONTAL + ty.getDouble(0.0)));
 		_inchesToTarget = _heightDifference/_angleToTargetFromHorizontal;
 		_angleComplimenting90 = Calibrations.LIMELIGHT_LENS_TO_ROBOT_CENTER_OFFSET_INCHES/_inchesToTarget;
@@ -62,17 +69,8 @@ public class LimelightSubsystem extends Subsystem {
 		} else {
 			_offsetFromTargetAngle = 0;
 		}
-		
-
-		table.getEntry("ledMode").setNumber(0);
-		table.getEntry("camMode").setNumber(0);
 	
 		bufferedAngleOffHorizontal.maintainState(this.angleOffHorizontal());
-		//bufferedAngleOffHorizontal.traverse();
-		//System.out.println();
-
-		System.out.println("AOH buf: " + this.bufferedAngleOffHorizontal.getMedian());
-		System.out.println("AOH: " + this.angleOffHorizontal());
 	}
 
 	public double getTargetArea() {
@@ -102,7 +100,7 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void turnToTarget() {
-		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + this.bufferedAngleOffHorizontal.getMedian());
+		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() - _offsetFromTargetAngle);
 	}
 
 	public void driveToTarget(double distanceDesiredFromTarget) {
@@ -129,6 +127,27 @@ public class LimelightSubsystem extends Subsystem {
 			(new DriveTrainStopCommand()).start();
 			System.out.println("DO NOTHING, I'M AT 10 FEET");
 		} 
+	}
+
+	public void toggleLED() {
+		
+		int _ledState = ledMode.getNumber(1).intValue();
+		
+		if (_ledState == 1) {
+			turnLEDOn();
+		} else if (_ledState == 3) {
+			turnLEDOff();
+		}
+	}
+
+	public void turnLEDOff() {
+		ledMode.setNumber(1);
+		_ledState = 1;
+	}
+
+	public void turnLEDOn() {
+		ledMode.setNumber(3);
+		_ledState = 3;
 	}
 
 	
