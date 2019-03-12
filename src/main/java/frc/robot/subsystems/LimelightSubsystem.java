@@ -130,9 +130,6 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void toggleLED() {
-		
-		int _ledState = ledMode.getNumber(1).intValue();
-		
 		if (_ledState == 1) {
 			turnLEDOn();
 		} else if (_ledState == 3) {
