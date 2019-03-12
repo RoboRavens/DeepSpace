@@ -41,6 +41,7 @@ import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.hatchpanel.HatchPanelScoreLowCommand;
 import frc.robot.commands.hatchpanel.HatchPanelScoreMidRocketCommand;
 import frc.robot.commands.hatchpanel.SetReadyToCollectTrue;
+import frc.robot.commands.misc.LimelightToggleLEDCommand;
 import frc.robot.commands.misc.SetOverride1Command;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.BeakSubsystem;
@@ -129,6 +130,8 @@ public class Robot extends TimedRobot {
 		Robot.ARM_SUBSYSTEM.resetEncodersToRetractionLimit();
 
 		Robot.BEAK_SUBSYSTEM.release();
+
+		Robot.LIMELIGHT_SUBSYSTEM.turnLEDOff();
 
 		this.setupDriveController();
 		this.setupOperationPanel();
@@ -350,6 +353,7 @@ public class Robot extends TimedRobot {
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new CargoWheelSuckCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.A).whileHeld(new DriveTrainDriveLimeLightCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.BACK).whenPressed(new LimelightToggleLEDCommand());
 	}
 
 	public void setupOperationPanel() {
