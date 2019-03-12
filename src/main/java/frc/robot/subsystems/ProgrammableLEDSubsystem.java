@@ -4,8 +4,9 @@ import team401.LightLink;
 import frc.controls.ButtonCode;
 import frc.controls.Gamepad;
 import frc.robot.Robot;
+import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
 import frc.robot.commands.LED.LEDCommand;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ProgrammableLEDSubsystem extends Subsystem {
@@ -13,8 +14,52 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 	public static final Gamepad CONTROLLER = Robot.OPERATION_CONTROLLER;
 	private LightLink _led;
 
+	DriverStation driverStation = DriverStation.getInstance();
+
+	LEDBlinkFor2SecondsCommand command90s = new LEDBlinkFor2SecondsCommand(4, false);
+	LEDBlinkFor2SecondsCommand command60s = new LEDBlinkFor2SecondsCommand(3, false);
+	LEDBlinkFor2SecondsCommand command30s = new LEDBlinkFor2SecondsCommand(2, false);
+	LEDBlinkFor2SecondsCommand command10s = new LEDBlinkFor2SecondsCommand(1, false);
+
 	public ProgrammableLEDSubsystem() {
 		_led = new LightLink();
+	}
+
+	public void periodic() {
+		if (getMatchIsAtTime(90)) {
+			command90s.start();
+		}
+		if (getMatchIsAtTime(60)) {
+			command60s.start();
+		}
+		if (getMatchIsAtTime(30)) {
+			command30s.start();
+		}
+		if (getMatchIsAtTime(10)) {
+			command10s.start();
+		}
+
+		if (command90s.isCompleted()) {
+			command90s.close();
+		}
+		if (command60s.isCompleted()) {
+			command60s.close();
+		}
+		if (command30s.isCompleted()) {
+			command30s.close();
+		}
+		if (command10s.isCompleted()) {
+			command10s.close();
+		}
+	}
+
+	public boolean getMatchIsAtTime(int matchSecond) {
+		double matchTime = driverStation.getMatchTime();
+		if (matchTime > matchSecond - .5 && matchTime < matchSecond + .5) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public void run() {
