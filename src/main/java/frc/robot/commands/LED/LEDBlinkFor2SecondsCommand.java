@@ -11,7 +11,7 @@ public class LEDBlinkFor2SecondsCommand extends Command {
     boolean staysOn;
 
     public LEDBlinkFor2SecondsCommand(int color, boolean staysOn) {
-        requires(Robot.LED_SUBSYSTEM);
+        //requires(Robot.LED_SUBSYSTEM);
         this.color = color;
         this.staysOn = staysOn;
     }

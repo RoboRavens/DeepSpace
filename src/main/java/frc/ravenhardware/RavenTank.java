@@ -128,16 +128,19 @@ public class RavenTank {
 	}
 
 	public void fpsTank(double translation, double turn) {
+		double squaredTranslation = Math.copySign(Math.pow(translation, 2), translation);
+		double squaredTurn = Math.copySign(Math.pow(turn, 2), turn);
+
 		System.out.println("Inside of FPS tank");
 		if (Robot.DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
 			System.out.println("Inside of get axis left trigger");
 		
-			fpsTankChooseLimelightOrManual(translation, turn);
+			fpsTankChooseLimelightOrManual(squaredTranslation, squaredTurn);
 		}
 		else {
 			System.out.println("Inside of ELSE");
 		
-			fpsTankManual(translation, turn);
+			fpsTankManual(squaredTranslation, squaredTurn);
 		}
 	}
 

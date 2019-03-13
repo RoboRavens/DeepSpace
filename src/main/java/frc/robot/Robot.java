@@ -114,11 +114,6 @@ public class Robot extends TimedRobot {
 	public String autoFromDashboard;
 	public String positionFromDashboard;
 
-	LEDBlinkFor2SecondsCommand command90s = new LEDBlinkFor2SecondsCommand(4, false);
-	LEDBlinkFor2SecondsCommand command60s = new LEDBlinkFor2SecondsCommand(3, false);
-	LEDBlinkFor2SecondsCommand command30s = new LEDBlinkFor2SecondsCommand(2, false);
-	LEDBlinkFor2SecondsCommand command10s = new LEDBlinkFor2SecondsCommand(1, false);
-
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.

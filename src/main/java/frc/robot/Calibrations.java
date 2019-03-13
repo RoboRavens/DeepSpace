@@ -18,7 +18,7 @@ public class Calibrations {
 	
 	public static final double cutPowerModeMovementRatio = .3;
 	public static final double cutPowerModeTurnRatio = .5;
-	public static final double gyroAdjustmentDefaultScaleFactor = .04;
+	public static final double gyroAdjustmentDefaultScaleFactor = .025;
 	public static final double driveTrainTurnRelativeDegreesGyroAdjustmentScaleFactor = .03;
 	public static final double gyroCooldownTimerTime = .5;
 	public static final double translationMaxTurnScaling = .5;
@@ -43,7 +43,7 @@ public class Calibrations {
 	public static final double DriveTrainDriveInchesSafetyTimerSeconds = 3;
 	
 	// Deadband
-	public static final double deadbandMagnitude = .1;
+	public static final double deadbandMagnitude = .2;
 	
 	// Default drive and gyro modes
 	public static final int defaultDriveMode = Calibrations.fpsTank;
