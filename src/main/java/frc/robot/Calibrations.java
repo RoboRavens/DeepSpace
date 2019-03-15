@@ -177,6 +177,10 @@ public class Calibrations {
 
 	public static final double cargoSpitTimer = 1;
 
+
+	// BEAK
+	public static final double hasHatchPanelTimer = 2;
+
 	
 	// LIMELIGHT
 	public static final double FLOOR_TO_LIMELIGHT_LENS_HEIGHT = 19.5;

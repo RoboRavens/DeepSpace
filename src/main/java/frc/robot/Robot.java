@@ -42,6 +42,8 @@ import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.hatchpanel.HatchPanelScoreLowCommand;
 import frc.robot.commands.hatchpanel.HatchPanelScoreMidRocketCommand;
 import frc.robot.commands.hatchpanel.SetReadyToCollectTrue;
+import frc.robot.commands.intaketransport.IntakeExtendCommand;
+import frc.robot.commands.intaketransport.IntakeRetractCommand;
 import frc.robot.commands.misc.LimelightToggleLEDCommand;
 import frc.robot.commands.misc.SetOverride1Command;
 import frc.robot.subsystems.ArmSubsystem;
@@ -52,6 +54,7 @@ import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GamePiecePossessedSubsystem;
+import frc.robot.subsystems.IntakeTransportSubsystem;
 import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.LineAlignmentSubsystem;
@@ -96,6 +99,7 @@ public class Robot extends TimedRobot {
 	public static final SetCommandSubsystem SET_COMMAND_SUBSYSTEM = new SetCommandSubsystem();
 	public static final LineAlignmentSubsystem LINE_ALIGNMENT_SUBSYSTEM = new LineAlignmentSubsystem();
 	public static final GamePiecePossessedSubsystem GAME_PIECE_POSSESSED_SUBSYSTEM = new GamePiecePossessedSubsystem();
+	public static final IntakeTransportSubsystem INTAKE_TRANSPORT_SUBSYSTEM = new IntakeTransportSubsystem();
 
 	public CameraServer server;
 
@@ -321,6 +325,10 @@ public class Robot extends TimedRobot {
 			}
 		}
 
+		if (OPERATION_PANEL_2.getButton(ButtonCode.HATCHOVERRIDE).get()) {
+			DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
+		}
+
 		/*DriveTrainDriveLimeLightCommand driveTrainDriveLimeLightCommand = new DriveTrainDriveLimeLightCommand();
 		if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
 			driveTrainDriveLimeLightCommand.start();
@@ -330,9 +338,10 @@ public class Robot extends TimedRobot {
 	}
 
 	public void setupDriveController() {
+		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new IntakeExtendCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new BeakReleaseHatchPanelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSpitCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new IntakeExtendCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new CargoWheelSuckCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new ClimberThirdLevelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.BACK).whenPressed(new LimelightToggleLEDCommand());
