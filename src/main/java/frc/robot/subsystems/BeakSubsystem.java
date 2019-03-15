@@ -5,7 +5,11 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import frc.util.NetworkTableDiagnostics;
+import frc.robot.Calibrations;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.gamepiecepossessed.ReadyToCollectCommand;
+import frc.robot.commands.intaketransport.IntakeRetractCommand;
 
 public class BeakSubsystem extends Subsystem {
   private Solenoid _beakCapture;
@@ -20,7 +24,6 @@ public class BeakSubsystem extends Subsystem {
     _beakRelease = new Solenoid(RobotMap.beakReleaseSolenoid);
     _hatchPanelSensorLeft = new DigitalInput(RobotMap.hatchPanelSensorLeft);
     _hatchPanelSensorRight = new DigitalInput(RobotMap.hatchPanelSensorRight);
-    _hasHatchPanelDurationTimer.start();
     
     NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "HasHatchPanel", () -> hasHatchPanelStrict());
     NetworkTableDiagnostics.SubsystemBoolean("HatchPanel", "LeftHatchSensor", () -> getLeftHatchPanelSensor());
@@ -62,11 +65,9 @@ public class BeakSubsystem extends Subsystem {
   }
   
   public void periodic()  {
-    if (_readyToCollect == true) {
-      if (hasHatchPanelStrict() == true) {
-        this.capture();
-        _readyToCollect = false;
-      }
+    if (_readyToCollect) {
+      new ReadyToCollectCommand();
+      _readyToCollect = false;
     } 
   }
   

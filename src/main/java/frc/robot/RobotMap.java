@@ -21,7 +21,9 @@ public class RobotMap {
 	// PCM
 	public static final int beakCaptureSolenoid = 0;
 	public static final int beakReleaseSolenoid = 1;
-	
+	public static final int intakeExtendTransportSolenoid = 2;
+	public static final int intakeRetractTransportSolenoid = 3;
+
 	// DIO PORTS
 	public static final int frontLineSensor = 0;
 	public static final int rearLineSensor = 1;
