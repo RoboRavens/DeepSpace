@@ -15,7 +15,7 @@ import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
 public class CargoCaptureHPSCommand extends CommandGroup {
  
   public CargoCaptureHPSCommand() {
-    addSequential(new ElevatorRetractFullyCommand());
     addSequential(new ArmMoveToHeightCommand(Calibrations.armCargoHPSEncoderValue));
+    addSequential(new ElevatorRetractFullyCommand());
   }
 }

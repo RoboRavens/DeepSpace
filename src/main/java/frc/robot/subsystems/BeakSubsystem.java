@@ -1,15 +1,11 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Timer;
-import frc.util.NetworkTableDiagnostics;
-import frc.robot.Calibrations;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.gamepiecepossessed.ReadyToCollectCommand;
-import frc.robot.commands.intaketransport.IntakeRetractCommand;
+import frc.util.NetworkTableDiagnostics;
 
 public class BeakSubsystem extends Subsystem {
   private Solenoid _beakCapture;
@@ -17,7 +13,6 @@ public class BeakSubsystem extends Subsystem {
   private DigitalInput _hatchPanelSensorLeft;
   private DigitalInput _hatchPanelSensorRight;
   private boolean _readyToCollect;
-  private Timer _hasHatchPanelDurationTimer = new Timer();
 
   public BeakSubsystem() {
     _beakCapture = new Solenoid(RobotMap.beakCaptureSolenoid);

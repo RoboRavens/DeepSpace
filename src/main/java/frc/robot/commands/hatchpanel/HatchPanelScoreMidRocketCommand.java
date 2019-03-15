@@ -15,8 +15,7 @@ import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 public class HatchPanelScoreMidRocketCommand extends CommandGroup {
   
   public HatchPanelScoreMidRocketCommand() {
-    
-    addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorMidHatchEncoderValue));
     addSequential(new ArmMoveToHeightCommand(Calibrations.armMidHatchEncoderValue));
+    addSequential(new ElevatorMoveToHeightCommand(Calibrations.elevatorMidHatchEncoderValue));
   }
 }

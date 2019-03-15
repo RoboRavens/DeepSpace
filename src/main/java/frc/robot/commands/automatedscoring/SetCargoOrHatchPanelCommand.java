@@ -27,9 +27,9 @@ public class SetCargoOrHatchPanelCommand extends Command {
   @Override
   protected void execute() { 
     if (_hatchOrCargo == "Cargo") {
-      Robot.SET_COMMAND_SUBSYSTEM.SetCargoOrHatchPanelCommand("Cargo");
+      Robot.SET_COMMAND_SUBSYSTEM.SetCargoOrHatchPanel("Cargo");
     } else {
-      Robot.SET_COMMAND_SUBSYSTEM.SetCargoOrHatchPanelCommand("Hatch Panel");
+      Robot.SET_COMMAND_SUBSYSTEM.SetCargoOrHatchPanel("Hatch Panel");
     }
   }
 
