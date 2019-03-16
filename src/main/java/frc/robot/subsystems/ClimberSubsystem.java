@@ -40,7 +40,7 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new ClimberHoldPositionCommand());
+		// setDefaultCommand(new ClimberHoldPositionCommand());
 	}
 
 	public void extend(double magnitude) {

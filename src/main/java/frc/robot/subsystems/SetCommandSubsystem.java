@@ -21,8 +21,7 @@ import frc.robot.commands.hatchpanel.HatchPanelScoreMidRocketCommand;
 public class SetCommandSubsystem extends Subsystem {
   private String _cargoOrHatchPanel;
 
-  public void SetCargoOrHatchPanel(String cargoOrHatchPanel) {
-    _cargoOrHatchPanel = cargoOrHatchPanel;
+  public void periodic() {
     if (Robot.BEAK_SUBSYSTEM.hasHatchPanelStrict()) {
       _cargoOrHatchPanel = "Hatch Panel";
     }
@@ -31,36 +30,48 @@ public class SetCommandSubsystem extends Subsystem {
     }
   }
 
+  public void SetCargoOrHatchPanel(String cargoOrHatchPanel) {
+    _cargoOrHatchPanel = cargoOrHatchPanel;
+  }
+
   public void callAutomatedCommand() {
     if (Robot.OPERATION_PANEL.getButton(ButtonCode.ROCKETHIGH).get()) {
       if (_cargoOrHatchPanel == "Cargo") {
+        System.out.println("RUNNING CARGO HIGH ROCKET");
         new CargoScoreHighRocketCommand();
       }
       if (_cargoOrHatchPanel == "Hatch Panel") {
+        System.out.println("RUNNING HATCH HIGH ROCKET");
         new HatchPanelScoreHighRocketCommand();
       }
     }
     if (Robot.OPERATION_PANEL.getButton(ButtonCode.ROCKETMID).get()) {
       if (_cargoOrHatchPanel == "Cargo") {
+        System.out.println("RUNNING CARGO MID ROCKET");
         new CargoScoreMidRocketCommand();
       }
       if (_cargoOrHatchPanel == "Hatch Panel") {
+        System.out.println("RUNNING HATCH MID ROCKET");
         new HatchPanelScoreMidRocketCommand();
       }
     }
     if (Robot.OPERATION_PANEL.getButton(ButtonCode.ROCKETLOW).get()) {
       if (_cargoOrHatchPanel == "Cargo") {
+        System.out.println("RUNNING CARGO LOW ROCKET");
         new CargoScoreLowRocketCommand();
       }
       if (_cargoOrHatchPanel == "Hatch Panel") {
+        System.out.println("RUNNING HATCH LOW ROCKET");
         new HatchPanelScoreLowCommand();
       }          
     }
     if (Robot.OPERATION_PANEL.getButton(ButtonCode.CARGOSHIP).get()) {
       if (_cargoOrHatchPanel == "Cargo") {
+        System.out.println("RUNNING CARGO CARGO SHIP");
         new CargoScoreCargoShipCommand();
       }
       if (_cargoOrHatchPanel == "Hatch Panel") {
+        System.out.println("RUNNING HATCH CARGO SHIP");
         new HatchPanelScoreLowCommand();
       }
     }
