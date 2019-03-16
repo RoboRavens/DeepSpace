@@ -65,7 +65,7 @@ public class RavenTalon {
 			targetOutput = 0;
 		}
 
-		Robot.LOGGER_OVERLORD.log(LoggerOverlordLogID.DriveTargetOutputPower, "target output power " + targetOutput);
+		//Robot.LOGGER_OVERLORD.log(LoggerOverlordLogID.DriveTargetOutputPower, "target output power " + targetOutput);
 		this.setWithSlewRate(targetOutput);
 	}
 

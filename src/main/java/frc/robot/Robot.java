@@ -152,10 +152,10 @@ public class Robot extends TimedRobot {
 		Robot.LED_SUBSYSTEM.setDisabledPattern();
 	}
 
-	public Robot() {
+	/*public Robot() {
 		server = CameraServer.getInstance();
 		server.startAutomaticCapture();
-	}
+	}*/
 
 	@Override
 	public void disabledPeriodic() {

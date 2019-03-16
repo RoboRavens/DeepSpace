@@ -29,7 +29,7 @@ public class Calibrations {
 	public static final double DriveTrainCollisionJerkThreshold = 4;
 
 	// 2019 and newer robots use talonSRX instead talon
-	public static final Boolean UseTalonSRXForDriveController = false;
+	public static final Boolean UseTalonSRXForDriveController = true;
 
 	// Drive and gyro modes
 	public static final int bulldozerTank = 0;
@@ -57,6 +57,13 @@ public class Calibrations {
 	
 	// We're using CUI 103 encoders on both sides of the drivetrain.
 	public static final int encoderCyclesPerRevolution = Calibrations.encoderCUI103CyclesPerRevolution;
+
+	// Encoder usage choice in case of one side breaking
+	public static final int useLeftEncoderOnly = 0;
+	public static final int useRightEncoderOnly = 1;
+	public static final int useBothEncoders = 2;
+
+	public static final int useWhichEncoders = useBothEncoders;
 	
 	// Direction magic numbers
 	public static final int drivingForward = -1;
