@@ -25,6 +25,17 @@ public class Calibrations {
 	public static final double gyroAutoTurnAcceptableErrorDegrees = 1;
 	public static final boolean driveTrainStartingIsInHighGear = false;
 	
+
+	public static final double turnFeedForwardMagnitude = .1;
+	public static final double translationFeedForwardMagnitude = .1;
+
+
+	// .35 is for minibot
+	// public static final double turnFeedForwardMagnitude = .35;
+
+	// .18 is for minibot
+	// public static final double translationFeedForwardMagnitude = .18;
+	
 	// Drive collision
 	public static final double DriveTrainCollisionJerkThreshold = 4;
 

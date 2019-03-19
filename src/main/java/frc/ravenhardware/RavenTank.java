@@ -128,14 +128,15 @@ public class RavenTank {
 	}
 
 	public void fpsTank(double translation, double turn) {
-		double squaredTranslation = Math.copySign(Math.pow(translation, 2), translation);
-		double squaredTurn = Math.copySign(Math.pow(turn, 2), turn);
+		double adjustedTurn = getFedForwardDriveValue(turn, Calibrations.turnFeedForwardMagnitude, true);
+		double squaredTranslation = getFedForwardDriveValue(translation, Calibrations.translationFeedForwardMagnitude, false);
+		// double squaredTranslation = Math.copySign(Math.pow(translation, 2), translation);
 
 		if (Robot.DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
-			fpsTankChooseLimelightOrManual(squaredTranslation, squaredTurn);
+			fpsTankChooseLimelightOrManual(squaredTranslation, adjustedTurn);
 		}
 		else {
-			fpsTankManual(squaredTranslation, squaredTurn);
+			fpsTankManual(squaredTranslation, adjustedTurn);
 		}
 	}
 
@@ -183,6 +184,88 @@ public class RavenTank {
 
 		this.driveLeftSide(leftFinal);
 		this.driveRightSide(rightFinal);
+	}
+
+	// Adjust the turn value by performing the following operations:
+	// 1. Adjust the input value such that it is a percentage of the non-deadband input range, not the total input range.
+	// To do this, calculate the non-deadband range, and then subtract the deadband value from the input.
+	// 2. Square the adjusted input value while keeping its sign intact.
+	// 3. Calculate the "moveable range", which is the range of output that will break static friction.
+	// 4. Apply the adjusted input percentage to the moveable range.
+	// 5. Add the feedforward value to the moveable range input percentage.
+	public double getAdjustedTurnValue(double turn) {
+		double inputRange = 1 - Calibrations.deadbandMagnitude;
+
+		double deadbandDifference = Calibrations.deadbandMagnitude;
+		if (turn < 0) {
+			deadbandDifference *= -1;
+		}
+
+		double inputMinusDeadband = turn - deadbandDifference;
+		double percentOfInputRange = inputMinusDeadband / inputRange;
+		double squaredPercentOfInputRange = Math.copySign(Math.pow(percentOfInputRange, 2), percentOfInputRange);
+		
+		double moveableRange = 1 - Calibrations.turnFeedForwardMagnitude;
+		double squaredInputPercentageOfMoveableRange = squaredPercentOfInputRange * moveableRange;
+
+		double ffDifference = Calibrations.turnFeedForwardMagnitude;
+		if (turn < 0) {
+			ffDifference *= -1;
+		}
+
+		double ffAdjustedInput = squaredInputPercentageOfMoveableRange + ffDifference;
+
+		System.out.print("Turn vals: turn: " + (double) Math.round(turn * 100) / 100);
+		System.out.print(" in-DB: " + (double) Math.round(inputMinusDeadband * 100) / 100);
+		System.out.print(" %ofIR: " + (double) Math.round(percentOfInputRange * 100) / 100);
+		System.out.print(" sq%ofIR: " + (double) Math.round(squaredPercentOfInputRange * 100) / 100);
+		System.out.print(" MR: " + (double) Math.round(moveableRange * 100) / 100);
+		System.out.print(" sq%ofMR: " + (double) Math.round(squaredInputPercentageOfMoveableRange * 100) / 100);
+		System.out.println(" ffAdj: " + (double) Math.round(ffAdjustedInput * 100) / 100);
+
+
+		if (turn == 0) {
+			ffAdjustedInput = 0;
+		}
+		return ffAdjustedInput;
+	}
+
+	public double getFedForwardDriveValue(double input, double feedForward, boolean tuning) {
+		double inputRange = 1 - Calibrations.deadbandMagnitude;
+
+		double deadbandDifference = Calibrations.deadbandMagnitude;
+		if (input < 0) {
+			deadbandDifference *= -1;
+		}
+
+		double inputMinusDeadband = input - deadbandDifference;
+		double percentOfInputRange = inputMinusDeadband / inputRange;
+		double squaredPercentOfInputRange = Math.copySign(Math.pow(percentOfInputRange, 2), percentOfInputRange);
+		
+		double moveableRange = 1 - feedForward;
+		double squaredInputPercentageOfMoveableRange = squaredPercentOfInputRange * moveableRange;
+
+		double ffDifference = feedForward;
+		if (input < 0) {
+			ffDifference *= -1;
+		}
+
+		double ffAdjustedInput = squaredInputPercentageOfMoveableRange + ffDifference;
+
+		if (tuning) {
+			System.out.print("Turn vals: turn: " + (double) Math.round(input * 100) / 100);
+			System.out.print(" in-DB: " + (double) Math.round(inputMinusDeadband * 100) / 100);
+			System.out.print(" %ofIR: " + (double) Math.round(percentOfInputRange * 100) / 100);
+			System.out.print(" sq%ofIR: " + (double) Math.round(squaredPercentOfInputRange * 100) / 100);
+			System.out.print(" MR: " + (double) Math.round(moveableRange * 100) / 100);
+			System.out.print(" sq%ofMR: " + (double) Math.round(squaredInputPercentageOfMoveableRange * 100) / 100);
+			System.out.println(" ffAdj: " + (double) Math.round(ffAdjustedInput * 100) / 100);
+		}
+
+		if (input == 0) {
+			ffAdjustedInput = 0;
+		}
+		return ffAdjustedInput;
 	}
 
 	public boolean detectCollisions() {
