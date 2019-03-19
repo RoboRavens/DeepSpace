@@ -128,9 +128,9 @@ public class RavenTank {
 	}
 
 	public void fpsTank(double translation, double turn) {
-		double adjustedTurn = getAdjustedTurnValue(turn);
-
-		double squaredTranslation = Math.copySign(Math.pow(translation, 2), translation);
+		double adjustedTurn = getFedForwardDriveValue(turn, Calibrations.turnFeedForwardMagnitude, true);
+		double squaredTranslation = getFedForwardDriveValue(translation, Calibrations.translationFeedForwardMagnitude, false);
+		// double squaredTranslation = Math.copySign(Math.pow(translation, 2), translation);
 
 		if (Robot.DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
 			fpsTankChooseLimelightOrManual(squaredTranslation, adjustedTurn);
@@ -225,6 +225,44 @@ public class RavenTank {
 
 
 		if (turn == 0) {
+			ffAdjustedInput = 0;
+		}
+		return ffAdjustedInput;
+	}
+
+	public double getFedForwardDriveValue(double input, double feedForward, boolean tuning) {
+		double inputRange = 1 - Calibrations.deadbandMagnitude;
+
+		double deadbandDifference = Calibrations.deadbandMagnitude;
+		if (input < 0) {
+			deadbandDifference *= -1;
+		}
+
+		double inputMinusDeadband = input - deadbandDifference;
+		double percentOfInputRange = inputMinusDeadband / inputRange;
+		double squaredPercentOfInputRange = Math.copySign(Math.pow(percentOfInputRange, 2), percentOfInputRange);
+		
+		double moveableRange = 1 - feedForward;
+		double squaredInputPercentageOfMoveableRange = squaredPercentOfInputRange * moveableRange;
+
+		double ffDifference = feedForward;
+		if (input < 0) {
+			ffDifference *= -1;
+		}
+
+		double ffAdjustedInput = squaredInputPercentageOfMoveableRange + ffDifference;
+
+		if (tuning) {
+			System.out.print("Turn vals: turn: " + (double) Math.round(input * 100) / 100);
+			System.out.print(" in-DB: " + (double) Math.round(inputMinusDeadband * 100) / 100);
+			System.out.print(" %ofIR: " + (double) Math.round(percentOfInputRange * 100) / 100);
+			System.out.print(" sq%ofIR: " + (double) Math.round(squaredPercentOfInputRange * 100) / 100);
+			System.out.print(" MR: " + (double) Math.round(moveableRange * 100) / 100);
+			System.out.print(" sq%ofMR: " + (double) Math.round(squaredInputPercentageOfMoveableRange * 100) / 100);
+			System.out.println(" ffAdj: " + (double) Math.round(ffAdjustedInput * 100) / 100);
+		}
+
+		if (input == 0) {
 			ffAdjustedInput = 0;
 		}
 		return ffAdjustedInput;

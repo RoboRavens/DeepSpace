@@ -25,14 +25,22 @@ public class Calibrations {
 	public static final double gyroAutoTurnAcceptableErrorDegrees = 1;
 	public static final boolean driveTrainStartingIsInHighGear = false;
 	
-	// .3 is for minibot with dead battery, lul
-	public static final double turnFeedForwardMagnitude = .35;
+
+	public static final double turnFeedForwardMagnitude = .1;
+	public static final double translationFeedForwardMagnitude = .1;
+
+
+	// .35 is for minibot
+	// public static final double turnFeedForwardMagnitude = .35;
+
+	// .18 is for minibot
+	// public static final double translationFeedForwardMagnitude = .18;
 	
 	// Drive collision
 	public static final double DriveTrainCollisionJerkThreshold = 4;
 
 	// 2019 and newer robots use talonSRX instead talon
-	public static final Boolean UseTalonSRXForDriveController = false;
+	public static final Boolean UseTalonSRXForDriveController = true;
 
 	// Drive and gyro modes
 	public static final int bulldozerTank = 0;
