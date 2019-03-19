@@ -19,7 +19,7 @@ public class TalonSRXConstants {
 	 * set to zero to skip waiting for confirmation, set to nonzero to wait and
 	 * report to DS if action fails.
 	 */
-	public static final int kTimeoutMs = 2500;
+	public static final int kTimeoutMs = 100;
 	
 	/* choose so that Talon does not report sensor out of phase */
 	public static boolean kSensorPhase = true;
