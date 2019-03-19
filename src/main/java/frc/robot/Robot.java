@@ -34,6 +34,7 @@ import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.climber.ClimberExtendWhileHeldCommand;
 import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
 import frc.robot.commands.climber.ClimberThirdLevelCommand;
+import frc.robot.commands.drivetrain.DriveTrainNearRocketScoreHatchPanelCommand;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
@@ -340,6 +341,7 @@ public class Robot extends TimedRobot {
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new CargoWheelSuckCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new ClimberThirdLevelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.BACK).whenPressed(new LimelightToggleLEDCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.X).whenPressed(new DriveTrainNearRocketScoreHatchPanelCommand());
 	}
 
 	public void setupOperationPanel() {
