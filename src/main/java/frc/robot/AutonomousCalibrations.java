@@ -8,6 +8,6 @@ public class AutonomousCalibrations {
 	public static final String FlexScale = "FLEXSCALE";
 	public static final String FlexSwitch = "FLEXSWITCH";
 
-	public static final double HPSBackwardsScoreOnNearRocketDistanceInches = 165;
-	public static final double HPSBackwardsScoreOnNearRocketPowerMagnitude = 0.5;
+	public static final double HPSBackwardsScoreOnNearRocketDistanceInches = 155;
+	public static final double HPSBackwardsScoreOnNearRocketPowerMagnitude = 0.4;
 }

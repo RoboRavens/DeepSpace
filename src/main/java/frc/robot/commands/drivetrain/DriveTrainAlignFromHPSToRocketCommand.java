@@ -12,10 +12,10 @@ import frc.robot.AutonomousCalibrations;
 import frc.robot.Calibrations;
 import frc.robot.Robot;
 
-public class DriveTrainNearRocketScoreHatchPanelCommand extends CommandGroup {
-  public DriveTrainNearRocketScoreHatchPanelCommand() {
+public class DriveTrainAlignFromHPSToRocketCommand extends CommandGroup {
+  public DriveTrainAlignFromHPSToRocketCommand() {
     addSequential(new DriveTrainDriveInchesCommand(AutonomousCalibrations.HPSBackwardsScoreOnNearRocketDistanceInches,
-        AutonomousCalibrations.HPSBackwardsScoreOnNearRocketPowerMagnitude, Calibrations.drivingBackward, 0.5));
+        AutonomousCalibrations.HPSBackwardsScoreOnNearRocketPowerMagnitude, Calibrations.drivingBackward, 3));
     addSequential(new DriveTrainTurnRelativeDegreesCommand(Robot.DRIVE_TRAIN_SUBSYSTEM, 150));
   }
 }
