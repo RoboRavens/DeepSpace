@@ -34,6 +34,7 @@ public class RavenTalon {
 			_victorSPX2 = new VictorSPX(follower2);
 			_victorSPX1.follow(_talonSRX);
 			_victorSPX2.follow(_talonSRX);
+			_talonSRX.setSensorPhase(false);
 		} else {
 			_talon = new Talon(channel);
 		}

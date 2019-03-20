@@ -32,8 +32,7 @@ public class RavenEncoder {
         double netRevolutions = getNetRevolutions();
         double netInchesTraveled = netRevolutions * _wheelCircumferenceInches;
 
-        // I added the *2 here
-        return netInchesTraveled * 2;
+        return netInchesTraveled / 2;
     }
 
     public int getCycles() {
