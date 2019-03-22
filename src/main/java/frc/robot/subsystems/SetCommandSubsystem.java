@@ -38,41 +38,41 @@ public class SetCommandSubsystem extends Subsystem {
     if (Robot.OPERATION_PANEL.getButton(ButtonCode.ROCKETHIGH).get()) {
       if (_cargoOrHatchPanel == "Cargo") {
         System.out.println("RUNNING CARGO HIGH ROCKET");
-        new CargoScoreHighRocketCommand();
+        new CargoScoreHighRocketCommand().start();
       }
       if (_cargoOrHatchPanel == "Hatch Panel") {
         System.out.println("RUNNING HATCH HIGH ROCKET");
-        new HatchPanelScoreHighRocketCommand();
+        new HatchPanelScoreHighRocketCommand().start();
       }
     }
     if (Robot.OPERATION_PANEL.getButton(ButtonCode.ROCKETMID).get()) {
       if (_cargoOrHatchPanel == "Cargo") {
         System.out.println("RUNNING CARGO MID ROCKET");
-        new CargoScoreMidRocketCommand();
+        new CargoScoreMidRocketCommand().start();
       }
       if (_cargoOrHatchPanel == "Hatch Panel") {
         System.out.println("RUNNING HATCH MID ROCKET");
-        new HatchPanelScoreMidRocketCommand();
+        new HatchPanelScoreMidRocketCommand().start();
       }
     }
     if (Robot.OPERATION_PANEL.getButton(ButtonCode.ROCKETLOW).get()) {
       if (_cargoOrHatchPanel == "Cargo") {
         System.out.println("RUNNING CARGO LOW ROCKET");
-        new CargoScoreLowRocketCommand();
+        new CargoScoreLowRocketCommand().start();
       }
       if (_cargoOrHatchPanel == "Hatch Panel") {
         System.out.println("RUNNING HATCH LOW ROCKET");
-        new HatchPanelScoreLowCommand();
+        new HatchPanelScoreLowCommand().start();
       }          
     }
     if (Robot.OPERATION_PANEL.getButton(ButtonCode.CARGOSHIP).get()) {
       if (_cargoOrHatchPanel == "Cargo") {
         System.out.println("RUNNING CARGO CARGO SHIP");
-        new CargoScoreCargoShipCommand();
+        new CargoScoreCargoShipCommand().start();
       }
       if (_cargoOrHatchPanel == "Hatch Panel") {
         System.out.println("RUNNING HATCH CARGO SHIP");
-        new HatchPanelScoreLowCommand();
+        new HatchPanelScoreLowCommand().start();
       }
     }
   }

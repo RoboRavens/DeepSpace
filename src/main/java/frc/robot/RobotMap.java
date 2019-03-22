@@ -14,9 +14,10 @@ public class RobotMap {
 
 	public static final int armMotor = 4;
 
-	public static final int cargoMotor = 5;
+	public static final int topCargoMotor = 5;
+	public static final int bottomCargoMotor = 6;
 
-	public static final int climberMotor = 6;
+	public static final int climberMotor = 7;
 
 	// PCM
 	public static final int beakCaptureSolenoid = 0;

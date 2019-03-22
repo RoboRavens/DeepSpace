@@ -492,6 +492,28 @@
               "_source0": "network_table:///Diagnostics/AdHoc/GyroCurrentHeading",
               "_title": "/Diagnostics/AdHoc/GyroCurrentHeading"
             }
+          },
+          "4,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///Diagnostics/Subsystem/DriveTrain/EncoderLeftInchesTraveled",
+              "_title": "/Diagnostics/Subsystem/DriveTrain/EncoderLeftInchesTraveled"
+            }
+          },
+          "6,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///Diagnostics/Subsystem/DriveTrain/EncoderRightInchesTraveled",
+              "_title": "/Diagnostics/Subsystem/DriveTrain/EncoderRightInchesTraveled"
+            }
           }
         }
       }

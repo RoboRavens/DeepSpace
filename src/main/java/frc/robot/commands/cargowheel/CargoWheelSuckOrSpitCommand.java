@@ -33,10 +33,12 @@ public class CargoWheelSuckOrSpitCommand extends Command {
   @Override
   protected void execute() {
     if (_suckOrSpit == "Suck" || _suckOrSpit == "suck") {
-      Robot.CARGO_WHEEL_SUBSYSTEM.suck(_magnitude);
+      Robot.CARGO_WHEEL_SUBSYSTEM.topMotorSuck(_magnitude);
+      Robot.CARGO_WHEEL_SUBSYSTEM.bottomMotorSuck(_magnitude);
     }
     if (_suckOrSpit == "Spit" || _suckOrSpit == "spit") {
-      Robot.CARGO_WHEEL_SUBSYSTEM.spit(_magnitude);
+      Robot.CARGO_WHEEL_SUBSYSTEM.topMotorSpit(_magnitude);
+      Robot.CARGO_WHEEL_SUBSYSTEM.bottomMotorSpit(_magnitude);
     }
   }
 

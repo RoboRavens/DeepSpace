@@ -23,7 +23,8 @@ public class CargoWheelHoldCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.CARGO_WHEEL_SUBSYSTEM.hold();
+    Robot.CARGO_WHEEL_SUBSYSTEM.topMotorHold();
+    Robot.CARGO_WHEEL_SUBSYSTEM.bottomMotorHold();
   }
 
   // Make this return true when this Command no longer needs to run execute()
