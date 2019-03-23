@@ -133,9 +133,11 @@ public class RavenTank {
 		// double squaredTranslation = Math.copySign(Math.pow(translation, 2), translation);
 
 		if (Robot.DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
+			Robot.LIMELIGHT_SUBSYSTEM.turnLEDOn();
 			fpsTankChooseLimelightOrManual(squaredTranslation, adjustedTurn);
 		}
 		else {
+			Robot.LIMELIGHT_SUBSYSTEM.turnLEDOff();
 			fpsTankManual(squaredTranslation, adjustedTurn);
 		}
 	}

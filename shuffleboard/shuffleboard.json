@@ -446,7 +446,100 @@
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
-        "tiles": {}
+        "tiles": {
+          "7,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Elevator/LimitEncoderExtended",
+              "_title": "Extend Encoder",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "7,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Elevator/LimitEncoderRetracted",
+              "_title": "Retract Encoder",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,0": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Elevator/LimitFinalExtension",
+              "_title": "Extension Limit Final",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,2": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Elevator/LimitFinalRetraction",
+              "_title": "Retraction Limit Final",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Elevator/LimitSwitchExtended",
+              "_title": "Extension Limit Switch",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Elevator/LimitSwitchRetracted",
+              "_title": "Extension Limit Switch",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "0,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///Diagnostics/Subsystem/Elevator/Encoder",
+              "_title": "Elevator Encoder",
+              "Range/Min": 0.0,
+              "Range/Max": 52000.0,
+              "Visuals/Show value": true
+            }
+          }
+        }
       }
     },
     {
@@ -458,7 +551,100 @@
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
-        "tiles": {}
+        "tiles": {
+          "5,0": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Arm/LimitFinalExtension",
+              "_title": "Extension Limit Final",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,2": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Arm/LimitFinalRetraction",
+              "_title": "Retraction Limit Final",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Arm/LimitSwitchExtension",
+              "_title": "Extension Limit Switch",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Arm/LimitSwitchRetraction",
+              "_title": "Retraction Limit Switch",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "7,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Arm/LimitEncoderExtension",
+              "_title": "Extend Encoder",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "7,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Arm/LimitEncoderRetraction",
+              "_title": "Retract Encoder",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "0,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///Diagnostics/Subsystem/Arm/Encoder",
+              "_title": "Arm Encoder",
+              "Range/Min": 0.0,
+              "Range/Max": 12000.0,
+              "Visuals/Show value": true
+            }
+          }
+        }
       }
     },
     {
@@ -471,29 +657,29 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "4,0": {
+          "5,1": {
             "size": [
-              1,
+              3,
               1
             ],
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///Diagnostics/AdHoc/GyroCurrentAngle",
-              "_title": "/Diagnostics/AdHoc/GyroCurrentAngle"
+              "_title": "Gyro Current Angle"
             }
           },
-          "5,0": {
+          "5,2": {
             "size": [
-              1,
+              3,
               1
             ],
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///Diagnostics/AdHoc/GyroCurrentHeading",
-              "_title": "/Diagnostics/AdHoc/GyroCurrentHeading"
+              "_title": "Gyro Current Heading"
             }
           },
-          "4,2": {
+          "0,3": {
             "size": [
               2,
               1
@@ -501,10 +687,10 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///Diagnostics/Subsystem/DriveTrain/EncoderLeftInchesTraveled",
-              "_title": "/Diagnostics/Subsystem/DriveTrain/EncoderLeftInchesTraveled"
+              "_title": "Left Inches Traveled"
             }
           },
-          "6,2": {
+          "2,3": {
             "size": [
               2,
               1
@@ -512,7 +698,46 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///Diagnostics/Subsystem/DriveTrain/EncoderRightInchesTraveled",
-              "_title": "/Diagnostics/Subsystem/DriveTrain/EncoderRightInchesTraveled"
+              "_title": "Right Inches Traveled"
+            }
+          },
+          "0,0": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///Diagnostics/Subsystem/DriveTrain/MotorLeftOutputPercent",
+              "_title": "Left Motor Output",
+              "Range/Min": 0.0,
+              "Range/Max": 1.0,
+              "Visuals/Show value": true
+            }
+          },
+          "2,0": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///Diagnostics/Subsystem/DriveTrain/MotorRightOutputPercent",
+              "_title": "Right Motor Ouput",
+              "Range/Min": 0.0,
+              "Range/Max": 1.0,
+              "Visuals/Show value": true
+            }
+          },
+          "0,2": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///Diagnostics/Subsystem/DriveTrain/EncoderAvgInchesTraveled",
+              "_title": "Average Inches Traveled"
             }
           }
         }
@@ -527,7 +752,60 @@
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
-        "tiles": {}
+        "tiles": {
+          "4,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/CargoWheel/HasCargo",
+              "_title": "Has Cargo",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "0,0": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/HatchPanel/HasHatchPanel",
+              "_title": "Has Hatch Panel",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "0,2": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/HatchPanel/ReadyToCollect",
+              "_title": "Ready To Collect",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "4,2": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Limelight/hasTarget",
+              "_title": "Has Target",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          }
+        }
       }
     }
   ],

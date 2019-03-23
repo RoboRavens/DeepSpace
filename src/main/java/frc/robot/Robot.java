@@ -127,12 +127,12 @@ public class Robot extends TimedRobot {
 		driverStation.getMatchTime();
 		// Zero the elevator encoders; the robot should always g with the elevator
 		// down.
-		Robot.ELEVATOR_SUBSYSTEM.resetEncodersToRetractedLimit();
-		Robot.ARM_SUBSYSTEM.resetEncodersToRetractionLimit();
+		ELEVATOR_SUBSYSTEM.resetEncodersToRetractedLimit();
+		ARM_SUBSYSTEM.resetEncodersToRetractionLimit();
 
-		Robot.BEAK_SUBSYSTEM.release();
+		BEAK_SUBSYSTEM.release();
 
-		Robot.LIMELIGHT_SUBSYSTEM.turnLEDOff();
+		LIMELIGHT_SUBSYSTEM.turnLEDOff();
 
 		this.setupDriveController();
 		this.setupOperationPanel();
@@ -150,7 +150,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		Robot.LED_SUBSYSTEM.setDisabledPattern();
+		LIMELIGHT_SUBSYSTEM.turnLEDOff();
+		LED_SUBSYSTEM.setDisabledPattern();
 	}
 
 	/*public Robot() {
@@ -160,7 +161,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		Robot.LED_SUBSYSTEM.setDisabledPattern();
+		LED_SUBSYSTEM.setDisabledPattern();
+		LIMELIGHT_SUBSYSTEM.turnLEDOff();
 
 		Scheduler.getInstance().run();
 
@@ -187,7 +189,7 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putString("DB/String 4", allianceString);
 
-		Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeadingToCurrentHeading();
+		DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeadingToCurrentHeading();
 
 		diagnostics.outputDisabledDiagnostics();
 
@@ -274,7 +276,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		Robot.LED_SUBSYSTEM.setAutonomousPattern();
+		LED_SUBSYSTEM.setAutonomousPattern();
 	}
 
 	/**
@@ -300,7 +302,7 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.cancel();
 		}
 
-		Robot.LED_SUBSYSTEM.setEnabledPattern();
+		LED_SUBSYSTEM.setEnabledPattern();
 	}
 
 	/**
@@ -347,20 +349,20 @@ public class Robot extends TimedRobot {
 	public void setupOperationPanel() {
 		System.out.println("Operation PANEL CONFIGURED!!! Operation PANEL CONFIGURED!!!");
 		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDERETRACT).whileHeld(new ElevatorRetractWhileHeldCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATORDOUBLEOVERRIDERETRACT).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT, true));
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATORDOUBLEOVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_RETRACT, false));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATORDOUBLEOVERRIDERETRACT).whenPressed(new SetOverride1Command(OVERRIDE_SYSTEM_ELEVATOR_RETRACT, true));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATORDOUBLEOVERRIDERETRACT).whenReleased(new SetOverride1Command(OVERRIDE_SYSTEM_ELEVATOR_RETRACT, false));
 		
 		OPERATION_PANEL.getButton(ButtonCode.ELEVATOROVERRIDEEXTEND).whileHeld(new ElevatorExtendWhileHeldCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATORDOUBLEOVERRIDEEXTEND).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND, true));
-		OPERATION_PANEL.getButton(ButtonCode.ELEVATORDOUBLEOVERRIDEEXTEND).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ELEVATOR_EXTEND, false));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATORDOUBLEOVERRIDEEXTEND).whenPressed(new SetOverride1Command(OVERRIDE_SYSTEM_ELEVATOR_EXTEND, true));
+		OPERATION_PANEL.getButton(ButtonCode.ELEVATORDOUBLEOVERRIDEEXTEND).whenReleased(new SetOverride1Command(OVERRIDE_SYSTEM_ELEVATOR_EXTEND, false));
 		
 		OPERATION_PANEL.getButton(ButtonCode.ARMOVERRIDEEXTEND).whileHeld(new ArmExtendWhileHeldCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDEEXTEND).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, true));
-		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDEEXTEND).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, false));
+		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDEEXTEND).whenPressed(new SetOverride1Command(OVERRIDE_SYSTEM_ARM_EXTEND, true));
+		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDEEXTEND).whenReleased(new SetOverride1Command(OVERRIDE_SYSTEM_ARM_EXTEND, false));
 
 		OPERATION_PANEL.getButton(ButtonCode.ARMOVERRIDERETRACT).whileHeld(new ArmRetractWhileHeldCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenPressed(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, true));
-		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenReleased(new SetOverride1Command(Robot.OVERRIDE_SYSTEM_ARM_EXTEND, false));
+		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenPressed(new SetOverride1Command(OVERRIDE_SYSTEM_ARM_EXTEND, true));
+		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenReleased(new SetOverride1Command(OVERRIDE_SYSTEM_ARM_EXTEND, false));
 
 		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDEEXTEND).whileHeld(new ClimberExtendWhileHeldCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDERETRACT).whileHeld(new ClimberRetractWhileHeldCommand());
