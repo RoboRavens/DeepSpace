@@ -10,27 +10,25 @@ package frc.robot.commands.hatchpanel;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class SetReadyToCollectTrue extends Command {
-  public SetReadyToCollectTrue() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-  }
+public class SetReadyToCollectFalseCommand extends Command {
+  public SetReadyToCollectFalseCommand() {}
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("SetReadyToCollectFalseCommand init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.BEAK_SUBSYSTEM.setIsReadyToCollect(true);
+    Robot.BEAK_SUBSYSTEM.setIsReadyToCollect(false);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

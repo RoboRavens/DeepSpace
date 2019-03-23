@@ -4,17 +4,18 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SetGyroTargetHeading extends Command {
+public class SetGyroTargetHeadingCommand extends Command {
 
 	private int _heading;
 	
-    public SetGyroTargetHeading(int heading) {
+    public SetGyroTargetHeadingCommand(int heading) {
     	_heading = heading;
         
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("SetGyroTargetHeadingCommand init");
     }
 
     // Called repeatedly when this Command is scheduled to run

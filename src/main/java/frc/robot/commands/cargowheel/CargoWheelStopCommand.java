@@ -4,9 +4,6 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class CargoWheelStopCommand extends Command {
 
     public CargoWheelStopCommand() {
@@ -15,6 +12,7 @@ public class CargoWheelStopCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("CargoWheelStopCommand init");
     }
 
     // Called repeatedly when this Command is scheduled to run

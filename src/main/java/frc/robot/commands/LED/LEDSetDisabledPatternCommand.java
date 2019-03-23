@@ -12,19 +12,16 @@ public class LEDSetDisabledPatternCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		System.out.println("Starting disabled pattern");
+		System.out.println("LEDSetDisabledPatternCommand init");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-
-		System.out.println("Executing disabled pattern");
 		Robot.LED_SUBSYSTEM.setDisabledPattern();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		
 		return true;
 	}
 

@@ -25,6 +25,7 @@ public class CargoWheelSuckOrSpitCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("CargoWheelSuckOrSpitCommand init");
     _timer.reset();
     _timer.start();
   }

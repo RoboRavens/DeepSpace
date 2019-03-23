@@ -18,6 +18,7 @@ public class LEDBlinkFor2SecondsCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("LEDBlinkFor2SecondsCommand init");
         _timer.start();
         Robot.LED_SUBSYSTEM.race(color, 2);
 

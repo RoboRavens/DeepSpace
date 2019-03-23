@@ -4,9 +4,6 @@ import frc.robot.Calibrations;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class CargoWheelSuckCommand extends Command {
 
     public CargoWheelSuckCommand() {
@@ -15,6 +12,7 @@ public class CargoWheelSuckCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("CargoWheelSuckCommand init");
     }
 
     // Called repeatedly when this Command is scheduled to run

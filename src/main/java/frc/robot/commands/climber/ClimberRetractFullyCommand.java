@@ -5,9 +5,6 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ClimberRetractFullyCommand extends Command {
 
 	public ClimberRetractFullyCommand() {
@@ -16,6 +13,7 @@ public class ClimberRetractFullyCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		System.out.println("ClimberRetractFullyCommand init");
 		Robot.CLIMBER_SUBSYSTEM.resetSafetyTimer();
 		Robot.CLIMBER_SUBSYSTEM.startSafetyTimer();
 	}

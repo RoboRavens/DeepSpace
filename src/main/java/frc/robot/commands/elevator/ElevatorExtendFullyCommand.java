@@ -14,6 +14,7 @@ public class ElevatorExtendFullyCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		System.out.println("ElevatorExtendFullyCommand init");
 		Robot.ELEVATOR_SUBSYSTEM.resetSafetyTimer();
 		Robot.ELEVATOR_SUBSYSTEM.startSafetyTimer();
 	}

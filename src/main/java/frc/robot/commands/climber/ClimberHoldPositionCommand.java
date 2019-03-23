@@ -13,8 +13,8 @@ public class ClimberHoldPositionCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		this.targetPosition = Robot.CLIMBER_SUBSYSTEM.getEncoderPosition();
 		System.out.println("ClimberHoldPositionCommand init");
+		this.targetPosition = Robot.CLIMBER_SUBSYSTEM.getEncoderPosition();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

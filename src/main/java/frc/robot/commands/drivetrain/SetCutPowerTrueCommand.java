@@ -4,14 +4,15 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SetCutPowerTrue extends Command {
+public class SetCutPowerTrueCommand extends Command {
 
-    public SetCutPowerTrue() {
+    public SetCutPowerTrueCommand() {
         requires(Robot.DRIVE_TRAIN_SUBSYSTEM);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("SetCutPowerTrueCommand init");
     }
 
     // Called repeatedly when this Command is scheduled to run

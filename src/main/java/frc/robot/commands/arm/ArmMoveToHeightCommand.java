@@ -15,6 +15,7 @@ public class ArmMoveToHeightCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("ArmMoveToHeightCommand init");
         Robot.ARM_SUBSYSTEM.resetSafetyTimer();
         Robot.ARM_SUBSYSTEM.startSafetyTimer();
     }

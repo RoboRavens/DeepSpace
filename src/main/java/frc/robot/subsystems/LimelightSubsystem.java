@@ -10,9 +10,6 @@ import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
 import frc.robot.commands.drivetrain.DriveTrainStopCommand;
 import frc.util.NetworkTableDiagnostics;
 
-/**
- *
- */
 public class LimelightSubsystem extends Subsystem {
 	static double Limit = 0.00;
 	edu.wpi.first.networktables.NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");

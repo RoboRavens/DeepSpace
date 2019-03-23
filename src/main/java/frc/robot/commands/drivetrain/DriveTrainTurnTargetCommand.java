@@ -19,12 +19,13 @@ public class DriveTrainTurnTargetCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("DriveTrainTurnTargetCommand init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("DRIVETRAINTURNTARGETCOMMANDISRUNNINGjhbdweibwejbdwekfbweijkfb");
+    System.out.println("DRIVETRAINTURNTARGETCOMMANDISRUNNING");
     Robot.LIMELIGHT_SUBSYSTEM.turnToTarget();
   }
 

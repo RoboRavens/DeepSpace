@@ -4,9 +4,6 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ClimberExtendWhileHeldCommand extends Command {
 
     public ClimberExtendWhileHeldCommand() {
@@ -15,6 +12,7 @@ public class ClimberExtendWhileHeldCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("ClimberExtendWhileHeldCommand init");
     }
 
     // Called repeatedly when this Command is scheduled to run
