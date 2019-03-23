@@ -12,8 +12,7 @@ import frc.robot.Robot;
 
 public class LimelightToggleLEDCommand extends Command {
   public LimelightToggleLEDCommand() {
-     requires(Robot.LIMELIGHT_SUBSYSTEM); 
-         // eg. requires(chassis);
+    requires(Robot.LIMELIGHT_SUBSYSTEM); 
   }
 
   // Called just before this Command runs the first time

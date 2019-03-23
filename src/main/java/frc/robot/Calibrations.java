@@ -26,7 +26,7 @@ public class Calibrations {
 	public static final boolean driveTrainStartingIsInHighGear = false;
 	
 
-	public static final double turnFeedForwardMagnitude = .1;
+	public static final double turnFeedForwardMagnitude = .18;
 	public static final double translationFeedForwardMagnitude = .1;
 
 
@@ -40,7 +40,7 @@ public class Calibrations {
 	public static final double DriveTrainCollisionJerkThreshold = 4;
 
 	// 2019 and newer robots use talonSRX instead talon
-	public static final Boolean UseTalonSRXForDriveController = false;
+	public static final Boolean UseTalonSRXForDriveController = true;
 
 	// Drive and gyro modes
 	public static final int bulldozerTank = 0;

@@ -8,57 +8,36 @@ import frc.robot.commands.cargowheel.CargoWheelStopCommand;
 import frc.util.NetworkTableDiagnostics;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
 public class CargoWheelSubsystem extends Subsystem {
-	private TalonSRX _cargoMotor;
+	private TalonSRX _topCargoMotor;
+	private VictorSPX _bottomCargoMotor;
 	private BufferedDigitalInput _cargoSensor;
 	private Timer _hasCargoDurationTimer = new Timer();
 
 	public CargoWheelSubsystem() {
-		_cargoMotor = new TalonSRX(RobotMap.cargoMotor);
+		_topCargoMotor = new TalonSRX(RobotMap.topCargoMotor);
+		_bottomCargoMotor = new VictorSPX(RobotMap.bottomCargoMotor);
 		_cargoSensor = new BufferedDigitalInput(RobotMap.cargoSensor);
 		_hasCargoDurationTimer.start();
 
 		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", () -> this.hasCargo());
 		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoSensorRaw", () -> _cargoSensor.get());
-		// NetworkTableDiagnostics.SubsystemNumber("CargoWheel", "MotorOutputPercent", () -> _cargoMotor.getMotorOutputPercent());
+		// NetworkTableDiagnostics.SubsystemNumber("CargoWheel", "MotorOutputPercent", () -> _topCargoMotor.getMotorOutputPercent());
 	}
+	
+	public void periodic() {
+		_cargoSensor.maintainState();
 
-	public void initDefaultCommand() {
-		setDefaultCommand(new CargoWheelStopCommand());
-	}
-
-	public void suck(double magnitude) {
-		if (hasCargo() == false) {
-			this.set(-1 * magnitude);
-		} else {
-			this.stop();
+		if (this.hasCargo() == false) {
+			_hasCargoDurationTimer.reset();
 		}
 	}
-
-	public void spit(double magnitude) {
-		this.set(magnitude);
-	}
-
-	public void hold() {
-		this.set(-1 * Calibrations.cargoHoldPowerMagnitude);
-	}
-
-
-	public void idle() {
-		this.set(0.1);
-	}
-
-	public void stop() {
-		this.set(0);
-	}
-
-	private void set(double magnitude) {
-		_cargoMotor.set(ControlMode.PercentOutput, magnitude);
-	}  
 
 	public boolean hasCargo() {
 		boolean otherLimit = false;
@@ -67,11 +46,69 @@ public class CargoWheelSubsystem extends Subsystem {
 		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(hasCargo, otherLimit);
 	}
 
-	public void periodic() {
-		_cargoSensor.maintainState();
+	public void initDefaultCommand() {
+		setDefaultCommand(new CargoWheelStopCommand());
+	}
 
-		if (this.hasCargo() == false) {
-			_hasCargoDurationTimer.reset();
+	// TOP MOTOR
+
+	public void topMotorSuck(double magnitude) {
+		if (hasCargo() == false) {
+			this.setTopMotor(-1 * magnitude);
+		} else {
+			this.topMotorStop();
 		}
 	}
+
+	public void topMotorSpit(double magnitude) {
+		this.setTopMotor(magnitude);
+	}
+
+	public void topMotorHold() {
+		this.setTopMotor(-1 * Calibrations.cargoHoldPowerMagnitude);
+	}
+
+
+	public void topMotorIdle() {
+		this.setTopMotor(0.1);
+	}
+
+	public void topMotorStop() {
+		this.setTopMotor(0);
+	}
+
+	private void setTopMotor(double magnitude) {
+		_topCargoMotor.set(ControlMode.PercentOutput, magnitude);
+	}  
+
+	// BOTTOM MOTOR
+
+	public void bottomMotorSuck(double magnitude) {
+		if (hasCargo() == false) {
+			this.setbottomMotor(-1 * magnitude);
+		} else {
+			this.bottomMotorStop();
+		}
+	}
+
+	public void bottomMotorSpit(double magnitude) {
+		this.setbottomMotor(magnitude);
+	}
+
+	public void bottomMotorHold() {
+		this.setbottomMotor(-1 * Calibrations.cargoHoldPowerMagnitude);
+	}
+
+
+	public void bottomMotorIdle() {
+		this.setbottomMotor(0.1);
+	}
+
+	public void bottomMotorStop() {
+		this.setbottomMotor(0);
+	}
+
+	private void setbottomMotor(double magnitude) {
+		_bottomCargoMotor.set(ControlMode.PercentOutput, magnitude);
+	}  
 }

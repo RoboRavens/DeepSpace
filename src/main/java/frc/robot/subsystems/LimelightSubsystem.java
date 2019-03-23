@@ -22,7 +22,7 @@ public class LimelightSubsystem extends Subsystem {
 	NetworkTableEntry tv = table.getEntry("tv");
 	NetworkTableEntry ledMode = table.getEntry("ledMode");
 
-	private int _ledState = 1;
+	private int _ledState = 0;
 
 	private double _heightDifference = Calibrations.FLOOR_TO_TARGET_CENTER_HEIGHT - Calibrations.FLOOR_TO_LIMELIGHT_LENS_HEIGHT;
 	private double _angleToTargetFromHorizontal = 0;
@@ -129,24 +129,28 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void toggleLED() {
-		if (_ledState == 1) {
-			turnLEDOn();
+		if (_ledState == 0) {
+			setBothLEDOn();
 		} else if (_ledState == 3) {
-			turnLEDOff();
+			setOneLEDOn();
 		}
+	}
+
+	public void setOneLEDOn() {
+		_ledState = 0;
+	}
+
+	public void setBothLEDOn() {
+		_ledState = 3;
 	}
 
 	public void turnLEDOff() {
 		ledMode.setNumber(1);
-		_ledState = 1;
 	}
 
 	public void turnLEDOn() {
-		ledMode.setNumber(3);
-		_ledState = 3;
+		ledMode.setNumber(_ledState);
 	}
-
-	
 
 		/*Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + x);
         

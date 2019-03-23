@@ -15,7 +15,8 @@ public class CargoWheelSuckIdleCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.CARGO_WHEEL_SUBSYSTEM.idle();
+        Robot.CARGO_WHEEL_SUBSYSTEM.topMotorIdle();
+        Robot.CARGO_WHEEL_SUBSYSTEM.bottomMotorIdle();
     }
 
     // Make this return true when this Command no longer needs to run execute()

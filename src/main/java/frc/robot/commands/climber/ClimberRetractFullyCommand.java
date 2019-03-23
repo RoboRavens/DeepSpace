@@ -22,7 +22,12 @@ public class ClimberRetractFullyCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.CLIMBER_SUBSYSTEM.setMotorsPID(Calibrations.climberEncoderMinimumValue);
+		if (Robot.CLIMBER_SUBSYSTEM.isAtRetractionLimit() == false) {
+    		Robot.CLIMBER_SUBSYSTEM.retract(Calibrations.climberRetractPowerMagnitude);
+    	}
+    	else {
+    		Robot.CLIMBER_SUBSYSTEM.stop();
+    	}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -42,7 +47,7 @@ public class ClimberRetractFullyCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.CLIMBER_SUBSYSTEM.expectClimberToBeAtRetractionLimit();
+		Robot.CLIMBER_SUBSYSTEM.resetEncodersToRetractedLimit();;
 		Robot.CLIMBER_SUBSYSTEM.stop();
 	}
 
