@@ -49,6 +49,19 @@ public class ClimberSubsystem extends Subsystem {
 		_climberMotor.set(ControlMode.PercentOutput, magnitude);
 	}
 
+	public void raiseRobotToThirdLevel() {
+		if (Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getPitchAngle() <= 4 && Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getPitchAngle() >= -4) {
+			Robot.CLIMBER_SUBSYSTEM.extend(Calibrations.climberExtendPowerMagnitude);
+			Robot.ARM_SUBSYSTEM.extend(Calibrations.armExtendPowerMagnitude);
+		}
+		if (Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getPitchAngle() > 4) {
+			Robot.ARM_SUBSYSTEM.extend(Calibrations.armExtendPowerMagnitude);
+		}
+		if (Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getPitchAngle() < -4) {
+			Robot.CLIMBER_SUBSYSTEM.extend(Calibrations.climberExtendPowerMagnitude);
+		}
+	}
+
 	public void getPosition() {
 		System.out.print("Climber Position: " + getEncoderPosition());
 	}

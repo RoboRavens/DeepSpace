@@ -455,6 +455,10 @@ public class RavenTank {
 		this.resetGyroAdjustmentScaleFactor();
 	}
 
+	public double getPitchAngle() {
+		return orientationGyro.getPitch();
+	}
+
 	public boolean automatedActionHasCompleted() {
 		// Just return the opposite of automatedDrivingEnabled.
 		return automatedDrivingEnabled == false;

@@ -331,5 +331,4 @@ public class ElevatorSubsystem extends Subsystem {
 	public double getSafetyTimer() {
 		return _safetyTimer.get();
 	}
-
 }

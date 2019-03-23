@@ -163,6 +163,8 @@ public class Calibrations {
 	public static final double armkI = 0.0;
 	public static final double armkD = 170.0;
 	public static final double armHoldPositionPowerMagnitude = 0.04;
+	public static final double armExtendPowerMagnitude = 0.6;
+	public static final double armRetractPowerMagnitude = 0.8;
 	
 	public static final int armEncoderRetractedValue = 0;
 	public static final int armEncoderExtendedValue = 9700;
@@ -194,6 +196,7 @@ public class Calibrations {
 	public static final double AXIS_IS_PRESSED_VALUE = .25;
 
 	public static final double cargoSpitTimer = 1;
+	public static final double cargoBottomMotorSpinTimout = 15;
 
 
 	// BEAK

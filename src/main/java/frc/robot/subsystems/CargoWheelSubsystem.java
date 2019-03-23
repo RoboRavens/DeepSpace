@@ -18,13 +18,12 @@ public class CargoWheelSubsystem extends Subsystem {
 	private TalonSRX _topCargoMotor;
 	private VictorSPX _bottomCargoMotor;
 	private BufferedDigitalInput _cargoSensor;
-	private Timer _hasCargoDurationTimer = new Timer();
+	private Timer _timer = new Timer();
 
 	public CargoWheelSubsystem() {
 		_topCargoMotor = new TalonSRX(RobotMap.topCargoMotor);
 		_bottomCargoMotor = new VictorSPX(RobotMap.bottomCargoMotor);
 		_cargoSensor = new BufferedDigitalInput(RobotMap.cargoSensor);
-		_hasCargoDurationTimer.start();
 
 		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", () -> this.hasCargo());
 		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoSensorRaw", () -> _cargoSensor.get());
@@ -33,10 +32,6 @@ public class CargoWheelSubsystem extends Subsystem {
 	
 	public void periodic() {
 		_cargoSensor.maintainState();
-
-		if (this.hasCargo() == false) {
-			_hasCargoDurationTimer.reset();
-		}
 	}
 
 	public boolean hasCargo() {
@@ -111,4 +106,16 @@ public class CargoWheelSubsystem extends Subsystem {
 	private void setbottomMotor(double magnitude) {
 		_bottomCargoMotor.set(ControlMode.PercentOutput, magnitude);
 	}  
+
+	public void resetTimer() {
+		_timer.reset();
+	}
+
+	public void startTimer() {
+		_timer.start();
+	}
+
+	public double getTimer() {
+		return _timer.get();
+	}
 }
