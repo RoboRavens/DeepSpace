@@ -18,7 +18,12 @@ public class ClimberExtendFullyCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.CLIMBER_SUBSYSTEM.setMotorsPID(Calibrations.climberEncoderMaximumValue);
+		if (Robot.CLIMBER_SUBSYSTEM.isAtExtensionLimit() == false) {
+    		Robot.CLIMBER_SUBSYSTEM.extend(Calibrations.climberExtendPowerMagnitude);
+    	}
+    	else {
+    		Robot.CLIMBER_SUBSYSTEM.stop();
+    	}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -37,7 +42,7 @@ public class ClimberExtendFullyCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.CLIMBER_SUBSYSTEM.expectClimberToBeAtExtensionLimit();
+		Robot.CLIMBER_SUBSYSTEM.resetEncodersToExtendedLimit();
 		Robot.CLIMBER_SUBSYSTEM.stop();
 	}
 
