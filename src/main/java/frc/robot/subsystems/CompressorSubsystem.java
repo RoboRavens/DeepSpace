@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CompressorSubsystem extends Subsystem {
 
   Compressor aCompressor = new Compressor();
+  private boolean _isClimbing = false;
 
   @Override
   public void initDefaultCommand() {
@@ -28,12 +29,14 @@ public class CompressorSubsystem extends Subsystem {
 
   @Override
   public void periodic() {
-    if (RobotController.getBatteryVoltage() < 11.0) {
-      stop();
-    }
+    if (_isClimbing == false) {
+      if (RobotController.getBatteryVoltage() < 11.0) {
+        stop();
+      }
 
-    if (RobotController.getBatteryVoltage() > 11.5) {
-      start();
+      if (RobotController.getBatteryVoltage() > 11.5) {
+        start();
+      }
     }
   }
 
@@ -57,5 +60,9 @@ public class CompressorSubsystem extends Subsystem {
 
   public Boolean isOff() {
     return !isOn();
+  }
+
+  public void setIsClimbing(boolean isClimbing) {
+    _isClimbing = isClimbing;
   }
 }

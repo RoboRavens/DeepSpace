@@ -11,11 +11,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Calibrations;
 import frc.robot.commands.arm.ArmRetractFullyCommand;
 import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
+import frc.robot.commands.misc.CompressorTurnOffWhileClimbingCommand;
 import frc.robot.commands.climbthirdlevel.*;
 
 public class ClimberThirdLevelCommand extends CommandGroup {
   
   public ClimberThirdLevelCommand() {
+    addSequential(new CompressorTurnOffWhileClimbingCommand());
     addSequential(new ArmRetractFullyCommand());
     addSequential(new DriveTrainDriveInchesCommand(5, .3, Calibrations.drivingBackward));
     addParallel(new RaiseRobotToThirdLevelCommand());

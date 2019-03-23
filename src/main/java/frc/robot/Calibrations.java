@@ -145,7 +145,7 @@ public class Calibrations {
 	// At higher speeds, a higher value is needed because the climber will overshoot the target until we have PID.
 	
 	public static final int climberLiftUpwardSafetyMargin = 400;
-	public static final int climberLiftDownwardSafetyMargin = 400;
+	public static final int climberLiftDownwardSafetyMargin = 500;
 	public static final int CLIMBER_AT_POSITION_BUFFER = 500;
 	
 	public static final double climberConsideredMovingEncoderRate = 0;
@@ -154,7 +154,9 @@ public class Calibrations {
     public static final double CLIMBER_SAFETY_TIMER_TIMEOUT = 5;
 	
 	public static final int climberInchesToEncoderTicksConversionValue = 411;
-    public static final int climberInchesToEncoderTicksOffsetValue = 10;
+	public static final int climberInchesToEncoderTicksOffsetValue = 10;
+	
+	public static final int maximumTiltAngleWhileClimbing = 4;
 	
 
 	// ARM

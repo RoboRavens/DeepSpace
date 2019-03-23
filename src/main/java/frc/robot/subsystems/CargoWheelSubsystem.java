@@ -80,18 +80,18 @@ public class CargoWheelSubsystem extends Subsystem {
 
 	public void bottomMotorSuck(double magnitude) {
 		if (hasCargo() == false) {
-			this.setbottomMotor(-1 * magnitude);
+			this.setbottomMotor(magnitude);
 		} else {
 			this.bottomMotorStop();
 		}
 	}
 
 	public void bottomMotorSpit(double magnitude) {
-		this.setbottomMotor(magnitude);
+		this.setbottomMotor(-1 * magnitude);
 	}
 
 	public void bottomMotorHold() {
-		this.setbottomMotor(-1 * Calibrations.cargoHoldPowerMagnitude);
+		this.setbottomMotor(Calibrations.cargoHoldPowerMagnitude);
 	}
 
 

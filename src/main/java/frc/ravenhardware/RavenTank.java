@@ -459,6 +459,10 @@ public class RavenTank {
 		return orientationGyro.getPitch();
 	}
 
+	public double getRollAngle() {
+		return orientationGyro.getRoll();
+	}
+
 	public boolean automatedActionHasCompleted() {
 		// Just return the opposite of automatedDrivingEnabled.
 		return automatedDrivingEnabled == false;
