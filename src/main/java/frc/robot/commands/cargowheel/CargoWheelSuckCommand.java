@@ -4,9 +4,6 @@ import frc.robot.Calibrations;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class CargoWheelSuckCommand extends Command {
 
     public CargoWheelSuckCommand() {
@@ -35,7 +32,5 @@ public class CargoWheelSuckCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        Robot.CARGO_WHEEL_SUBSYSTEM.topMotorStop();
-        Robot.CARGO_WHEEL_SUBSYSTEM.bottomMotorStop();
     }
 }

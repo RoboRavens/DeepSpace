@@ -7,9 +7,6 @@ import frc.robot.Robot;
 import frc.robot.commands.drivetrain.DriveTrainDriveFPSCommand;
 import frc.util.NetworkTableDiagnostics;
 
-/**
- *
- */
 public class DriveTrainSubsystem extends Subsystem {
 	public RavenTank ravenTank;
 

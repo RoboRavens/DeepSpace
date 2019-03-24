@@ -42,7 +42,7 @@ public class ElevatorSubsystem extends Subsystem {
 		_elevatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
 		_elevatorMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
 
-		/* Don't neutral motor if remote limit source is not available */
+		// Don't neutral motor if remote limit source is not available 
 		_elevatorMotor.configLimitSwitchDisableNeutralOnLOS(true, TalonSRXConstants.kTimeoutMs);
 
 		registerDiagnostics();

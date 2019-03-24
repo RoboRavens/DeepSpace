@@ -10,9 +10,6 @@ import frc.robot.commands.drivetrain.DriveTrainDriveInchesCommand;
 import frc.robot.commands.drivetrain.DriveTrainStopCommand;
 import frc.util.NetworkTableDiagnostics;
 
-/**
- *
- */
 public class LimelightSubsystem extends Subsystem {
 	static double Limit = 0.00;
 	edu.wpi.first.networktables.NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -22,7 +19,7 @@ public class LimelightSubsystem extends Subsystem {
 	NetworkTableEntry tv = table.getEntry("tv");
 	NetworkTableEntry ledMode = table.getEntry("ledMode");
 
-	private int _ledState = 0;
+	private int _ledState = 3;
 
 	private double _heightDifference = Calibrations.FLOOR_TO_TARGET_CENTER_HEIGHT - Calibrations.FLOOR_TO_LIMELIGHT_LENS_HEIGHT;
 	private double _angleToTargetFromHorizontal = 0;
