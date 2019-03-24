@@ -306,4 +306,17 @@ public class ArmSubsystem extends Subsystem {
 	public void holdPosition() {
 		_armMotor.set(ControlMode.PercentOutput, Calibrations.armHoldPositionPowerMagnitude);
 	}
+
+	// This method will extend the arm SOLELY based on the arm extension limit switch.
+	// It will ignore the encoder entirely.
+	// USE WITH EXTREME CAUTION. This can easily destroy the robot if abused.
+	// If the switch ever fails to function, serious damage will occur.
+	public void extendIfNotAtExtensionLimit(double magnitude) {
+		if (getArmExtensionLimitSwitchValue() == false) {
+			set(magnitude);
+		}
+		else {
+			set(0);
+		}
+	}
 }

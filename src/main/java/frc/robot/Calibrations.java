@@ -138,7 +138,15 @@ public class Calibrations {
     public static final double climberkD = 230.0;
 	
 	public static final int climberEncoderMinimumValue = 0;
-    public static final int climberEncoderMaximumValue = 53000;
+	public static final int climberEncoderMaximumValue = 53000;
+	
+	
+	// In theory whenever we're climbing the arm is stalled, and it's on a 775,
+	// so we can't go above about .3 here.
+	public static final double armExtendWhileClimbingPowerMagnitude = .25;
+
+	public static final double elevatorClimbingRetractionPowerMagnitude = .3;
+
 
     // The safety margin is how far away from the end of travel the encoders will stop the lift.
 	// At low speeds (max of .3), and a lift max value of 30k, 1500 maxes out the climber.

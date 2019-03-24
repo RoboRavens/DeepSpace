@@ -31,9 +31,7 @@ import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
 import frc.robot.commands.cargo.CargoCaptureHPSCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
-import frc.robot.commands.climber.ClimberExtendWhileHeldCommand;
-import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
-import frc.robot.commands.climber.ClimberThirdLevelCommand;
+import frc.robot.commands.climber.*;
 import frc.robot.commands.drivetrain.DriveTrainAlignFromHPSToRocketCommand;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
@@ -364,7 +362,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenPressed(new SetOverride1Command(OVERRIDE_SYSTEM_ARM_EXTEND, true));
 		OPERATION_PANEL.getButton(ButtonCode.ARMDOUBLEOVERRIDERETRACT).whenReleased(new SetOverride1Command(OVERRIDE_SYSTEM_ARM_EXTEND, false));
 
-		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDEEXTEND).whileHeld(new ClimberExtendWhileHeldCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDEEXTEND).whileHeld(new ClimberExtendWhileHeldCommandCZB());
 		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDERETRACT).whileHeld(new ClimberRetractWhileHeldCommand());
 
 		OPERATION_PANEL.getButton(ButtonCode.ROCKETHIGH).whenPressed(new RunAutomatedCommand());
