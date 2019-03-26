@@ -38,7 +38,7 @@ public class ElevatorSubsystem extends Subsystem {
 
 		//_elevatorExtensionLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorExtensionLimitSwitch);
 		//_elevatorRetractionLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorRetractionLimitSwitch);
-		//this.elevatorMotor.setSensorPhase(false);
+		_elevatorMotor.setSensorPhase(true);
 		_elevatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
 		_elevatorMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
 
