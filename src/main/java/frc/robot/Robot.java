@@ -30,6 +30,7 @@ import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
 import frc.robot.commands.beak.BeakReleaseHatchPanelCommand;
 import frc.robot.commands.cargo.CargoCaptureHPSCommand;
 import frc.robot.commands.cargowheel.CargoWheelSpitCommand;
+import frc.robot.commands.cargowheel.CargoWheelStopCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.climber.ClimberExtendWhileHeldCommand;
 import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
@@ -40,6 +41,7 @@ import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.hatchpanel.SetReadyToCollectTrue;
 import frc.robot.commands.intaketransport.IntakeExtendCommand;
+import frc.robot.commands.intaketransport.IntakeRetractCommand;
 import frc.robot.commands.misc.LimelightToggleLEDCommand;
 import frc.robot.commands.misc.SetOverride1Command;
 import frc.robot.subsystems.ArmSubsystem;
@@ -73,6 +75,8 @@ public class Robot extends TimedRobot {
 
 	public DriverStation driverStation;
 	public PowerDistributionPanel PDP = new PowerDistributionPanel();
+
+	public boolean gamePieceIsHatch = true;
 
 	public Diagnostics diagnostics = new Diagnostics();
 	public static final LoggerOverlord LOGGER_OVERLORD = new LoggerOverlord(1f);
@@ -150,7 +154,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		LIMELIGHT_SUBSYSTEM.turnLEDOff();
 		LED_SUBSYSTEM.setDisabledPattern();
 	}
 
@@ -305,10 +308,23 @@ public class Robot extends TimedRobot {
 		LED_SUBSYSTEM.setEnabledPattern();
 	}
 
-	/**
-	 * This function is called periodically during operator control.
-	 */
-	@Override
+	public void cargoIntake() {
+
+	}
+
+	public void cargoScore() {
+
+	}
+
+	public void hatchIntake() {
+
+	}
+
+	public void hatchScore() {
+
+	}
+
+
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		diagnostics.outputTeleopDiagnostics();
@@ -323,25 +339,46 @@ public class Robot extends TimedRobot {
 			}
 		}
 
-		if (OPERATION_PANEL_2.getButton(ButtonCode.HATCHOVERRIDE).get()) {
-			DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new BeakCaptureHatchPanelCommand());
+		if (DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).get()) {
+			if (gamePieceIsHatch) {
+				Command beakCaptureCommand = new BeakCaptureHatchPanelCommand();
+				beakCaptureCommand.start();
+			}
+			else {
+				Command cargoCaptureCommand = new CargoWheelSuckCommand();
+				cargoCaptureCommand.start();
+			}
+		}
+		else if (DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).get()) {
+			if (gamePieceIsHatch) {
+				Command command = new BeakReleaseHatchPanelCommand();
+				command.start();
+			}
+			else {
+				Command command = new CargoWheelSpitCommand();
+				command.start();
+			}
+		}
+		else {
+			Command command = new CargoWheelStopCommand();
+			command.start();
 		}
 
-		/*DriveTrainDriveLimeLightCommand driveTrainDriveLimeLightCommand = new DriveTrainDriveLimeLightCommand();
-		if (DRIVE_CONTROLLER.getAxis(AxisCode.LEFTTRIGGER) > .25) {
-			driveTrainDriveLimeLightCommand.start();
-		} else {
-			driveTrainDriveLimeLightCommand.close();
-		}*/
+		if (OPERATION_PANEL_2.getButton(ButtonCode.HATCHOVERRIDE).get()) {
+			gamePieceIsHatch = true;
+		}
+
+		if (OPERATION_PANEL_2.getButton(ButtonCode.CARGOOVERRIDE).get()) {
+			Robot.BEAK_SUBSYSTEM.capture();
+			Robot.INTAKE_TRANSPORT_SUBSYSTEM.intakeExtend();
+			gamePieceIsHatch = false;
+		}
 	}
 
 	public void setupDriveController() {
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new IntakeExtendCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new BeakReleaseHatchPanelCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new CargoWheelSpitCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new IntakeExtendCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whileHeld(new CargoWheelSuckCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new ClimberThirdLevelCommand());
+		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new ClimberThirdLevelCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.B).whenPressed(new IntakeRetractCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.BACK).whenPressed(new LimelightToggleLEDCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.X).whenPressed(new DriveTrainAlignFromHPSToRocketCommand());
 	}

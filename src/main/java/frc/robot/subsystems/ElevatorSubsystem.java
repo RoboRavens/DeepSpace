@@ -42,14 +42,14 @@ public class ElevatorSubsystem extends Subsystem {
 		_elevatorMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
 		_elevatorMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
 
-		/* Don't neutral motor if remote limit source is not available */
+		// Don't neutral motor if remote limit source is not available 
 		_elevatorMotor.configLimitSwitchDisableNeutralOnLOS(true, TalonSRXConstants.kTimeoutMs);
 
 		registerDiagnostics();
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new ElevatorHoldPositionCommand());
+		//setDefaultCommand(new ElevatorHoldPositionCommand());
 	}
 
 	public void extend(double magnitude) {
@@ -210,7 +210,8 @@ public class ElevatorSubsystem extends Subsystem {
     		encoderLimit = true;
     	}
     	
-    	return encoderLimit;
+		//return encoderLimit;
+		return false;
     }
     
     public boolean isEncoderAtRetractionLimit() {
@@ -220,7 +221,8 @@ public class ElevatorSubsystem extends Subsystem {
     		encoderLimit = true;
     	}
     	
-    	return encoderLimit;
+		//return encoderLimit;
+		return false;
     }
 
 	// Right now this method just looks at the right limit switch; some combination of both should be used.
@@ -285,11 +287,13 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public boolean getElevatorExtensionLimitSwitchValue() {
-		return _elevatorMotor.getSensorCollection().isRevLimitSwitchClosed();
+		//return _elevatorMotor.getSensorCollection().isRevLimitSwitchClosed();
+		return false;
 	}
 
 	public boolean getElevatorRetractionLimitSwitchValue() {
-		return _elevatorMotor.getSensorCollection().isFwdLimitSwitchClosed();
+		//return _elevatorMotor.getSensorCollection().isFwdLimitSwitchClosed();
+		return false;
 	}
 
 	public boolean getIsExtendedPastEncoderPosition(int encoderPosition) {
@@ -331,5 +335,4 @@ public class ElevatorSubsystem extends Subsystem {
 	public double getSafetyTimer() {
 		return _safetyTimer.get();
 	}
-
 }

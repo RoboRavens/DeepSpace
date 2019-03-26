@@ -4,9 +4,6 @@ import frc.util.OverrideSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class SetOverride1Command extends Command {
     private OverrideSystem _overrideSystem;
     private boolean _value;
