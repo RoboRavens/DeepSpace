@@ -36,6 +36,7 @@ public class ElevatorSubsystem extends Subsystem {
 		_elevatorMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkI, TalonSRXConstants.kTimeoutMs);
 		_elevatorMotor.config_kD(TalonSRXConstants.kPIDLoopIdx, Calibrations.elevatorkD, TalonSRXConstants.kTimeoutMs);
 
+		
 		//_elevatorExtensionLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorExtensionLimitSwitch);
 		//_elevatorRetractionLimitSwitch = new BufferedDigitalInput(RobotMap.elevatorRetractionLimitSwitch);
 		_elevatorMotor.setSensorPhase(true);
@@ -43,8 +44,11 @@ public class ElevatorSubsystem extends Subsystem {
 		_elevatorMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, TalonSRXConstants.kTimeoutMs);
 
 		// Don't neutral motor if remote limit source is not available 
-		_elevatorMotor.configLimitSwitchDisableNeutralOnLOS(true, TalonSRXConstants.kTimeoutMs);
+		_elevatorMotor.configLimitSwitchDisableNeutralOnLOS(false, TalonSRXConstants.kTimeoutMs);
 
+		_elevatorMotor.configForwardSoftLimitEnable(false);
+		_elevatorMotor.configReverseSoftLimitEnable(false);
+		_elevatorMotor.overrideLimitSwitchesEnable(false);
 		registerDiagnostics();
 	}
 
@@ -210,8 +214,7 @@ public class ElevatorSubsystem extends Subsystem {
     		encoderLimit = true;
     	}
     	
-		//return encoderLimit;
-		return false;
+		return encoderLimit;
     }
     
     public boolean isEncoderAtRetractionLimit() {
@@ -221,8 +224,7 @@ public class ElevatorSubsystem extends Subsystem {
     		encoderLimit = true;
     	}
     	
-		//return encoderLimit;
-		return false;
+		return encoderLimit;
     }
 
 	// Right now this method just looks at the right limit switch; some combination of both should be used.
@@ -287,13 +289,11 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public boolean getElevatorExtensionLimitSwitchValue() {
-		//return _elevatorMotor.getSensorCollection().isRevLimitSwitchClosed();
-		return false;
+		return _elevatorMotor.getSensorCollection().isRevLimitSwitchClosed();
 	}
 
 	public boolean getElevatorRetractionLimitSwitchValue() {
-		//return _elevatorMotor.getSensorCollection().isFwdLimitSwitchClosed();
-		return false;
+		return _elevatorMotor.getSensorCollection().isFwdLimitSwitchClosed();
 	}
 
 	public boolean getIsExtendedPastEncoderPosition(int encoderPosition) {
