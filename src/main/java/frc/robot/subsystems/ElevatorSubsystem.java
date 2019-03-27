@@ -210,8 +210,7 @@ public class ElevatorSubsystem extends Subsystem {
     		encoderLimit = true;
     	}
     	
-		//return encoderLimit;
-		return false;
+		return encoderLimit;
     }
     
     public boolean isEncoderAtRetractionLimit() {
@@ -221,8 +220,7 @@ public class ElevatorSubsystem extends Subsystem {
     		encoderLimit = true;
     	}
     	
-		//return encoderLimit;
-		return false;
+		return encoderLimit;
     }
 
 	// Right now this method just looks at the right limit switch; some combination of both should be used.
@@ -287,13 +285,11 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public boolean getElevatorExtensionLimitSwitchValue() {
-		//return _elevatorMotor.getSensorCollection().isRevLimitSwitchClosed();
-		return false;
+		return _elevatorMotor.getSensorCollection().isRevLimitSwitchClosed();
 	}
 
 	public boolean getElevatorRetractionLimitSwitchValue() {
-		//return _elevatorMotor.getSensorCollection().isFwdLimitSwitchClosed();
-		return false;
+		return _elevatorMotor.getSensorCollection().isFwdLimitSwitchClosed();
 	}
 
 	public boolean getIsExtendedPastEncoderPosition(int encoderPosition) {
