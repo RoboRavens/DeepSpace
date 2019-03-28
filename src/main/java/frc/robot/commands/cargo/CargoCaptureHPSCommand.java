@@ -10,12 +10,12 @@ package frc.robot.commands.cargo;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Calibrations;
 import frc.robot.commands.arm.ArmMoveToHeightCommand;
-import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
+import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 
 public class CargoCaptureHPSCommand extends CommandGroup {
  
   public CargoCaptureHPSCommand() {
-    addSequential(new ArmMoveToHeightCommand(Calibrations.armCargoHPSEncoderValue));
-    addSequential(new ElevatorRetractFullyCommand());
+    addParallel(new ArmMoveToHeightCommand(Calibrations.armCargoHPSEncoderValue));
+    addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorCargoHPSEncoderValue));
   }
 }

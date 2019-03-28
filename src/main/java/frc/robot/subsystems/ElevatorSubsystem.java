@@ -53,7 +53,7 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		//setDefaultCommand(new ElevatorHoldPositionCommand());
+		setDefaultCommand(new ElevatorHoldPositionCommand());
 	}
 
 	public void extend(double magnitude) {

@@ -43,6 +43,7 @@ import frc.robot.commands.hatchpanel.SetReadyToCollectTrue;
 import frc.robot.commands.intaketransport.IntakeExtendCommand;
 import frc.robot.commands.intaketransport.IntakeRetractCommand;
 import frc.robot.commands.misc.LimelightToggleLEDCommand;
+import frc.robot.commands.misc.RetractAllCommand;
 import frc.robot.commands.misc.SetOverride1Command;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.BeakSubsystem;
@@ -412,8 +413,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.READYTOCOLLECT).whenPressed(new SetReadyToCollectTrue());
 		OPERATION_PANEL_2.getButton(ButtonCode.HATCHOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Hatch"));
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Cargo"));
-		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new ArmRetractFullyCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new ElevatorRetractFullyCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new RetractAllCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOHPS).whenPressed(new CargoCaptureHPSCommand());
 	}
 	

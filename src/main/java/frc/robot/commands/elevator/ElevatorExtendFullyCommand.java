@@ -40,7 +40,7 @@ public class ElevatorExtendFullyCommand extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.ELEVATOR_SUBSYSTEM.expectElevatorToBeAtExtensionLimit();
-		Robot.ELEVATOR_SUBSYSTEM.stop();
+		Robot.ELEVATOR_SUBSYSTEM.holdPosition();
 	}
 
 	// Called when another command which requires one or more of the same

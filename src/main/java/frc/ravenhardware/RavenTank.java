@@ -128,7 +128,7 @@ public class RavenTank {
 	}
 
 	public void fpsTank(double translation, double turn) {
-		double adjustedTurn = getFedForwardDriveValue(turn, Calibrations.turnFeedForwardMagnitude, true);
+		double adjustedTurn = getFedForwardDriveValue(turn, Calibrations.turnFeedForwardMagnitude, false);
 		double squaredTranslation = getFedForwardDriveValue(translation, Calibrations.translationFeedForwardMagnitude, false);
 		// double squaredTranslation = Math.copySign(Math.pow(translation, 2), translation);
 
@@ -216,7 +216,7 @@ public class RavenTank {
 		}
 
 		double ffAdjustedInput = squaredInputPercentageOfMoveableRange + ffDifference;
-
+/*
 		System.out.print("Turn vals: turn: " + (double) Math.round(turn * 100) / 100);
 		System.out.print(" in-DB: " + (double) Math.round(inputMinusDeadband * 100) / 100);
 		System.out.print(" %ofIR: " + (double) Math.round(percentOfInputRange * 100) / 100);
@@ -224,7 +224,7 @@ public class RavenTank {
 		System.out.print(" MR: " + (double) Math.round(moveableRange * 100) / 100);
 		System.out.print(" sq%ofMR: " + (double) Math.round(squaredInputPercentageOfMoveableRange * 100) / 100);
 		System.out.println(" ffAdj: " + (double) Math.round(ffAdjustedInput * 100) / 100);
-
+*/
 
 		if (turn == 0) {
 			ffAdjustedInput = 0;
