@@ -338,14 +338,10 @@ public class Robot extends TimedRobot {
 		}
 
 		if (DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).get()) {
-			if (gamePieceIsHatch) {
 				Command beakCaptureCommand = new BeakCaptureHatchPanelCommand();
-				beakCaptureCommand.start();
-			}
-			else {
 				Command cargoCaptureCommand = new CargoWheelSuckCommand();
+				beakCaptureCommand.start();
 				cargoCaptureCommand.start();
-			}
 		}
 		else if (DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).get()) {
 			if (gamePieceIsHatch) {
