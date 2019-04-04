@@ -5,18 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.cargo;
+package frc.robot.commands.misc;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Calibrations;
-import frc.robot.commands.arm.ArmMoveToHeightCommand;
+import frc.robot.commands.arm.ArmRetractFullyCommand;
+import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
 
-import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
+public class RetractAllCommand extends CommandGroup {
 
-public class CargoScoreCargoShipCommand extends CommandGroup {
-  
-  public CargoScoreCargoShipCommand() {
-    addParallel(new ArmMoveToHeightCommand(Calibrations.armCargoShipPortEncoderValue));
-    addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorCargoShipPortEncoderValue));
+  public RetractAllCommand() {
+    addParallel(new ArmRetractFullyCommand());
+    addSequential(new ElevatorRetractFullyCommand());
   }
 }

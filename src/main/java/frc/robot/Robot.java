@@ -22,7 +22,6 @@ import frc.controls.Gamepad;
 import frc.controls.OperationPanel;
 import frc.controls.OperationPanel2;
 import frc.robot.commands.arm.ArmExtendWhileHeldCommand;
-import frc.robot.commands.arm.ArmRetractFullyCommand;
 import frc.robot.commands.arm.ArmRetractWhileHeldCommand;
 import frc.robot.commands.automatedscoring.RunAutomatedCommand;
 import frc.robot.commands.automatedscoring.SetCargoOrHatchPanelCommand;
@@ -34,15 +33,14 @@ import frc.robot.commands.cargowheel.CargoWheelStopCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.climber.ClimberExtendWhileHeldCommand;
 import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
-import frc.robot.commands.climber.ClimberThirdLevelCommand;
 import frc.robot.commands.drivetrain.DriveTrainAlignFromHPSToRocketCommand;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
-import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.hatchpanel.SetReadyToCollectTrue;
 import frc.robot.commands.intaketransport.IntakeExtendCommand;
 import frc.robot.commands.intaketransport.IntakeRetractCommand;
 import frc.robot.commands.misc.LimelightToggleLEDCommand;
+import frc.robot.commands.misc.RetractAllCommand;
 import frc.robot.commands.misc.SetOverride1Command;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.BeakSubsystem;
@@ -134,7 +132,7 @@ public class Robot extends TimedRobot {
 		ELEVATOR_SUBSYSTEM.resetEncodersToRetractedLimit();
 		ARM_SUBSYSTEM.resetEncodersToRetractionLimit();
 
-		BEAK_SUBSYSTEM.release();
+		BEAK_SUBSYSTEM.capture();
 
 		LIMELIGHT_SUBSYSTEM.turnLEDOff();
 
@@ -157,10 +155,10 @@ public class Robot extends TimedRobot {
 		LED_SUBSYSTEM.setDisabledPattern();
 	}
 
-	/*public Robot() {
+	public Robot() {
 		server = CameraServer.getInstance();
 		server.startAutomaticCapture();
-	}*/
+	}
 
 	@Override
 	public void disabledPeriodic() {
@@ -340,14 +338,10 @@ public class Robot extends TimedRobot {
 		}
 
 		if (DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).get()) {
-			if (gamePieceIsHatch) {
 				Command beakCaptureCommand = new BeakCaptureHatchPanelCommand();
-				beakCaptureCommand.start();
-			}
-			else {
 				Command cargoCaptureCommand = new CargoWheelSuckCommand();
+				beakCaptureCommand.start();
 				cargoCaptureCommand.start();
-			}
 		}
 		else if (DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).get()) {
 			if (gamePieceIsHatch) {
@@ -377,6 +371,7 @@ public class Robot extends TimedRobot {
 
 	public void setupDriveController() {
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new IntakeExtendCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new IntakeExtendCommand());
 		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new ClimberThirdLevelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.B).whenPressed(new IntakeRetractCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.BACK).whenPressed(new LimelightToggleLEDCommand());
@@ -412,8 +407,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.READYTOCOLLECT).whenPressed(new SetReadyToCollectTrue());
 		OPERATION_PANEL_2.getButton(ButtonCode.HATCHOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Hatch"));
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Cargo"));
-		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new ArmRetractFullyCommand());
-		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new ElevatorRetractFullyCommand());
+		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new RetractAllCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOHPS).whenPressed(new CargoCaptureHPSCommand());
 	}
 	

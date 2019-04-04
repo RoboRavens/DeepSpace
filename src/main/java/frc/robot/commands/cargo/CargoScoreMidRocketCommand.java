@@ -15,7 +15,7 @@ import frc.robot.commands.elevator.ElevatorMoveToHeightCommand;
 public class CargoScoreMidRocketCommand extends CommandGroup {
   
   public CargoScoreMidRocketCommand() {
-    addSequential(new ArmMoveToHeightCommand(Calibrations.armMidRocketPortEncoderValue));
-    addSequential(new ElevatorMoveToHeightCommand(Calibrations.elevatorMidRocketPortEncoderValue));
+    addParallel(new ArmMoveToHeightCommand(Calibrations.armMidRocketPortEncoderValue));
+    addParallel(new ElevatorMoveToHeightCommand(Calibrations.elevatorMidRocketPortEncoderValue));
   }
 }

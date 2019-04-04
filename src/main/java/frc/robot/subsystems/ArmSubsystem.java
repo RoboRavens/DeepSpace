@@ -181,7 +181,7 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public void expectArmToBeAtRetractionLimit() {
-		boolean isAtLimitSwitch = this.getArmRetractionLimitSwitchValue();
+		boolean isAtLimitSwitch = getArmRetractionLimitSwitchValue();
 		boolean isEncoderWithinRange = isEncoderAtRetractionLimit();
 
 		if (isEncoderWithinRange == false && isAtLimitSwitch == true) {

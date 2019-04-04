@@ -19,7 +19,12 @@ public class ElevatorRetractFullyCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.ELEVATOR_SUBSYSTEM.setMotorsPID(Calibrations.elevatorEncoderMinimumValue);
+		if (Robot.ELEVATOR_SUBSYSTEM.isAtRetractionLimit() == false) {
+    		Robot.ELEVATOR_SUBSYSTEM.retract(Calibrations.elevatorRetractPowerMagnitude);
+    	}
+    	else {
+    		Robot.ELEVATOR_SUBSYSTEM.stop();
+    	}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
