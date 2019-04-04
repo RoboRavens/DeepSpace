@@ -131,7 +131,7 @@ public class Calibrations {
 
 	// CLIMBER (ALL VALUES ARE INCORRECT)
 	public static final double climberHoldPositionPowerMagnitude = .13;
-	public static final double climberExtendPowerMagnitude = .5;
+	public static final double climberExtendPowerMagnitude = .66;
 	public static final double climberRetractPowerMagnitude = .4;
 
 	public static final double climberkF = Calibrations.climberHoldPositionPowerMagnitude;
@@ -166,7 +166,7 @@ public class Calibrations {
 	public static final double armkP = 12.0;
 	public static final double armkI = 0.0;
 	public static final double armkD = 170.0;
-	public static final double armHoldPositionPowerMagnitude = 0.04;
+	public static final double armHoldPositionPowerMagnitude = -0.04;
 	public static final double armExtendPowerMagnitude = 0.6;
 	public static final double armRetractPowerMagnitude = 0.8;
 	

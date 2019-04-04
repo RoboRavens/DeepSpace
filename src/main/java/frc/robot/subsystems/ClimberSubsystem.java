@@ -32,19 +32,11 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public void extend(double magnitude) {
-		if (this.isAtExtensionLimit()) {
-			stop();
-		} else {
-		set(magnitude);
-		}
+		set(-1 * magnitude);
 	}
 
 	public void retract(double magnitude) {
-		if (this.isAtRetractionLimit()) {
-			stop();
-		} else {
-		set(-1 * magnitude);
-		}
+		set(magnitude);
 	}
 
 	private void set(double magnitude) {
@@ -77,9 +69,7 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public double getEncoderPosition() {
-		int EncoderPosition = Math.abs(_climberMotor.getSelectedSensorPosition());
-
-		return EncoderPosition;
+		return _climberMotor.getSelectedSensorPosition();
 	}
 
 	public void periodic() {

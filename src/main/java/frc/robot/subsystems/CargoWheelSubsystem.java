@@ -8,7 +8,6 @@ import frc.robot.commands.cargowheel.CargoWheelStopCommand;
 import frc.util.NetworkTableDiagnostics;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -16,13 +15,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class CargoWheelSubsystem extends Subsystem {
 	private TalonSRX _topCargoMotor;
-	private VictorSPX _bottomCargoMotor;
+	private TalonSRX _bottomCargoMotor;
 	private BufferedDigitalInput _cargoSensor;
 	private Timer _timer = new Timer();
 
 	public CargoWheelSubsystem() {
 		_topCargoMotor = new TalonSRX(RobotMap.topCargoMotor);
-		_bottomCargoMotor = new VictorSPX(RobotMap.bottomCargoMotor);
+		_bottomCargoMotor = new TalonSRX(RobotMap.bottomCargoMotor);
 		_cargoSensor = new BufferedDigitalInput(RobotMap.cargoSensor);
 
 		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", () -> this.hasCargo());

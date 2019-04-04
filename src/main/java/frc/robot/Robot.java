@@ -132,7 +132,7 @@ public class Robot extends TimedRobot {
 		ELEVATOR_SUBSYSTEM.resetEncodersToRetractedLimit();
 		ARM_SUBSYSTEM.resetEncodersToRetractionLimit();
 
-		BEAK_SUBSYSTEM.release();
+		BEAK_SUBSYSTEM.capture();
 
 		LIMELIGHT_SUBSYSTEM.turnLEDOff();
 
@@ -155,10 +155,10 @@ public class Robot extends TimedRobot {
 		LED_SUBSYSTEM.setDisabledPattern();
 	}
 
-	/*public Robot() {
+	public Robot() {
 		server = CameraServer.getInstance();
 		server.startAutomaticCapture();
-	}*/
+	}
 
 	@Override
 	public void disabledPeriodic() {
@@ -371,6 +371,7 @@ public class Robot extends TimedRobot {
 
 	public void setupDriveController() {
 		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new IntakeExtendCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new IntakeExtendCommand());
 		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new ClimberThirdLevelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.B).whenPressed(new IntakeRetractCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.BACK).whenPressed(new LimelightToggleLEDCommand());

@@ -126,7 +126,7 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void toggleLED() {
-		if (_ledState == 4) {
+		if (_ledState == 0) {
 			setBothLEDOn();
 		} else if (_ledState == 3) {
 			setOneLEDOn();
@@ -134,7 +134,7 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void setOneLEDOn() {
-		_ledState = 4;
+		_ledState = 0;
 	}
 
 	public void setBothLEDOn() {
