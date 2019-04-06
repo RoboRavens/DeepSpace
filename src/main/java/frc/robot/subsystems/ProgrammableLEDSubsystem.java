@@ -5,15 +5,14 @@ import frc.controls.ButtonCode;
 import frc.controls.Gamepad;
 import frc.robot.Robot;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
-import frc.robot.commands.LED.LEDCommand;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import edu.wpi.first.wpilibj.Joystick;
+import com.ctre.phoenix.CANifier;
+
 public class ProgrammableLEDSubsystem extends Subsystem {
-
-	public static final Gamepad CONTROLLER = Robot.OPERATION_CONTROLLER;
-	private LightLink _led;
-
+	public static CANifier canifier = new CANifier(0);
 	DriverStation driverStation = DriverStation.getInstance();
 
 	LEDBlinkFor2SecondsCommand command90s = new LEDBlinkFor2SecondsCommand(4, false);
@@ -22,7 +21,7 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 	LEDBlinkFor2SecondsCommand command10s = new LEDBlinkFor2SecondsCommand(1, false);
 
 	public ProgrammableLEDSubsystem() {
-		_led = new LightLink();
+
 	}
 
 	public void periodic() {
@@ -62,81 +61,36 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 		return false;
 	}
 
-	public void run() {
-
-		if (Robot.DRIVE_CONTROLLER.getButtonValue(ButtonCode.A)) {
-			// off();
-		}
-
-		if (Robot.ELEVATOR_SUBSYSTEM.isAtExtensionLimit()) {
-			// rainbow(0);
-			// System.out.println("Lighting UP Lighting UP Lighting UP Lighting UP Lighting
-			// UP Lighting UP Lighting UP");
-		}
-	}
-
 	public void setDisabledPattern() {
-		breathe(1, 0);
+		this.SetLEDColor(100, 0, 0);
 	}
 
 	public void setEnabledPattern() {
-		breathe(5, 0);
+		this.SetLEDColor(0, 100, 0);
 	}
 
-	public void setAutonomousPattern() {
-		rainbow(0);
+	public void setSandstormPattern() {
+		this.SetLEDColor(red, green, blue);
 	}
 
 	public void setErrorPattern() {
 		blink(1, 2);
 	}
 
-	public void breathe(int color, int speed) {
-		_led.breathe(color, speed, 0);
-		_led.breathe(color, speed, 1);
-		_led.breathe(color, speed, 2);
-		_led.breathe(color, speed, 3);
-	}
 
-	public void race(int color, int speed) {
-		_led.race(color, speed, 0);
-		_led.race(color, speed, 1);
-		_led.race(color, speed, 2);
-		_led.race(color, speed, 3);
-	}
 
-	public void blink(int color, int speed) {
-		_led.blink(color, speed, 0);
-		_led.blink(color, speed, 1);
-		_led.blink(color, speed, 3);
-	}
+	
 
-	public void bounce(int color, int speed) {
-		_led.bounce(color, speed, 0);
-		_led.bounce(color, speed, 1);
-		_led.bounce(color, speed, 2);
-		_led.bounce(color, speed, 3);
-	}
 
-	public void solid(int color) {
-		_led.solid(color, 0);
-		_led.solid(color, 1);
-		_led.solid(color, 2);
-		_led.solid(color, 3);
-	}
 
-	public void rainbow(int speed) {
-		_led.rainbow(speed, 0);
-		_led.rainbow(speed, 1);
-		_led.rainbow(speed, 2);
-		_led.rainbow(speed, 3);
-	}
 
 	public void off() {
-		_led.off(0);
-		_led.off(1);
-		_led.off(2);
-		_led.off(3);
+		this.SetLEDColor(0, 0, 0);
+	}
+	private void SetLEDColor(float red, float green, float blue) {
+		canifier.setLEDOutput(green, CANifier.LEDChannel.LEDChannelA); 
+		canifier.setLEDOutput(red, CANifier.LEDChannel.LEDChannelB); 
+		canifier.setLEDOutput(blue, CANifier.LEDChannel.LEDChannelC); 
 	}
 
 	@Override

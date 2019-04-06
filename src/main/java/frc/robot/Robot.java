@@ -277,7 +277,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		LED_SUBSYSTEM.setAutonomousPattern();
+		LED_SUBSYSTEM.setSandstormPattern();
 	}
 
 	/**
