@@ -61,13 +61,6 @@ import frc.util.LoggerOverlord;
 import frc.util.NetworkTableDiagnostics;
 import frc.util.OverrideSystem;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.properties file in the
- * project.
- */
 public class Robot extends TimedRobot {
 	public Command m_autonomousCommand;
 	public SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -118,10 +111,6 @@ public class Robot extends TimedRobot {
 	public String autoFromDashboard;
 	public String positionFromDashboard;
 
-	/**
-	 * This function is run when the robot is first started up and should be used
-	 * for any initialization code.
-	 */
 	@Override
 	public void robotInit() {
 
@@ -147,11 +136,6 @@ public class Robot extends TimedRobot {
 		NetworkTableDiagnostics.SendData();
 	}
 
-	/**
-	 * This function is called once each time the robot enters Disabled mode. You
-	 * can use it to reset any subsystem information you want to clear when the
-	 * robot is disabled.
-	 */
 	@Override
 	public void disabledInit() {
 		LED_SUBSYSTEM.setDisabledPattern();
@@ -171,9 +155,6 @@ public class Robot extends TimedRobot {
 
 		autoFromDashboard = SmartDashboard.getString("DB/String 0", "myDefaultData");
 		positionFromDashboard = SmartDashboard.getString("DB/String 2", "myDefaultData");
-
-		//outputAutoModeToDashboardStringOne(autoFromDashboard);
-		//outputPositionToDashboardStringThree(positionFromDashboard);
 
 		Alliance alliance = driverStation.getAlliance();
 
@@ -199,92 +180,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("DB/String 5", "TBD - Awaiting plates");
 	}
 
-	/*public void outputAutoModeToDashboardStringOne(String autoMode) {
-		String autonomousModeConfirmation = "Confirmed - auto mode: ";
-		String autonomousModeName = "";
-
-		switch (autoFromDashboard.toUpperCase()) {
-		case AutonomousCalibrations.DoNothing:
-			autonomousModeName += "Do nothing.";
-			break;
-		case AutonomousCalibrations.CrossLine:
-			autonomousModeName += "Cross auto line.";
-			break;
-		case AutonomousCalibrations.Switch:
-			autonomousModeName += "Score in switch.";
-			break;
-		case AutonomousCalibrations.Scale:
-			autonomousModeName += "Score on scale.";
-			break;
-		case AutonomousCalibrations.FlexSwitch:
-			autonomousModeName += "Flex - switch priority.";
-			break;
-		case AutonomousCalibrations.FlexScale:
-			autonomousModeName += "Flex - scale priority.";
-			break;
-
-		default:
-			autonomousModeConfirmation = "ERROR!";
-			autonomousModeName = "Mode not recognized.";
-			break;
-		}
-
-		putSmartDashboardAutonomousMode(autonomousModeConfirmation, autonomousModeName);
-	}
-
-	public void putSmartDashboardAutonomousMode(String autonomousModeConfirmation, String autonomousModeName) {
-		SmartDashboard.putString("DB/String 1", autonomousModeConfirmation);
-		SmartDashboard.putString("DB/String 6", autonomousModeName);
-	}
-
-	public void outputPositionToDashboardStringThree(String position) {
-		String positionConfirmation = "Confirmed - position: ";
-		String startingPosition = "";
-
-		switch (position.toUpperCase()) {
-		case "LEFT":
-			startingPosition += "Left.";
-			break;
-		case "MIDDLE":
-			startingPosition += "Middle.";
-			break;
-		case "RIGHT":
-			startingPosition += "Right.";
-			break;
-		default:
-			positionConfirmation = "ERROR!";
-			startingPosition = "Position not recognized.";
-			break;
-		}
-
-		putSmartDashboardStartingPosition(positionConfirmation, startingPosition);
-	}*/
-
-	public void putSmartDashboardStartingPosition(String positionConfirmation, String startingPosition) {
-		SmartDashboard.putString("DB/String 3", positionConfirmation);
-		SmartDashboard.putString("DB/String 8", startingPosition);
-	}
-
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable chooser
-	 * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
-	 * remove all of the chooser code and uncomment the getString code to get the
-	 * auto name from the text box below the Gyro
-	 *
-	 * <p>
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons to
-	 * the switch structure below with additional strings & commands.
-	 */
 	@Override
 	public void autonomousInit() {
 		LED_SUBSYSTEM.setAutonomousPattern();
 	}
 
-	/**
-	 * This function is called periodically during autonomous.
-	 */
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
@@ -307,23 +207,6 @@ public class Robot extends TimedRobot {
 
 		LED_SUBSYSTEM.setEnabledPattern();
 	}
-
-	public void cargoIntake() {
-
-	}
-
-	public void cargoScore() {
-
-	}
-
-	public void hatchIntake() {
-
-	}
-
-	public void hatchScore() {
-
-	}
-
 
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
@@ -377,7 +260,7 @@ public class Robot extends TimedRobot {
 		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new ClimberThirdLevelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.B).whenPressed(new IntakeRetractCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.BACK).whenPressed(new LimelightToggleLEDCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.X).whenPressed(new DriveTrainAlignFromHPSToRocketCommand());
+		//DRIVE_CONTROLLER.getButton(ButtonCode.X).whenPressed(new DriveTrainAlignFromHPSToRocketCommand());
 	}
 
 	public void setupOperationPanel() {
@@ -412,10 +295,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new RetractAllCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOHPS).whenPressed(new CargoCaptureHPSCommand());
 	}
-	
-	/**
-	 * This function is called periodically during test mode.
-	 */
+
 	@Override
 	public void testPeriodic() {
 	}
