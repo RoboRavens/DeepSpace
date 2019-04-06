@@ -34,8 +34,8 @@ public class SetCommandSubsystem extends Subsystem {
     _cargoOrHatchPanel = cargoOrHatchPanel;
   }
 
-  public void callAutomatedCommand(String buttonPressed) {
-    if (buttonPressed == "ROCKETHIGH") {
+  public void callAutomatedCommand(ButtonCode buttonPressed) {
+    if (buttonPressed == ButtonCode.ROCKETHIGH) {
       if (_cargoOrHatchPanel == "Cargo") {
         System.out.println("RUNNING CARGO HIGH ROCKET");
         new CargoScoreHighRocketCommand().start();
@@ -45,7 +45,7 @@ public class SetCommandSubsystem extends Subsystem {
         new HatchPanelScoreHighRocketCommand().start();
       }
     }
-    if (buttonPressed == "ROCKETMID") {
+    if (buttonPressed == ButtonCode.ROCKETMID) {
       if (_cargoOrHatchPanel == "Cargo") {
         System.out.println("RUNNING CARGO MID ROCKET");
         new CargoScoreMidRocketCommand().start();
@@ -55,7 +55,7 @@ public class SetCommandSubsystem extends Subsystem {
         new HatchPanelScoreMidRocketCommand().start();
       }
     }
-    if (buttonPressed == "ROCKETLOW") {
+    if (buttonPressed == ButtonCode.ROCKETLOW) {
       if (_cargoOrHatchPanel == "Cargo") {
         System.out.println("RUNNING CARGO LOW ROCKET");
         new CargoScoreLowRocketCommand().start();
@@ -65,7 +65,7 @@ public class SetCommandSubsystem extends Subsystem {
         new HatchPanelScoreLowCommand().start();
       }          
     }
-    if (buttonPressed == "CARGOSHIP") {
+    if (buttonPressed == ButtonCode.CARGOSHIP) {
       if (_cargoOrHatchPanel == "Cargo") {
         System.out.println("RUNNING CARGO CARGO SHIP");
         new CargoScoreCargoShipCommand().start();

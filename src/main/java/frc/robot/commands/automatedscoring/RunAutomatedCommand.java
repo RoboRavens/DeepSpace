@@ -7,12 +7,13 @@
 
 package frc.robot.commands.automatedscoring;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.controls.ButtonCode;
 import frc.robot.Robot;
 
 public class RunAutomatedCommand extends Command {
-  private String _buttonPressed;
+  private ButtonCode _buttonPressed;
 
-  public RunAutomatedCommand(String buttonPressed) {
+  public RunAutomatedCommand(ButtonCode buttonPressed) {
     _buttonPressed = buttonPressed;
     requires(Robot.SET_COMMAND_SUBSYSTEM);
   }

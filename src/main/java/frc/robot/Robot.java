@@ -399,10 +399,10 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDEEXTEND).whileHeld(new ClimberExtendWhileHeldCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDERETRACT).whileHeld(new ClimberRetractWhileHeldCommand());
 
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETHIGH).whenPressed(new RunAutomatedCommand("ROCKETHIGH"));
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETMID).whenPressed(new RunAutomatedCommand("ROCKETMID"));
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETLOW).whenPressed(new RunAutomatedCommand("ROCKETLOW"));
-		OPERATION_PANEL.getButton(ButtonCode.CARGOSHIP).whenPressed(new RunAutomatedCommand("CARGOSHIP"));
+		OPERATION_PANEL.getButton(ButtonCode.ROCKETHIGH).whenPressed(new RunAutomatedCommand(ButtonCode.ROCKETHIGH));
+		OPERATION_PANEL.getButton(ButtonCode.ROCKETMID).whenPressed(new RunAutomatedCommand(ButtonCode.ROCKETMID));
+		OPERATION_PANEL.getButton(ButtonCode.ROCKETLOW).whenPressed(new RunAutomatedCommand(ButtonCode.ROCKETLOW));
+		OPERATION_PANEL.getButton(ButtonCode.CARGOSHIP).whenPressed(new RunAutomatedCommand(ButtonCode.CARGOSHIP));
 
 		OPERATION_PANEL_2.getButton(ButtonCode.READYTOCOLLECT).whenPressed(new SetReadyToCollectTrue());
 		OPERATION_PANEL_2.getButton(ButtonCode.HATCHOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Hatch"));
