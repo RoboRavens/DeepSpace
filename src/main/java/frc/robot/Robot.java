@@ -51,7 +51,6 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GamePiecePossessedSubsystem;
 import frc.robot.subsystems.IntakeTransportSubsystem;
-import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.LineAlignmentSubsystem;
 import frc.robot.subsystems.ProgrammableLEDSubsystem;
@@ -85,7 +84,6 @@ public class Robot extends TimedRobot {
 	public static final CompressorSubsystem COMPRESSOR_SUBSYSTEM = new CompressorSubsystem();
 	public static final DriveTrainSubsystem DRIVE_TRAIN_SUBSYSTEM = new DriveTrainSubsystem();
 	public static final ElevatorSubsystem ELEVATOR_SUBSYSTEM = new ElevatorSubsystem();
-	public static final LightSubsystem LIGHT_SUBSYSTEM = new LightSubsystem();
 	public static final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
 	public static final ProgrammableLEDSubsystem LED_SUBSYSTEM = new ProgrammableLEDSubsystem();
 	public static final SetCommandSubsystem SET_COMMAND_SUBSYSTEM = new SetCommandSubsystem();
