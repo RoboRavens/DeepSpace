@@ -36,12 +36,12 @@ import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
 import frc.robot.commands.drivetrain.DriveTrainAlignFromHPSToRocketCommand;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
-import frc.robot.commands.hatchpanel.SetReadyToCollectTrue;
 import frc.robot.commands.intaketransport.IntakeExtendCommand;
 import frc.robot.commands.intaketransport.IntakeRetractCommand;
 import frc.robot.commands.misc.LimelightToggleLEDCommand;
 import frc.robot.commands.misc.RetractAllCommand;
 import frc.robot.commands.misc.SetOverride1Command;
+import frc.robot.commands.readytocollect.ReadyToCollectCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.BeakSubsystem;
 import frc.robot.subsystems.CargoWheelSubsystem;
@@ -55,6 +55,7 @@ import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.LineAlignmentSubsystem;
 import frc.robot.subsystems.ProgrammableLEDSubsystem;
+import frc.robot.subsystems.ReadyToCollectSubsystem;
 import frc.robot.subsystems.SetCommandSubsystem;
 import frc.util.LoggerOverlord;
 import frc.util.NetworkTableDiagnostics;
@@ -74,7 +75,7 @@ public class Robot extends TimedRobot {
 	public DriverStation driverStation;
 	public PowerDistributionPanel PDP = new PowerDistributionPanel();
 
-	public boolean gamePieceIsHatch = true;
+	public static boolean gamePieceIsHatch = true;
 
 	public Diagnostics diagnostics = new Diagnostics();
 	public static final LoggerOverlord LOGGER_OVERLORD = new LoggerOverlord(1f);
@@ -98,6 +99,7 @@ public class Robot extends TimedRobot {
 	public static final LineAlignmentSubsystem LINE_ALIGNMENT_SUBSYSTEM = new LineAlignmentSubsystem();
 	public static final GamePiecePossessedSubsystem GAME_PIECE_POSSESSED_SUBSYSTEM = new GamePiecePossessedSubsystem();
 	public static final IntakeTransportSubsystem INTAKE_TRANSPORT_SUBSYSTEM = new IntakeTransportSubsystem();
+	public static final ReadyToCollectSubsystem READY_TO_COLLECT_SUBSYSTEM = new ReadyToCollectSubsystem();
 
 	public CameraServer server;
 
@@ -339,9 +341,9 @@ public class Robot extends TimedRobot {
 
 		if (DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).get()) {
 				Command beakCaptureCommand = new BeakCaptureHatchPanelCommand();
-				Command cargoCaptureCommand = new CargoWheelSuckCommand();
+				Command cargoSuckCommand = new CargoWheelSuckCommand();
 				beakCaptureCommand.start();
-				cargoCaptureCommand.start();
+				cargoSuckCommand.start();
 		}
 		else if (DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).get()) {
 			if (gamePieceIsHatch) {
@@ -404,7 +406,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ROCKETLOW).whenPressed(new RunAutomatedCommand(ButtonCode.ROCKETLOW));
 		OPERATION_PANEL.getButton(ButtonCode.CARGOSHIP).whenPressed(new RunAutomatedCommand(ButtonCode.CARGOSHIP));
 
-		OPERATION_PANEL_2.getButton(ButtonCode.READYTOCOLLECT).whenPressed(new SetReadyToCollectTrue());
+		OPERATION_PANEL_2.getButton(ButtonCode.READYTOCOLLECT).whenPressed(new ReadyToCollectCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.HATCHOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Hatch"));
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Cargo"));
 		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new RetractAllCommand());

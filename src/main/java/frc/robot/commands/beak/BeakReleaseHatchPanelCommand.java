@@ -23,7 +23,6 @@ public class BeakReleaseHatchPanelCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.BEAK_SUBSYSTEM.setIsReadyToCollect(false);
     Robot.BEAK_SUBSYSTEM.release();
   }
 

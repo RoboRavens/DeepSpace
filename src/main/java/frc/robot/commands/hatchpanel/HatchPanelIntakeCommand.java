@@ -28,13 +28,11 @@ public class HatchPanelIntakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.BEAK_SUBSYSTEM.hasHatchPanelStrict()) {
       Robot.BEAK_SUBSYSTEM.capture();
       wait.start();
       if (wait.isCompleted()) {
         Robot.INTAKE_TRANSPORT_SUBSYSTEM.intakeRetract();
       }
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

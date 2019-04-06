@@ -9,7 +9,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.controls.ButtonCode;
-import frc.robot.Robot;
 import frc.robot.commands.cargo.CargoScoreCargoShipCommand;
 import frc.robot.commands.cargo.CargoScoreHighRocketCommand;
 import frc.robot.commands.cargo.CargoScoreLowRocketCommand;
@@ -20,15 +19,6 @@ import frc.robot.commands.hatchpanel.HatchPanelScoreMidRocketCommand;
 
 public class SetCommandSubsystem extends Subsystem {
   private String _cargoOrHatchPanel;
-
-  public void periodic() {
-    /*if (Robot.BEAK_SUBSYSTEM.hasHatchPanelStrict()) {
-      _cargoOrHatchPanel = "Hatch Panel";
-    }
-    if (Robot.CARGO_WHEEL_SUBSYSTEM.hasCargo()) {
-      _cargoOrHatchPanel = "Cargo";
-    }*/
-  }
 
   public void SetCargoOrHatchPanel(String cargoOrHatchPanel) {
     _cargoOrHatchPanel = cargoOrHatchPanel;

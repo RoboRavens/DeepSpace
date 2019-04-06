@@ -5,32 +5,54 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.hatchpanel;
+package frc.robot.commands.readytocollect;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.arm.ArmRetractFullyCommand;
+import frc.robot.commands.hatchpanel.HatchPanelIntakeCommand;
+import frc.robot.commands.hatchpanel.HatchPanelScoreLowCommand;
 
-public class SetReadyToCollectFalse extends Command {
-  public SetReadyToCollectFalse() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class ReadyToCollectCommand extends Command {
+  HatchPanelScoreLowCommand hatchPanelScoreLowCommand = new HatchPanelScoreLowCommand();
+  ArmRetractFullyCommand armRetractFullyCommand = new ArmRetractFullyCommand();
+  HatchPanelIntakeCommand hatchPanelIntakeCommand = new HatchPanelIntakeCommand();
+  private boolean _isFinished = false;
+
+  public ReadyToCollectCommand() {
+    requires(Robot.READY_TO_COLLECT_SUBSYSTEM);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.INTAKE_TRANSPORT_SUBSYSTEM.intakeExtend();
+    hatchPanelScoreLowCommand.start();
+    if (Robot.gamePieceIsHatch) {
+      Robot.BEAK_SUBSYSTEM.release();
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.BEAK_SUBSYSTEM.setIsReadyToCollect(false);
+    if (_isFinished) {
+      return;
+    }
+
+    if (Robot.CARGO_WHEEL_SUBSYSTEM.hasCargo()) {
+      armRetractFullyCommand.start();
+      _isFinished = true;
+    } else if (Robot.BEAK_SUBSYSTEM.hasHatchPanelStrict()) {
+      hatchPanelIntakeCommand.start();
+      _isFinished = true;
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return _isFinished;
   }
 
   // Called once after isFinished returns true
