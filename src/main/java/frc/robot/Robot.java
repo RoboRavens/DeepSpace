@@ -36,12 +36,12 @@ import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
 import frc.robot.commands.drivetrain.DriveTrainAlignFromHPSToRocketCommand;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
-import frc.robot.commands.hatchpanel.SetReadyToCollectTrue;
 import frc.robot.commands.intaketransport.IntakeExtendCommand;
 import frc.robot.commands.intaketransport.IntakeRetractCommand;
 import frc.robot.commands.misc.LimelightToggleLEDCommand;
 import frc.robot.commands.misc.RetractAllCommand;
 import frc.robot.commands.misc.SetOverride1Command;
+import frc.robot.commands.readytocollect.ReadyToCollectCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.BeakSubsystem;
 import frc.robot.subsystems.CargoWheelSubsystem;
@@ -51,22 +51,15 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.GamePiecePossessedSubsystem;
 import frc.robot.subsystems.IntakeTransportSubsystem;
-import frc.robot.subsystems.LightSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.LineAlignmentSubsystem;
 import frc.robot.subsystems.ProgrammableLEDSubsystem;
+import frc.robot.subsystems.ReadyToCollectSubsystem;
 import frc.robot.subsystems.SetCommandSubsystem;
 import frc.util.LoggerOverlord;
 import frc.util.NetworkTableDiagnostics;
 import frc.util.OverrideSystem;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.properties file in the
- * project.
- */
 public class Robot extends TimedRobot {
 	public Command m_autonomousCommand;
 	public SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -74,7 +67,7 @@ public class Robot extends TimedRobot {
 	public DriverStation driverStation;
 	public PowerDistributionPanel PDP = new PowerDistributionPanel();
 
-	public boolean gamePieceIsHatch = true;
+	public static boolean gamePieceIsHatch = true;
 
 	public Diagnostics diagnostics = new Diagnostics();
 	public static final LoggerOverlord LOGGER_OVERLORD = new LoggerOverlord(1f);
@@ -91,13 +84,13 @@ public class Robot extends TimedRobot {
 	public static final CompressorSubsystem COMPRESSOR_SUBSYSTEM = new CompressorSubsystem();
 	public static final DriveTrainSubsystem DRIVE_TRAIN_SUBSYSTEM = new DriveTrainSubsystem();
 	public static final ElevatorSubsystem ELEVATOR_SUBSYSTEM = new ElevatorSubsystem();
-	public static final LightSubsystem LIGHT_SUBSYSTEM = new LightSubsystem();
 	public static final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
 	public static final ProgrammableLEDSubsystem LED_SUBSYSTEM = new ProgrammableLEDSubsystem();
 	public static final SetCommandSubsystem SET_COMMAND_SUBSYSTEM = new SetCommandSubsystem();
 	public static final LineAlignmentSubsystem LINE_ALIGNMENT_SUBSYSTEM = new LineAlignmentSubsystem();
 	public static final GamePiecePossessedSubsystem GAME_PIECE_POSSESSED_SUBSYSTEM = new GamePiecePossessedSubsystem();
 	public static final IntakeTransportSubsystem INTAKE_TRANSPORT_SUBSYSTEM = new IntakeTransportSubsystem();
+	public static final ReadyToCollectSubsystem READY_TO_COLLECT_SUBSYSTEM = new ReadyToCollectSubsystem();
 
 	public CameraServer server;
 
@@ -116,10 +109,6 @@ public class Robot extends TimedRobot {
 	public String autoFromDashboard;
 	public String positionFromDashboard;
 
-	/**
-	 * This function is run when the robot is first started up and should be used
-	 * for any initialization code.
-	 */
 	@Override
 	public void robotInit() {
 
@@ -145,11 +134,6 @@ public class Robot extends TimedRobot {
 		NetworkTableDiagnostics.SendData();
 	}
 
-	/**
-	 * This function is called once each time the robot enters Disabled mode. You
-	 * can use it to reset any subsystem information you want to clear when the
-	 * robot is disabled.
-	 */
 	@Override
 	public void disabledInit() {
 		LED_SUBSYSTEM.setDisabledPattern();
@@ -169,9 +153,6 @@ public class Robot extends TimedRobot {
 
 		autoFromDashboard = SmartDashboard.getString("DB/String 0", "myDefaultData");
 		positionFromDashboard = SmartDashboard.getString("DB/String 2", "myDefaultData");
-
-		//outputAutoModeToDashboardStringOne(autoFromDashboard);
-		//outputPositionToDashboardStringThree(positionFromDashboard);
 
 		Alliance alliance = driverStation.getAlliance();
 
@@ -197,92 +178,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("DB/String 5", "TBD - Awaiting plates");
 	}
 
-	/*public void outputAutoModeToDashboardStringOne(String autoMode) {
-		String autonomousModeConfirmation = "Confirmed - auto mode: ";
-		String autonomousModeName = "";
-
-		switch (autoFromDashboard.toUpperCase()) {
-		case AutonomousCalibrations.DoNothing:
-			autonomousModeName += "Do nothing.";
-			break;
-		case AutonomousCalibrations.CrossLine:
-			autonomousModeName += "Cross auto line.";
-			break;
-		case AutonomousCalibrations.Switch:
-			autonomousModeName += "Score in switch.";
-			break;
-		case AutonomousCalibrations.Scale:
-			autonomousModeName += "Score on scale.";
-			break;
-		case AutonomousCalibrations.FlexSwitch:
-			autonomousModeName += "Flex - switch priority.";
-			break;
-		case AutonomousCalibrations.FlexScale:
-			autonomousModeName += "Flex - scale priority.";
-			break;
-
-		default:
-			autonomousModeConfirmation = "ERROR!";
-			autonomousModeName = "Mode not recognized.";
-			break;
-		}
-
-		putSmartDashboardAutonomousMode(autonomousModeConfirmation, autonomousModeName);
-	}
-
-	public void putSmartDashboardAutonomousMode(String autonomousModeConfirmation, String autonomousModeName) {
-		SmartDashboard.putString("DB/String 1", autonomousModeConfirmation);
-		SmartDashboard.putString("DB/String 6", autonomousModeName);
-	}
-
-	public void outputPositionToDashboardStringThree(String position) {
-		String positionConfirmation = "Confirmed - position: ";
-		String startingPosition = "";
-
-		switch (position.toUpperCase()) {
-		case "LEFT":
-			startingPosition += "Left.";
-			break;
-		case "MIDDLE":
-			startingPosition += "Middle.";
-			break;
-		case "RIGHT":
-			startingPosition += "Right.";
-			break;
-		default:
-			positionConfirmation = "ERROR!";
-			startingPosition = "Position not recognized.";
-			break;
-		}
-
-		putSmartDashboardStartingPosition(positionConfirmation, startingPosition);
-	}*/
-
-	public void putSmartDashboardStartingPosition(String positionConfirmation, String startingPosition) {
-		SmartDashboard.putString("DB/String 3", positionConfirmation);
-		SmartDashboard.putString("DB/String 8", startingPosition);
-	}
-
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable chooser
-	 * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
-	 * remove all of the chooser code and uncomment the getString code to get the
-	 * auto name from the text box below the Gyro
-	 *
-	 * <p>
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons to
-	 * the switch structure below with additional strings & commands.
-	 */
 	@Override
 	public void autonomousInit() {
 		LED_SUBSYSTEM.setAutonomousPattern();
 	}
 
-	/**
-	 * This function is called periodically during autonomous.
-	 */
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
@@ -306,23 +206,6 @@ public class Robot extends TimedRobot {
 		LED_SUBSYSTEM.setEnabledPattern();
 	}
 
-	public void cargoIntake() {
-
-	}
-
-	public void cargoScore() {
-
-	}
-
-	public void hatchIntake() {
-
-	}
-
-	public void hatchScore() {
-
-	}
-
-
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		diagnostics.outputTeleopDiagnostics();
@@ -339,9 +222,9 @@ public class Robot extends TimedRobot {
 
 		if (DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).get()) {
 				Command beakCaptureCommand = new BeakCaptureHatchPanelCommand();
-				Command cargoCaptureCommand = new CargoWheelSuckCommand();
+				Command cargoSuckCommand = new CargoWheelSuckCommand();
 				beakCaptureCommand.start();
-				cargoCaptureCommand.start();
+				cargoSuckCommand.start();
 		}
 		else if (DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).get()) {
 			if (gamePieceIsHatch) {
@@ -375,7 +258,7 @@ public class Robot extends TimedRobot {
 		//DRIVE_CONTROLLER.getButton(ButtonCode.A).whenPressed(new ClimberThirdLevelCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.B).whenPressed(new IntakeRetractCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.BACK).whenPressed(new LimelightToggleLEDCommand());
-		DRIVE_CONTROLLER.getButton(ButtonCode.X).whenPressed(new DriveTrainAlignFromHPSToRocketCommand());
+		//DRIVE_CONTROLLER.getButton(ButtonCode.X).whenPressed(new DriveTrainAlignFromHPSToRocketCommand());
 	}
 
 	public void setupOperationPanel() {
@@ -399,21 +282,18 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDEEXTEND).whileHeld(new ClimberExtendWhileHeldCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDERETRACT).whileHeld(new ClimberRetractWhileHeldCommand());
 
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETHIGH).whenPressed(new RunAutomatedCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETMID).whenPressed(new RunAutomatedCommand());
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETLOW).whenPressed(new RunAutomatedCommand());
-		OPERATION_PANEL.getButton(ButtonCode.CARGOSHIP).whenPressed(new RunAutomatedCommand());
+		OPERATION_PANEL.getButton(ButtonCode.ROCKETHIGH).whenPressed(new RunAutomatedCommand(ButtonCode.ROCKETHIGH));
+		OPERATION_PANEL.getButton(ButtonCode.ROCKETMID).whenPressed(new RunAutomatedCommand(ButtonCode.ROCKETMID));
+		OPERATION_PANEL.getButton(ButtonCode.ROCKETLOW).whenPressed(new RunAutomatedCommand(ButtonCode.ROCKETLOW));
+		OPERATION_PANEL.getButton(ButtonCode.CARGOSHIP).whenPressed(new RunAutomatedCommand(ButtonCode.CARGOSHIP));
 
-		OPERATION_PANEL_2.getButton(ButtonCode.READYTOCOLLECT).whenPressed(new SetReadyToCollectTrue());
+		OPERATION_PANEL_2.getButton(ButtonCode.READYTOCOLLECT).whenPressed(new ReadyToCollectCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.HATCHOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Hatch"));
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Cargo"));
 		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new RetractAllCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOHPS).whenPressed(new CargoCaptureHPSCommand());
 	}
-	
-	/**
-	 * This function is called periodically during test mode.
-	 */
+
 	@Override
 	public void testPeriodic() {
 	}

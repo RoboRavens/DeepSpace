@@ -5,16 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.gamepiecepossessed;
+package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.hatchpanel.HatchPanelIntakeCommand;
-import frc.robot.commands.intaketransport.IntakeExtendCommand;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class ReadyToCollectCommand extends CommandGroup {
+public class ReadyToCollectSubsystem extends Subsystem {
+  
 
-  public ReadyToCollectCommand() {
-    addSequential(new IntakeExtendCommand());
-    addSequential(new HatchPanelIntakeCommand());
-  }
+  @Override
+  public void initDefaultCommand() {}
 }

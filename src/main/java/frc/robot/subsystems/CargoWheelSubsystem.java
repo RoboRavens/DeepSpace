@@ -40,6 +40,12 @@ public class CargoWheelSubsystem extends Subsystem {
 		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(hasCargo, otherLimit);
 	}
 
+	public void retractWhenHasCargo() {
+		if (hasCargo()) {
+			
+		}
+	}
+
 	public void initDefaultCommand() {
 		setDefaultCommand(new CargoWheelStopCommand());
 	}

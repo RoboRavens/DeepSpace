@@ -5,15 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.hatchpanel;
+package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class SetReadyToCollectFalse extends Command {
-  public SetReadyToCollectFalse() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class UnlockArmCommand extends Command {
+  public UnlockArmCommand() {
+    requires(Robot.ARM_SUBSYSTEM);
   }
 
   // Called just before this Command runs the first time
@@ -24,13 +23,13 @@ public class SetReadyToCollectFalse extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.BEAK_SUBSYSTEM.setIsReadyToCollect(false);
+    Robot.ARM_SUBSYSTEM.unlockArm();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

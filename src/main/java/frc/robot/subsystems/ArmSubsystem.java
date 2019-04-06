@@ -16,6 +16,8 @@ import frc.robot.commands.arm.ArmHoldPositionCommand;
 import frc.util.NetworkTableDiagnostics;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.TalonSRXConstants;
@@ -24,6 +26,8 @@ public class ArmSubsystem extends Subsystem {
 	private TalonSRX _armMotor;
 	private BufferedDigitalInput _armExtensionLimitSwitch;
 	private BufferedDigitalInput _armRetractionLimitSwitch;
+	private Solenoid _armLockingSolenoid;
+	private Solenoid _armUnlockingSolenoid;
 	private Timer _safetyTimer = new Timer();
 
 	public ArmSubsystem() {
@@ -31,6 +35,8 @@ public class ArmSubsystem extends Subsystem {
 		_armMotor.setSensorPhase(true);
 		_armRetractionLimitSwitch = new BufferedDigitalInput(RobotMap.armRetractionLimitSwitch);
 		_armExtensionLimitSwitch = new BufferedDigitalInput(RobotMap.armExtensionLimitSwitch);
+		_armLockingSolenoid = new Solenoid(RobotMap.armLockingSolenoid);
+		_armUnlockingSolenoid = new Solenoid(RobotMap.armUnlockingSolenoid);
 		_armMotor.config_kF(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkF, TalonSRXConstants.kTimeoutMs);
 		_armMotor.config_kP(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkP, TalonSRXConstants.kTimeoutMs);
 		_armMotor.config_kI(TalonSRXConstants.kPIDLoopIdx, Calibrations.armkI, TalonSRXConstants.kTimeoutMs);
@@ -289,6 +295,18 @@ public class ArmSubsystem extends Subsystem {
 		}
 
 		return isAtHighScale;
+	}
+
+	// ARM LOCKING SOLENOID
+
+	public void lockArm() {
+		_armLockingSolenoid.set(true);
+		_armUnlockingSolenoid.set(false);
+	}
+
+	public void unlockArm() {
+		_armUnlockingSolenoid.set(true);
+		_armLockingSolenoid.set(false);
 	}
 
 	public void resetSafetyTimer() {
