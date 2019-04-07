@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LEDSetDisabledPatternCommand extends Command {
 
 	public LEDSetDisabledPatternCommand() {
-		requires(Robot.LED_SUBSYSTEM);
+		requires(Robot.PROGRAMMABLE_LED_SUBSYSTEM);
 	}
 
 	// Called just before this Command runs the first time
@@ -19,7 +19,7 @@ public class LEDSetDisabledPatternCommand extends Command {
 	protected void execute() {
 
 		System.out.println("Executing disabled pattern");
-		Robot.LED_SUBSYSTEM.setDisabledPattern();
+		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setDisabledPattern();
 	}
 
 	@Override

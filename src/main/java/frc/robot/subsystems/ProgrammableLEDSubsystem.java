@@ -1,28 +1,21 @@
 package frc.robot.subsystems;
 
-import team401.LightLink;
-import frc.controls.ButtonCode;
-import frc.controls.Gamepad;
 import frc.robot.Robot;
 import frc.robot.commands.LED.LEDBlinkFor2SecondsCommand;
+import frc.robot.commands.LED.LEDDuringMatchCommand;
+import frc.robot.commands.misc.WaitCommand;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
-import edu.wpi.first.wpilibj.Joystick;
 import com.ctre.phoenix.CANifier;
 
 public class ProgrammableLEDSubsystem extends Subsystem {
 	public static CANifier canifier = new CANifier(0);
 	DriverStation driverStation = DriverStation.getInstance();
 
-	LEDBlinkFor2SecondsCommand command90s = new LEDBlinkFor2SecondsCommand(4, false);
-	LEDBlinkFor2SecondsCommand command60s = new LEDBlinkFor2SecondsCommand(3, false);
-	LEDBlinkFor2SecondsCommand command30s = new LEDBlinkFor2SecondsCommand(2, false);
-	LEDBlinkFor2SecondsCommand command10s = new LEDBlinkFor2SecondsCommand(1, false);
-
-	public ProgrammableLEDSubsystem() {
-
-	}
+	LEDBlinkFor2SecondsCommand command90s = new LEDBlinkFor2SecondsCommand(0, 100, 0);
+	LEDBlinkFor2SecondsCommand command60s = new LEDBlinkFor2SecondsCommand(66, 33, 0);
+	LEDBlinkFor2SecondsCommand command30s = new LEDBlinkFor2SecondsCommand(100, 100, 0);
+	LEDBlinkFor2SecondsCommand command10s = new LEDBlinkFor2SecondsCommand(100, 0, 0);
 
 	public void periodic() {
 		if (getMatchIsAtTime(90)) {
@@ -52,17 +45,47 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 		}
 	}
 
-	public boolean getMatchIsAtTime(int matchSecond) {
-		double matchTime = driverStation.getMatchTime();
-		if (matchTime > matchSecond - .5 && matchTime < matchSecond + .5) {
+	public boolean getMatchIsAtTime(int desiredMatchSecond) {
+		double currentMatchTime = driverStation.getMatchTime();
+		if (currentMatchTime > desiredMatchSecond - .5 && currentMatchTime < desiredMatchSecond + .5) {
 			return true;
 		}
-
 		return false;
 	}
 
+	public boolean getMatchIsAtOrAfterTime(int desiredMatchSecond) {
+		double currentMatchTime = driverStation.getMatchTime();
+		if (currentMatchTime <= desiredMatchSecond) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean getMatchIsAtOrAfterOneTimeAndAtOrBeforeAnotherTime(int desiredMatchSecond1, int desiredMatchSecond2) {
+		double currentMatchTime = driverStation.getMatchTime();
+		if (currentMatchTime <= desiredMatchSecond1 && currentMatchTime >= desiredMatchSecond2) {
+			return true;
+		}
+		return false;
+	}
+
+	public void blink(float red, float green, float blue)  {
+		WaitCommand wait = new WaitCommand(0.2);
+		boolean _switch = true;
+		if (_switch) {
+			this.SetLEDColor(red, green, blue);
+			wait.start();
+			_switch = false;
+		}
+		if (_switch == false) {
+			this.off();
+			wait.start();
+			_switch = true;
+		}
+	}
+
 	public void setDisabledPattern() {
-		this.SetLEDColor(100, 0, 0);
+		this.SetLEDColor(75, 0, 25);
 	}
 
 	public void setEnabledPattern() {
@@ -70,23 +93,21 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 	}
 
 	public void setSandstormPattern() {
-		this.SetLEDColor(red, green, blue);
+		this.SetLEDColor(100, 0, 100);
 	}
 
-	public void setErrorPattern() {
-		blink(1, 2);
+	public void setGamePiecePosessedPattern() {
+		if (Robot.isRedAlliance) {
+			this.SetLEDColor(100, 0, 0);
+		} else {
+			this.SetLEDColor(0, 0, 100);				
+		}				
 	}
-
-
-
-	
-
-
-
 
 	public void off() {
 		this.SetLEDColor(0, 0, 0);
 	}
+	
 	private void SetLEDColor(float red, float green, float blue) {
 		canifier.setLEDOutput(green, CANifier.LEDChannel.LEDChannelA); 
 		canifier.setLEDOutput(red, CANifier.LEDChannel.LEDChannelB); 
@@ -95,7 +116,6 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		setDefaultCommand(new LEDCommand());
+		setDefaultCommand(new LEDDuringMatchCommand());
 	}
 }
