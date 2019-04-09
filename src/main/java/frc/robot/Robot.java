@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
 	public static final DriveTrainSubsystem DRIVE_TRAIN_SUBSYSTEM = new DriveTrainSubsystem();
 	public static final ElevatorSubsystem ELEVATOR_SUBSYSTEM = new ElevatorSubsystem();
 	public static final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
-	public static final ProgrammableLEDSubsystem LED_SUBSYSTEM = new ProgrammableLEDSubsystem();
+	public static final ProgrammableLEDSubsystem PROGRAMMABLE_LED_SUBSYSTEM = new ProgrammableLEDSubsystem();
 	public static final SetCommandSubsystem SET_COMMAND_SUBSYSTEM = new SetCommandSubsystem();
 	public static final LineAlignmentSubsystem LINE_ALIGNMENT_SUBSYSTEM = new LineAlignmentSubsystem();
 	public static final GamePiecePossessedSubsystem GAME_PIECE_POSSESSED_SUBSYSTEM = new GamePiecePossessedSubsystem();
@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
 
 	public Command autonomousCommand;
 
-	public boolean isRedAlliance;
+	public static boolean isRedAlliance;
 
 	public String autoFromDashboard;
 	public String positionFromDashboard;
@@ -136,7 +136,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-		LED_SUBSYSTEM.setDisabledPattern();
+		PROGRAMMABLE_LED_SUBSYSTEM.setDisabledPattern();
 	}
 
 	public Robot() {
@@ -146,7 +146,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		LED_SUBSYSTEM.setDisabledPattern();
 		LIMELIGHT_SUBSYSTEM.turnLEDOff();
 
 		Scheduler.getInstance().run();
@@ -180,7 +179,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
-		LED_SUBSYSTEM.setAutonomousPattern();
+		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
 	}
 
 	@Override
@@ -194,6 +193,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeadingToCurrentHeading();
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.resetGyroAdjustmentScaleFactor();
+		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -202,8 +202,6 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-
-		LED_SUBSYSTEM.setEnabledPattern();
 	}
 
 	public void teleopPeriodic() {

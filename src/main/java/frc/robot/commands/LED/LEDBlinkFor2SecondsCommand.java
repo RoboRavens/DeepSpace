@@ -6,21 +6,23 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class LEDBlinkFor2SecondsCommand extends Command {
-    Timer _timer = new Timer();
-    int color;
-    boolean staysOn;
+    private Timer _timer = new Timer();
+    private float _red;
+    private float _green;
+    private float _blue;
+    private float _duration;
 
-    public LEDBlinkFor2SecondsCommand(int color, boolean staysOn) {
-        //requires(Robot.LED_SUBSYSTEM);
-        this.color = color;
-        this.staysOn = staysOn;
+    public LEDBlinkFor2SecondsCommand(float red, float green, float blue, float duration) {
+        requires(Robot.PROGRAMMABLE_LED_SUBSYSTEM);
+        _red = red;
+        _green = green;
+        _blue = blue;
+        _duration = duration;
     }
-
+    
     // Called just before this Command runs the first time
     protected void initialize() {
         _timer.start();
-        Robot.LED_SUBSYSTEM.race(color, 2);
-
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -41,11 +43,7 @@ public class LEDBlinkFor2SecondsCommand extends Command {
     protected void end() {
         _timer.stop();
         _timer.reset();
-        if (staysOn == true) {
-            Robot.LED_SUBSYSTEM.solid(color);
-        } else {
-            Robot.LED_SUBSYSTEM.setEnabledPattern();
-        }
+        
     }
 
     // Called when another command which requires one or more of the same
