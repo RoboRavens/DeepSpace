@@ -22,7 +22,7 @@ public class GamePiecePossessedSubsystem extends Subsystem {
   }
   
   public void turnOff() {
-    Robot.PROGRAMMABLE_LED_SUBSYSTEM.off();
+    Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
 	}
 	
 	public void setHasGamePiece(boolean hasGamePiece) {

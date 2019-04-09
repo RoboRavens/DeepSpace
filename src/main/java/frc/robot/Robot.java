@@ -162,7 +162,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		PROGRAMMABLE_LED_SUBSYSTEM.setDisabledPattern();
 		LIMELIGHT_SUBSYSTEM.turnLEDOff();
 
 		Scheduler.getInstance().run();
@@ -277,7 +276,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		PROGRAMMABLE_LED_SUBSYSTEM.setSandstormPattern();
+		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
 	}
 
 	/**
@@ -294,6 +293,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeadingToCurrentHeading();
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.resetGyroAdjustmentScaleFactor();
+		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -302,8 +302,6 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-
-		PROGRAMMABLE_LED_SUBSYSTEM.setEnabledPattern();
 	}
 
 	public void cargoIntake() {

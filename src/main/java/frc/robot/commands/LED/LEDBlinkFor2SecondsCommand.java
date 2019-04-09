@@ -10,23 +10,23 @@ public class LEDBlinkFor2SecondsCommand extends Command {
     private float _red;
     private float _green;
     private float _blue;
+    private float _duration;
 
-    public LEDBlinkFor2SecondsCommand(float red, float green, float blue) {
+    public LEDBlinkFor2SecondsCommand(float red, float green, float blue, float duration) {
         requires(Robot.PROGRAMMABLE_LED_SUBSYSTEM);
-        this._red = red;
-        this._green = green;
-        this._blue = blue;
+        _red = red;
+        _green = green;
+        _blue = blue;
+        _duration = duration;
     }
     
     // Called just before this Command runs the first time
     protected void initialize() {
         _timer.start();
-
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.PROGRAMMABLE_LED_SUBSYSTEM.blink(_red, _green, _blue);
     }
 
     // Make this return true when this Command no longer needs to run execute()

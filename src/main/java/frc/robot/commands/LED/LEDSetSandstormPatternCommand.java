@@ -6,17 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands.LED;
-import edu.wpi.first.wpilibj.DriverStation;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class LEDDuringMatchCommand extends Command {
-  DriverStation driverStation = DriverStation.getInstance();
-
-  public LEDDuringMatchCommand() {
+public class LEDSetSandstormPatternCommand extends Command {
+  public LEDSetSandstormPatternCommand() {
     requires(Robot.PROGRAMMABLE_LED_SUBSYSTEM);
-
   }
 
   // Called just before this Command runs the first time
@@ -27,21 +23,13 @@ public class LEDDuringMatchCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.PROGRAMMABLE_LED_SUBSYSTEM.getMatchIsAtOrAfterOneTimeAndAtOrBeforeAnotherTime(135, 120)) {
-      Robot.PROGRAMMABLE_LED_SUBSYSTEM.setSandstormPattern();
-    }
-    if (Robot.PROGRAMMABLE_LED_SUBSYSTEM.getMatchIsAtOrAfterTime(120)) {
-      Robot.PROGRAMMABLE_LED_SUBSYSTEM.setEnabledPattern();
-    }
+    Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.PROGRAMMABLE_LED_SUBSYSTEM.getMatchIsAtTime(0)) {
-      return true;
-    }
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
