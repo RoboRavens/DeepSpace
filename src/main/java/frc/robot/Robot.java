@@ -33,7 +33,6 @@ import frc.robot.commands.cargowheel.CargoWheelStopCommand;
 import frc.robot.commands.cargowheel.CargoWheelSuckCommand;
 import frc.robot.commands.climber.ClimberExtendWhileHeldCommand;
 import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
-import frc.robot.commands.drivetrain.DriveTrainAlignFromHPSToRocketCommand;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.intaketransport.IntakeExtendCommand;
@@ -159,13 +158,13 @@ public class Robot extends TimedRobot {
 
 		if (alliance.compareTo(Alliance.Blue) == 0) {
 			allianceString = "Blue alliance";
-			this.isRedAlliance = false;
+			isRedAlliance = false;
 		} else if (alliance.compareTo(Alliance.Red) == 0) {
 			allianceString = "Red alliance";
-			this.isRedAlliance = true;
+			isRedAlliance = true;
 		} else {
 			allianceString = "Alliance not identified.";
-			this.isRedAlliance = false;
+			isRedAlliance = false;
 		}
 
 		SmartDashboard.putString("DB/String 4", allianceString);
