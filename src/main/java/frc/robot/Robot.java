@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
 	public static final DriveTrainSubsystem DRIVE_TRAIN_SUBSYSTEM = new DriveTrainSubsystem();
 	public static final ElevatorSubsystem ELEVATOR_SUBSYSTEM = new ElevatorSubsystem();
 	public static final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
-	public static final ProgrammableLEDSubsystem PROGRAMMABLE_LED_SUBSYSTEM = new ProgrammableLEDSubsystem();
+	// public static final ProgrammableLEDSubsystem PROGRAMMABLE_LED_SUBSYSTEM = new ProgrammableLEDSubsystem();
 	public static final SetCommandSubsystem SET_COMMAND_SUBSYSTEM = new SetCommandSubsystem();
 	public static final LineAlignmentSubsystem LINE_ALIGNMENT_SUBSYSTEM = new LineAlignmentSubsystem();
 	public static final GamePiecePossessedSubsystem GAME_PIECE_POSSESSED_SUBSYSTEM = new GamePiecePossessedSubsystem();
@@ -135,7 +135,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-		PROGRAMMABLE_LED_SUBSYSTEM.setDisabledPattern();
+		// PROGRAMMABLE_LED_SUBSYSTEM.setDisabledPattern();
 	}
 
 	public Robot() {
@@ -178,7 +178,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
-		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
+		// Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
 	}
 
 	@Override
@@ -192,7 +192,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeadingToCurrentHeading();
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.resetGyroAdjustmentScaleFactor();
-		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
+		// Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -279,10 +279,10 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDEEXTEND).whileHeld(new ClimberExtendWhileHeldCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.CLIMBEROVERRIDERETRACT).whileHeld(new ClimberRetractWhileHeldCommand());
 
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETHIGH).whenPressed(new RunAutomatedCommand(ButtonCode.ROCKETHIGH));
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETMID).whenPressed(new RunAutomatedCommand(ButtonCode.ROCKETMID));
-		OPERATION_PANEL.getButton(ButtonCode.ROCKETLOW).whenPressed(new RunAutomatedCommand(ButtonCode.ROCKETLOW));
-		OPERATION_PANEL.getButton(ButtonCode.CARGOSHIP).whenPressed(new RunAutomatedCommand(ButtonCode.CARGOSHIP));
+		OPERATION_PANEL.getButton(ButtonCode.ROCKETHIGH).whenPressed(new RunAutomatedCommand());
+		OPERATION_PANEL.getButton(ButtonCode.ROCKETMID).whenPressed(new RunAutomatedCommand());
+		OPERATION_PANEL.getButton(ButtonCode.ROCKETLOW).whenPressed(new RunAutomatedCommand());
+		OPERATION_PANEL.getButton(ButtonCode.CARGOSHIP).whenPressed(new RunAutomatedCommand());
 
 		OPERATION_PANEL_2.getButton(ButtonCode.READYTOCOLLECT).whenPressed(new ReadyToCollectCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.HATCHOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Hatch"));

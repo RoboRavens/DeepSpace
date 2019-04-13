@@ -13,7 +13,7 @@ public class LEDBlinkFor2SecondsCommand extends Command {
     private float _duration;
 
     public LEDBlinkFor2SecondsCommand(float red, float green, float blue, float duration) {
-        requires(Robot.PROGRAMMABLE_LED_SUBSYSTEM);
+        // requires(Robot.PROGRAMMABLE_LED_SUBSYSTEM);
         _red = red;
         _green = green;
         _blue = blue;

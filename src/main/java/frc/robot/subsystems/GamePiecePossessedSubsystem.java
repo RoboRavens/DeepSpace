@@ -18,11 +18,11 @@ public class GamePiecePossessedSubsystem extends Subsystem {
 	}
   
   public void turnOn() {
-    Robot.PROGRAMMABLE_LED_SUBSYSTEM.setGamePiecePosessedPattern();
+    // Robot.PROGRAMMABLE_LED_SUBSYSTEM.setGamePiecePosessedPattern();
   }
   
   public void turnOff() {
-    Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
+    // Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
 	}
 	
 	public void setHasGamePiece(boolean hasGamePiece) {

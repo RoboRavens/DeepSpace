@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class RavenTank {
 
-	private RavenEncoder _leftRavenEncoder;
-	private RavenEncoder _rightRavenEncoder;
+	//private RavenEncoder _leftRavenEncoder;
+	//private RavenEncoder _rightRavenEncoder;
 
 	private Timer _gyroCooldownTimer;
 
@@ -53,8 +53,8 @@ public class RavenTank {
 	private void initializeRavenTank() {
 		_slewRate = Calibrations.slewRateMaximum;
 
-		_leftRavenEncoder = new RavenEncoder(driveLeft, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
-		_rightRavenEncoder = new RavenEncoder(driveRight, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
+		//_leftRavenEncoder = new RavenEncoder(driveLeft, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
+		//_rightRavenEncoder = new RavenEncoder(driveRight, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
 
 		_gyroCooldownTimer = new Timer();
 
@@ -115,8 +115,8 @@ public class RavenTank {
 	}
 
 	public void resetDriveEncoders() {
-		_leftRavenEncoder.resetEncoder();
-		_rightRavenEncoder.resetEncoder();
+		// _leftRavenEncoder.resetEncoder();
+		// _rightRavenEncoder.resetEncoder();
 	}
 
 	public void drive(double left, double rightY, double rightX) {
@@ -497,6 +497,8 @@ public class RavenTank {
 	}
 
 	public double getNetInchesTraveled() {
+		return 0;
+		/*
 		// Ignore warnings, code will be used when calibrations value changes
 		if (Calibrations.useWhichEncoders == Calibrations.useLeftEncoderOnly) {
 			return _leftRavenEncoder.getNetInchesTraveled();
@@ -505,6 +507,7 @@ public class RavenTank {
 			return _rightRavenEncoder.getNetInchesTraveled();
 		}
 		return (_leftRavenEncoder.getNetInchesTraveled() + _rightRavenEncoder.getNetInchesTraveled())/2;
+	*/
 	}
 
 	public double getSlewRate() {
@@ -519,10 +522,12 @@ public class RavenTank {
 	}
 	
 	public double getRightNetInchesTraveled() {
-		return _rightRavenEncoder.getNetInchesTraveled();
+		return 0;
+		//		return _rightRavenEncoder.getNetInchesTraveled();
 	}
 	
 	public double getLeftNetInchesTraveled() {
-		return _leftRavenEncoder.getNetInchesTraveled();
+		return 0;
+		// return _leftRavenEncoder.getNetInchesTraveled();
 	}
 }

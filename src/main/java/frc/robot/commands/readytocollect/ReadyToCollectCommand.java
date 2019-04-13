@@ -10,13 +10,13 @@ package frc.robot.commands.readytocollect;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.commands.arm.ArmRetractFullyCommand;
-import frc.robot.commands.hatchpanel.HatchPanelIntakeCommand;
+import frc.robot.commands.beak.BeakCaptureHatchPanelCommand;
 import frc.robot.commands.hatchpanel.HatchPanelScoreLowCommand;
 
 public class ReadyToCollectCommand extends Command {
   HatchPanelScoreLowCommand hatchPanelScoreLowCommand = new HatchPanelScoreLowCommand();
   ArmRetractFullyCommand armRetractFullyCommand = new ArmRetractFullyCommand();
-  HatchPanelIntakeCommand hatchPanelIntakeCommand = new HatchPanelIntakeCommand();
+  BeakCaptureHatchPanelCommand hatchPanelIntakeCommand = new BeakCaptureHatchPanelCommand();
   private boolean _isFinished = false;
 
   public ReadyToCollectCommand() {
