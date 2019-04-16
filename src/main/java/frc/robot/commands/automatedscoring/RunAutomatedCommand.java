@@ -11,10 +11,8 @@ import frc.controls.ButtonCode;
 import frc.robot.Robot;
 
 public class RunAutomatedCommand extends Command {
-  private ButtonCode _buttonPressed;
 
-  public RunAutomatedCommand(ButtonCode buttonPressed) {
-    _buttonPressed = buttonPressed;
+  public RunAutomatedCommand() {
     requires(Robot.SET_COMMAND_SUBSYSTEM);
   }
 
@@ -27,7 +25,7 @@ public class RunAutomatedCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.SET_COMMAND_SUBSYSTEM.callAutomatedCommand(_buttonPressed);
+    Robot.SET_COMMAND_SUBSYSTEM.callAutomatedCommand();
   }
 
   // Make this return true when this Command no longer needs to run execute()

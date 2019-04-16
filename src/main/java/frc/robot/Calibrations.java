@@ -40,7 +40,7 @@ public class Calibrations {
 	public static final double DriveTrainCollisionJerkThreshold = 4;
 
 	// 2019 and newer robots use talonSRX instead talon
-	public static final Boolean UseTalonSRXForDriveController = false;
+	public static final Boolean UseTalonSRXForDriveController = true;
 
 	// Drive and gyro modes
 	public static final int bulldozerTank = 0;
@@ -105,7 +105,7 @@ public class Calibrations {
     public static final int elevatorMidHatchEncoderValue = 10900;
     public static final int elevatorHighHatchEncoderValue = 34800;
 
-    public static final int elevatorCargoShipPortEncoderValue = 11500;
+    public static final int elevatorCargoShipPortEncoderValue = 11000;
     public static final int elevatorLowRocketPortEncoderValue = 2600;
     public static final int elevatorMidRocketPortEncoderValue = 28000;
 	public static final int elevatorHighRocketPortEncoderValue = 49000;
@@ -171,18 +171,18 @@ public class Calibrations {
 	public static final double armRetractPowerMagnitude = 0.8;
 	
 	public static final int armEncoderRetractedValue = 0;
-	public static final int armEncoderExtendedValue = 9700;
+	public static final int armEncoderExtendedValue = 7800; // was 7400
 	
-	public static final int armCargoHPSEncoderValue = 2900;
+	public static final int armCargoHPSEncoderValue = 2200;
 
     public static final int armLowHatchEncoderValue = armEncoderExtendedValue;
-    public static final int armMidHatchEncoderValue = 2900;
-    public static final int armHighHatchEncoderValue = 1600;
+    public static final int armMidHatchEncoderValue = 2200;
+    public static final int armHighHatchEncoderValue = 1200;
 
     public static final int armCargoShipPortEncoderValue = armEncoderRetractedValue;
-    public static final int armLowRocketPortEncoderValue = 2900;
-    public static final int armMidRocketPortEncoderValue = 2900;
-    public static final int armHighRocketPortEncoderValue = 900;
+    public static final int armLowRocketPortEncoderValue = 2200;
+    public static final int armMidRocketPortEncoderValue = 2200;
+    public static final int armHighRocketPortEncoderValue = 700;
 
 	public static final int ARM_ENCODER_BUFFER = 300;
 	// This value represents the buffer that the arm can be *on either side* of midway,

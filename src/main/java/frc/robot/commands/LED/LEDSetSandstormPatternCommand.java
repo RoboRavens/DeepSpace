@@ -12,7 +12,7 @@ import frc.robot.Robot;
 
 public class LEDSetSandstormPatternCommand extends Command {
   public LEDSetSandstormPatternCommand() {
-    requires(Robot.PROGRAMMABLE_LED_SUBSYSTEM);
+    // requires(Robot.PROGRAMMABLE_LED_SUBSYSTEM);
   }
 
   // Called just before this Command runs the first time
@@ -23,7 +23,7 @@ public class LEDSetSandstormPatternCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
+    // Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
   }
 
   // Make this return true when this Command no longer needs to run execute()

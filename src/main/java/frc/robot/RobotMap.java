@@ -24,8 +24,6 @@ public class RobotMap {
 	public static final int beakReleaseSolenoid = 1;
 	public static final int intakeExtendTransportSolenoid = 2;
 	public static final int intakeRetractTransportSolenoid = 3;
-	public static final int armLockingSolenoid = 4;
-	public static final int armUnlockingSolenoid = 5;
 
 	// DIO PORTS
 	public static final int frontLineSensor = 0;
