@@ -35,10 +35,6 @@ import frc.robot.commands.climber.ClimberExtendWhileHeldCommand;
 import frc.robot.commands.climber.ClimberRetractWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
-<<<<<<< HEAD
-import frc.robot.commands.hatchpanel.SetReadyToCollectTrueCommand;
-=======
->>>>>>> master
 import frc.robot.commands.intaketransport.IntakeExtendCommand;
 import frc.robot.commands.intaketransport.IntakeRetractCommand;
 import frc.robot.commands.misc.LimelightToggleLEDCommand;
@@ -288,11 +284,7 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL.getButton(ButtonCode.ROCKETLOW).whenPressed(new RunAutomatedCommand());
 		OPERATION_PANEL.getButton(ButtonCode.CARGOSHIP).whenPressed(new RunAutomatedCommand());
 
-<<<<<<< HEAD
-		OPERATION_PANEL_2.getButton(ButtonCode.READYTOCOLLECT).whenPressed(new SetReadyToCollectTrueCommand());
-=======
 		OPERATION_PANEL_2.getButton(ButtonCode.READYTOCOLLECT).whenPressed(new ReadyToCollectCommand());
->>>>>>> master
 		OPERATION_PANEL_2.getButton(ButtonCode.HATCHOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Hatch"));
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Cargo"));
 		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new RetractAllCommand());
