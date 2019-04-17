@@ -28,17 +28,13 @@ public class RobotMap {
 	// DIO PORTS
 	public static final int frontLineSensor = 0;
 	public static final int rearLineSensor = 1;
-	public static final int hatchPanelSensorLeft = 2;
-	public static final int hatchPanelSensorRight = 3;
-	public static final int cargoSensor = 8;
+	public static final int hatchPanelSensor = 2;
+	public static final int cargoSensorLeft = 6;
+	public static final int cargoSensorRight = 7;
 
 	// Arm extension and retraction limit switches are deprecated.
 	public static final int armExtensionLimitSwitch = 4;
 	public static final int armRetractionLimitSwitch = 5;
-
-	// Elevator extension and retraction limit switches are deprecated.
-	public static final int elevatorExtensionLimitSwitch = 6;
-	public static final int elevatorRetractionLimitSwitch = 7;
 
 	// RELAYS
 	public static final int hasGamePieceRelay = 0;

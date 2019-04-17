@@ -40,10 +40,10 @@ public class ReadyToCollectCommand extends Command {
       return;
     }
 
-    if (Robot.CARGO_WHEEL_SUBSYSTEM.hasCargo()) {
+    if (Robot.CARGO_WHEEL_SUBSYSTEM.hasCargoStrict()) {
       armRetractFullyCommand.start();
       _isFinished = true;
-    } else if (Robot.BEAK_SUBSYSTEM.hasHatchPanelStrict()) {
+    } else if (Robot.BEAK_SUBSYSTEM.getHatchPanelSensor()) {
       hatchPanelIntakeCommand.start();
       _isFinished = true;
     }
