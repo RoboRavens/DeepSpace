@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class RavenTank {
 
-	private RavenEncoder _leftRavenEncoder;
-	private RavenEncoder _rightRavenEncoder;
+	//private RavenEncoder _leftRavenEncoder;
+	//private RavenEncoder _rightRavenEncoder;
 
 	private Timer _gyroCooldownTimer;
 
@@ -53,8 +53,8 @@ public class RavenTank {
 	private void initializeRavenTank() {
 		_slewRate = Calibrations.slewRateMaximum;
 
-		_leftRavenEncoder = new RavenEncoder(driveLeft, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
-		_rightRavenEncoder = new RavenEncoder(driveRight, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
+		//_leftRavenEncoder = new RavenEncoder(driveLeft, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, false);
+		//_rightRavenEncoder = new RavenEncoder(driveRight, Calibrations.encoderCyclesPerRevolution, Calibrations.wheelDiameterInches, true);
 
 		_gyroCooldownTimer = new Timer();
 
@@ -115,8 +115,8 @@ public class RavenTank {
 	}
 
 	public void resetDriveEncoders() {
-		_leftRavenEncoder.resetEncoder();
-		_rightRavenEncoder.resetEncoder();
+		// _leftRavenEncoder.resetEncoder();
+		// _rightRavenEncoder.resetEncoder();
 	}
 
 	public void drive(double left, double rightY, double rightX) {
@@ -128,7 +128,7 @@ public class RavenTank {
 	}
 
 	public void fpsTank(double translation, double turn) {
-		double adjustedTurn = getFedForwardDriveValue(turn, Calibrations.turnFeedForwardMagnitude, true);
+		double adjustedTurn = getFedForwardDriveValue(turn, Calibrations.turnFeedForwardMagnitude, false);
 		double squaredTranslation = getFedForwardDriveValue(translation, Calibrations.translationFeedForwardMagnitude, false);
 		// double squaredTranslation = Math.copySign(Math.pow(translation, 2), translation);
 
@@ -216,7 +216,7 @@ public class RavenTank {
 		}
 
 		double ffAdjustedInput = squaredInputPercentageOfMoveableRange + ffDifference;
-
+/*
 		System.out.print("Turn vals: turn: " + (double) Math.round(turn * 100) / 100);
 		System.out.print(" in-DB: " + (double) Math.round(inputMinusDeadband * 100) / 100);
 		System.out.print(" %ofIR: " + (double) Math.round(percentOfInputRange * 100) / 100);
@@ -224,7 +224,7 @@ public class RavenTank {
 		System.out.print(" MR: " + (double) Math.round(moveableRange * 100) / 100);
 		System.out.print(" sq%ofMR: " + (double) Math.round(squaredInputPercentageOfMoveableRange * 100) / 100);
 		System.out.println(" ffAdj: " + (double) Math.round(ffAdjustedInput * 100) / 100);
-
+*/
 
 		if (turn == 0) {
 			ffAdjustedInput = 0;
@@ -459,6 +459,10 @@ public class RavenTank {
 		return orientationGyro.getPitch();
 	}
 
+	public double getRollAngle() {
+		return orientationGyro.getRoll();
+	}
+
 	public boolean automatedActionHasCompleted() {
 		// Just return the opposite of automatedDrivingEnabled.
 		return automatedDrivingEnabled == false;
@@ -493,6 +497,8 @@ public class RavenTank {
 	}
 
 	public double getNetInchesTraveled() {
+		return 0;
+		/*
 		// Ignore warnings, code will be used when calibrations value changes
 		if (Calibrations.useWhichEncoders == Calibrations.useLeftEncoderOnly) {
 			return _leftRavenEncoder.getNetInchesTraveled();
@@ -501,6 +507,7 @@ public class RavenTank {
 			return _rightRavenEncoder.getNetInchesTraveled();
 		}
 		return (_leftRavenEncoder.getNetInchesTraveled() + _rightRavenEncoder.getNetInchesTraveled())/2;
+	*/
 	}
 
 	public double getSlewRate() {
@@ -515,10 +522,12 @@ public class RavenTank {
 	}
 	
 	public double getRightNetInchesTraveled() {
-		return _rightRavenEncoder.getNetInchesTraveled();
+		return 0;
+		//		return _rightRavenEncoder.getNetInchesTraveled();
 	}
 	
 	public double getLeftNetInchesTraveled() {
-		return _leftRavenEncoder.getNetInchesTraveled();
+		return 0;
+		// return _leftRavenEncoder.getNetInchesTraveled();
 	}
 }

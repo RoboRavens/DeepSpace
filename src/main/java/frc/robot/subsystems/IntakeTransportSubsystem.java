@@ -23,12 +23,12 @@ public class IntakeTransportSubsystem extends Subsystem {
   public void initDefaultCommand() {}
 
   public void intakeExtend() {
-    _intakeExtendTransport.set(true);
-    _intakeRetractTransport.set(false);
+    _intakeExtendTransport.set(false);
+    _intakeRetractTransport.set(true);
   }
 
   public void intakeRetract() {
-    _intakeRetractTransport.set(true);
-    _intakeExtendTransport.set(false);
+    _intakeRetractTransport.set(false);
+    _intakeExtendTransport.set(true);
   }
 }

@@ -512,19 +512,6 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "5,3": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///Diagnostics/Subsystem/Elevator/LimitSwitchRetracted",
-              "_title": "Extension Limit Switch",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
           "0,0": {
             "size": [
               4,
@@ -537,6 +524,19 @@
               "Range/Min": 0.0,
               "Range/Max": 52000.0,
               "Visuals/Show value": true
+            }
+          },
+          "5,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///Diagnostics/Subsystem/Elevator/LimitSwitchRetracted",
+              "_title": "Retraction Limit Switch",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
             }
           }
         }
@@ -640,7 +640,7 @@
               "_source0": "network_table:///Diagnostics/Subsystem/Arm/Encoder",
               "_title": "Arm Encoder",
               "Range/Min": 0.0,
-              "Range/Max": 12000.0,
+              "Range/Max": 10000.0,
               "Visuals/Show value": true
             }
           }
@@ -810,8 +810,8 @@
     }
   ],
   "windowGeometry": {
-    "x": 0.0,
-    "y": 0.0,
+    "x": 2.0,
+    "y": 4.0,
     "width": 1366.0,
     "height": 728.0
   }

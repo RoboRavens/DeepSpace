@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class RunAutomatedCommand extends Command {
+
   public RunAutomatedCommand() {
     requires(Robot.SET_COMMAND_SUBSYSTEM);
   }

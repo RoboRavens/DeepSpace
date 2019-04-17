@@ -8,7 +8,6 @@ import frc.robot.commands.cargowheel.CargoWheelStopCommand;
 import frc.util.NetworkTableDiagnostics;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -16,29 +15,55 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class CargoWheelSubsystem extends Subsystem {
 	private TalonSRX _topCargoMotor;
-	private VictorSPX _bottomCargoMotor;
-	private BufferedDigitalInput _cargoSensor;
+	private TalonSRX _bottomCargoMotor;
+	private BufferedDigitalInput _cargoSensorLeft;
+	private BufferedDigitalInput _cargoSensorRight;
 	private Timer _timer = new Timer();
 
 	public CargoWheelSubsystem() {
 		_topCargoMotor = new TalonSRX(RobotMap.topCargoMotor);
-		_bottomCargoMotor = new VictorSPX(RobotMap.bottomCargoMotor);
-		_cargoSensor = new BufferedDigitalInput(RobotMap.cargoSensor);
+		_bottomCargoMotor = new TalonSRX(RobotMap.bottomCargoMotor);
+		_cargoSensorLeft = new BufferedDigitalInput(RobotMap.cargoSensorLeft);
+		_cargoSensorRight = new BufferedDigitalInput(RobotMap.cargoSensorRight);
 
-		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", () -> this.hasCargo());
-		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoSensorRaw", () -> _cargoSensor.get());
-		// NetworkTableDiagnostics.SubsystemNumber("CargoWheel", "MotorOutputPercent", () -> _topCargoMotor.getMotorOutputPercent());
+		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", () -> this.hasCargoStrict());
+		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoLeft", () -> _cargoSensorLeft.get());
+		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoRight", () -> _cargoSensorRight.get());
 	}
 	
 	public void periodic() {
-		_cargoSensor.maintainState();
+		_cargoSensorLeft.maintainState();
+		_cargoSensorRight.maintainState();
 	}
 
-	public boolean hasCargo() {
-		boolean otherLimit = false;
-		boolean hasCargo = _cargoSensor.get() == false;
+	 // True only if BOTH cargo sensors are true.
+	 public boolean hasCargoStrict() {
+		boolean hasCargo = false;
+		  
+		  if (getLeftCargoSensor() && getRightCargoSensor()) {
+			  hasCargo = true;
+		  }
+		  
+		  return hasCargo;
+	}
+  
+	// True if EITHER cargo sensor is true.
+	public boolean hasCargoLenient() {
+		boolean hasCargo = false;
+		
+		if (getLeftCargoSensor() || getRightCargoSensor()) {
+			hasCargo = true;
+		}
+		
+		return hasCargo;
+	}
 
-		return Robot.OVERRIDE_SYSTEM_CARGO.getIsAtLimit(hasCargo, otherLimit);
+	public boolean getLeftCargoSensor() {
+		return !_cargoSensorLeft.get();
+	}
+
+	public boolean getRightCargoSensor() {
+		return !_cargoSensorRight.get();
 	}
 
 	public void initDefaultCommand() {
@@ -48,7 +73,7 @@ public class CargoWheelSubsystem extends Subsystem {
 	// TOP MOTOR
 
 	public void topMotorSuck(double magnitude) {
-		if (hasCargo() == false) {
+		if (hasCargoStrict() == false) {
 			this.setTopMotor(-1 * magnitude);
 		} else {
 			this.topMotorStop();
@@ -79,19 +104,19 @@ public class CargoWheelSubsystem extends Subsystem {
 	// BOTTOM MOTOR
 
 	public void bottomMotorSuck(double magnitude) {
-		if (hasCargo() == false) {
-			this.setbottomMotor(-1 * magnitude);
+		if (hasCargoStrict() == false) {
+			this.setbottomMotor(magnitude);
 		} else {
 			this.bottomMotorStop();
 		}
 	}
 
 	public void bottomMotorSpit(double magnitude) {
-		this.setbottomMotor(magnitude);
+		this.setbottomMotor(-1 * magnitude);
 	}
 
 	public void bottomMotorHold() {
-		this.setbottomMotor(-1 * Calibrations.cargoHoldPowerMagnitude);
+		this.setbottomMotor(Calibrations.cargoHoldPowerMagnitude);
 	}
 
 

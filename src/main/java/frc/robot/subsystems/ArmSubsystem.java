@@ -16,6 +16,8 @@ import frc.robot.commands.arm.ArmHoldPositionCommand;
 import frc.util.NetworkTableDiagnostics;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.TalonSRXConstants;
@@ -181,7 +183,7 @@ public class ArmSubsystem extends Subsystem {
 	}
 
 	public void expectArmToBeAtRetractionLimit() {
-		boolean isAtLimitSwitch = this.getArmRetractionLimitSwitchValue();
+		boolean isAtLimitSwitch = getArmRetractionLimitSwitchValue();
 		boolean isEncoderWithinRange = isEncoderAtRetractionLimit();
 
 		if (isEncoderWithinRange == false && isAtLimitSwitch == true) {

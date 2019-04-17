@@ -31,7 +31,7 @@ public class OperationPanel2 {
 		case READYTOCOLLECT:
 			buttonNumber = 3;
 			break;
-		case RETRACTALL:
+		case CARGOHPS:
 			buttonNumber = 4;
 			break;
 		case CLIMBEROVERRIDERETRACT:
@@ -40,7 +40,7 @@ public class OperationPanel2 {
 		case CLIMBEROVERRIDEEXTEND:
 			buttonNumber = 6;
 			break;
-		case CARGOHPS:		
+		case RETRACTALL:		
 			buttonNumber = 7;
 			break;
 		default:

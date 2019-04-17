@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LEDSetEnabledPatternCommand extends Command {
 
     public LEDSetEnabledPatternCommand() {
-        requires(Robot.LED_SUBSYSTEM);
+        // requires(Robot.PROGRAMMABLE_LED_SUBSYSTEM);
     }
 
     // Called just before this Command runs the first time
@@ -17,7 +17,7 @@ public class LEDSetEnabledPatternCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.LED_SUBSYSTEM.setEnabledPattern();
+        // Robot.PROGRAMMABLE_LED_SUBSYSTEM.setEnabledPattern();
     }
 
     @Override

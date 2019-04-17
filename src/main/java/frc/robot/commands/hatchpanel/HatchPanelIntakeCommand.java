@@ -5,32 +5,43 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.beak;
+package frc.robot.commands.hatchpanel;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.commands.misc.WaitCommand;
+import frc.robot.Calibrations;
 import frc.robot.Robot;
 
-public class BeakReleaseHatchPanelCommand extends Command {
-  public BeakReleaseHatchPanelCommand() {
+public class HatchPanelIntakeCommand extends Command {
+  WaitCommand wait = new WaitCommand(Calibrations.hasHatchPanelTimer);
+
+  public HatchPanelIntakeCommand() {
     requires(Robot.BEAK_SUBSYSTEM);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("BeakReleaseHatchPanelCommand init");
+    System.out.println("HatchPanelIntakeCommand init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.BEAK_SUBSYSTEM.release();
+      Robot.BEAK_SUBSYSTEM.capture();
+      wait.start();
+      if (wait.isCompleted()) {
+        Robot.INTAKE_TRANSPORT_SUBSYSTEM.intakeRetract();
+      }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    if (wait.isCompleted()) {
+      return true;
+    }
+    return false;
   }
 
   // Called once after isFinished returns true

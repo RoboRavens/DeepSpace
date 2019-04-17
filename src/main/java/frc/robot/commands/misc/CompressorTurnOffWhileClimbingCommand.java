@@ -5,26 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.beak;
+package frc.robot.commands.misc;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class BeakReleaseHatchPanelCommand extends Command {
-  public BeakReleaseHatchPanelCommand() {
-    requires(Robot.BEAK_SUBSYSTEM);
+public class CompressorTurnOffWhileClimbingCommand extends Command {
+  public CompressorTurnOffWhileClimbingCommand() {
+    requires(Robot.COMPRESSOR_SUBSYSTEM);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("BeakReleaseHatchPanelCommand init");
+    System.out.println("CompressorTurnOffWhileClimbingCommand init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.BEAK_SUBSYSTEM.release();
+    Robot.COMPRESSOR_SUBSYSTEM.setIsClimbing(true);
+    Robot.COMPRESSOR_SUBSYSTEM.stop();
   }
 
   // Make this return true when this Command no longer needs to run execute()

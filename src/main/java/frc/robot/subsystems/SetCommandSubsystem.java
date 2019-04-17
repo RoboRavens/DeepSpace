@@ -21,15 +21,6 @@ import frc.robot.commands.hatchpanel.HatchPanelScoreMidRocketCommand;
 public class SetCommandSubsystem extends Subsystem {
   private String _cargoOrHatchPanel;
 
-  public void periodic() {
-    if (Robot.BEAK_SUBSYSTEM.hasHatchPanelStrict()) {
-      _cargoOrHatchPanel = "Hatch Panel";
-    }
-    if (Robot.CARGO_WHEEL_SUBSYSTEM.hasCargo()) {
-      _cargoOrHatchPanel = "Cargo";
-    }
-  }
-
   public void SetCargoOrHatchPanel(String cargoOrHatchPanel) {
     _cargoOrHatchPanel = cargoOrHatchPanel;
   }

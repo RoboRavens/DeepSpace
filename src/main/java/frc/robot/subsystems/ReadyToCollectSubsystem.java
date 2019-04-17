@@ -5,17 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.hatchpanel;
+package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Calibrations;
-import frc.robot.commands.arm.ArmMoveToHeightCommand;
-import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class HatchPanelScoreLowCommand extends CommandGroup {
+public class ReadyToCollectSubsystem extends Subsystem {
   
-  public HatchPanelScoreLowCommand() {
-    addParallel(new ArmMoveToHeightCommand(Calibrations.armLowHatchEncoderValue));
-    addParallel(new ElevatorRetractFullyCommand());
-  }
+
+  @Override
+  public void initDefaultCommand() {}
 }

@@ -33,7 +33,7 @@ public class ArmExtendFullyCommand extends Command {
     // Called once after isFinished returns true
     protected void end() {
         Robot.ARM_SUBSYSTEM.expectArmToBeAtExtensionLimit();
-        Robot.ARM_SUBSYSTEM.stop();
+        Robot.ARM_SUBSYSTEM.holdPosition();
     }
 
     // Called when another command which requires one or more of the same

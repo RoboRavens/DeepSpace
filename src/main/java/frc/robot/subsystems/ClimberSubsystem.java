@@ -50,15 +50,17 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public void raiseRobotToThirdLevel() {
-		if (Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getPitchAngle() <= 4 && Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getPitchAngle() >= -4) {
+		if (Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getRollAngle() <= Calibrations.maximumTiltAngleWhileClimbing && Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getRollAngle() >= -Calibrations.maximumTiltAngleWhileClimbing) {
 			Robot.CLIMBER_SUBSYSTEM.extend(Calibrations.climberExtendPowerMagnitude);
 			Robot.ARM_SUBSYSTEM.extend(Calibrations.armExtendPowerMagnitude);
 		}
-		if (Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getPitchAngle() > 4) {
+		if (Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getRollAngle() > Calibrations.maximumTiltAngleWhileClimbing) {
 			Robot.ARM_SUBSYSTEM.extend(Calibrations.armExtendPowerMagnitude);
+			Robot.CLIMBER_SUBSYSTEM.holdPosition();
 		}
-		if (Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getPitchAngle() < -4) {
+		if (Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getRollAngle() < -Calibrations.maximumTiltAngleWhileClimbing) {
 			Robot.CLIMBER_SUBSYSTEM.extend(Calibrations.climberExtendPowerMagnitude);
+			Robot.ARM_SUBSYSTEM.holdPosition();
 		}
 	}
 
@@ -67,9 +69,7 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public double getEncoderPosition() {
-		int EncoderPosition = _climberMotor.getSelectedSensorPosition();
-
-		return EncoderPosition;
+		return _climberMotor.getSelectedSensorPosition();
 	}
 
 	public void periodic() {
