@@ -15,6 +15,7 @@ public class RumbleDriveControllerCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("RumbleDriveControllerCommand init");
         Robot.DRIVE_CONTROLLER.setRumbleOn();
         _timer.reset();
         _timer.start();

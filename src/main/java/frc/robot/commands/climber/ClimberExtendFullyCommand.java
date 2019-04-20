@@ -12,6 +12,7 @@ public class ClimberExtendFullyCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		System.out.println("ClimberExtendFullyCommand init");
 		Robot.CLIMBER_SUBSYSTEM.resetSafetyTimer();
 		Robot.CLIMBER_SUBSYSTEM.startSafetyTimer();
 	}

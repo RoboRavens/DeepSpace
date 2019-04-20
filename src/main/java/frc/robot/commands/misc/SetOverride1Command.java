@@ -15,11 +15,11 @@ public class SetOverride1Command extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("SetOverride1Command init");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        System.out.println("OVERIDDING OVERIDDING OVERIDDING");
         _overrideSystem.setOverride1(_value);
     }
 

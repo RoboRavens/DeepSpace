@@ -12,7 +12,7 @@ public class LEDSetDisabledPatternCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		System.out.println("Starting disabled pattern");
+		System.out.println("LEDSetDisabledPatternCommand init");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -24,7 +24,6 @@ public class LEDSetDisabledPatternCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		
 		return true;
 	}
 

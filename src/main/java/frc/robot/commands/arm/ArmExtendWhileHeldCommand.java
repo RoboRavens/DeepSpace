@@ -10,7 +10,7 @@ public class ArmExtendWhileHeldCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-
+        System.out.println("ArmExtendWhileHeldCommand init");
     }
 
     // Called repeatedly when this Command is scheduled to run

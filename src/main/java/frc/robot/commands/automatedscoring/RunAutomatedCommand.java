@@ -18,7 +18,7 @@ public class RunAutomatedCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Running SetAutomatedCommand");        
+    System.out.println("RunAutomatedCommand init");      
   }
 
   // Called repeatedly when this Command is scheduled to run

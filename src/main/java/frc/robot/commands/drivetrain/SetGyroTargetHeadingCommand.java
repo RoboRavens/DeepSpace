@@ -4,19 +4,23 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SetCutPowerFalse extends Command {
+public class SetGyroTargetHeadingCommand extends Command {
 
-    public SetCutPowerFalse() {
-        requires(Robot.DRIVE_TRAIN_SUBSYSTEM);
+	private int _heading;
+	
+    public SetGyroTargetHeadingCommand(int heading) {
+    	_heading = heading;
+        
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("SetGyroTargetHeadingCommand init");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setCutPower(false);
+    	Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(_heading);
     }
 
     // Make this return true when this Command no longer needs to run execute()
