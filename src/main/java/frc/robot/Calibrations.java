@@ -86,7 +86,7 @@ public class Calibrations {
 
 	// ELEVATOR
 	// TODO: scale this based on elevator height
-	public static final double elevatorHoldPositionPowerMagnitude = .12;
+	public static final double elevatorHoldPositionPowerMagnitude = 0;
 
 	public static final double elevatorExtendPowerMagnitude = 0.5;
 	public static final double elevatorRetractPowerMagnitude = 0.3;
