@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
 	public static final DriveTrainSubsystem DRIVE_TRAIN_SUBSYSTEM = new DriveTrainSubsystem();
 	public static final ElevatorSubsystem ELEVATOR_SUBSYSTEM = new ElevatorSubsystem();
 	public static final LimelightSubsystem LIMELIGHT_SUBSYSTEM = new LimelightSubsystem();
-	// public static final ProgrammableLEDSubsystem PROGRAMMABLE_LED_SUBSYSTEM = new ProgrammableLEDSubsystem();
+	public static final ProgrammableLEDSubsystem PROGRAMMABLE_LED_SUBSYSTEM = new ProgrammableLEDSubsystem();
 	public static final SetCommandSubsystem SET_COMMAND_SUBSYSTEM = new SetCommandSubsystem();
 	public static final LineAlignmentSubsystem LINE_ALIGNMENT_SUBSYSTEM = new LineAlignmentSubsystem();
 	public static final GamePiecePossessedSubsystem GAME_PIECE_POSSESSED_SUBSYSTEM = new GamePiecePossessedSubsystem();
@@ -135,7 +135,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-		// PROGRAMMABLE_LED_SUBSYSTEM.setDisabledPattern();
+		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setDisabledMode();
 	}
 
 	public Robot() {
@@ -178,7 +178,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
-		// Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
+		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setAutonomousMode();
 	}
 
 	@Override
@@ -192,7 +192,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeadingToCurrentHeading();
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.resetGyroAdjustmentScaleFactor();
-		// Robot.PROGRAMMABLE_LED_SUBSYSTEM.setMatchDefaultPattern();
+		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setTeleopMode();
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -289,6 +289,11 @@ public class Robot extends TimedRobot {
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOOVERRIDE).whenPressed(new SetCargoOrHatchPanelCommand("Cargo"));
 		OPERATION_PANEL_2.getButton(ButtonCode.RETRACTALL).whenPressed(new RetractAllCommand());
 		OPERATION_PANEL_2.getButton(ButtonCode.CARGOHPS).whenPressed(new CargoCaptureHPSCommand());
+	}
+
+	@Override
+	public void testInit() {
+		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setTestMode();
 	}
 
 	@Override

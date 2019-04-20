@@ -1,13 +1,18 @@
 package frc.robot.subsystems;
 
 import frc.robot.Robot;
+import frc.robot.commands.LED.LEDDuringMatchCommand;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import java.awt.Color;
+
 import com.ctre.phoenix.CANifier;
 
 public class ProgrammableLEDSubsystem extends Subsystem {
 	private static CANifier _canifier;
 	DriverStation driverStation = DriverStation.getInstance();
+	private boolean _teleop = false;
 
 	public ProgrammableLEDSubsystem() {
 		_canifier = new CANifier(0);
@@ -15,7 +20,28 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		//setDefaultCommand(new LEDDuringMatchCommand());
+		setDefaultCommand(new LEDDuringMatchCommand());
+	}
+
+	public void setTeleopMode() {
+		_teleop = true;
+		this.setColorToTeleop();
+	}
+
+	public void setColorToTeleop(){
+		if (Robot.isRedAlliance) {
+			this.SetLEDColor(Color.RED);
+		} else {
+			this.SetLEDColor(Color.BLUE);				
+		}	
+	}
+
+	public boolean isTeleopMode(){
+		return _teleop;
+	}
+
+	public long getMatchSecond() {
+		return Math.round(driverStation.getMatchTime());
 	}
 
 	public boolean getMatchIsAtTime(int desiredMatchSecond) {
@@ -42,28 +68,32 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 		return false;
 	}
 
-	public void setDisabledPattern() {
-		this.SetLEDColor(100, 0, 0);
+	public void setDisabledMode() {
+		_teleop = false;
+		this.SetLEDColor(Color.RED);
 	}
 
-	public void setEnabledPattern() {
-		this.SetLEDColor(0, 75, 0);
+	public void setAutonomousMode() {
+		_teleop = false;		
 	}
 
-	public void setMatchDefaultPattern() {
-		if (Robot.isRedAlliance) {
-			this.SetLEDColor(100, 0, 0);
-		} else {
-			this.SetLEDColor(0, 0, 100);				
-		}			
+	public void setTestMode(){
+		_teleop = false;
 	}
 
 	public void setGamePiecePosessedPattern() {
-		this.SetLEDColor(75, 0, 25);
+		this.SetLEDColor(new Color(192, 0, 64));
 	}
 
 	public void off() {
 		this.SetLEDColor(0, 0, 0);
+	}
+
+	public void SetLEDColor(Color color) {
+		float red = (color.getRed() / 256);
+		float green = (color.getGreen() / 256);
+		float blue = (color.getBlue() / 256);
+		this.SetLEDColor(red, green, blue);
 	}
 	
 	private void SetLEDColor(float red, float green, float blue) {
