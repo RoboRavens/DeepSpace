@@ -27,6 +27,7 @@ public class CargoWheelSubsystem extends Subsystem {
 		_cargoSensorRight = new BufferedDigitalInput(RobotMap.cargoSensorRight);
 
 		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoStrict", () -> this.hasCargoStrict());
+		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoLenient", () -> this.hasCargoLenient());
 		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoLeft", () -> this.getLeftCargoSensor());
 		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoRight", () -> this.getRightCargoSensor());
 	}
@@ -73,7 +74,7 @@ public class CargoWheelSubsystem extends Subsystem {
 	// TOP MOTOR
 
 	public void topMotorSuck(double magnitude) {
-		if (hasCargoStrict() == false) {
+		if (hasCargoLenient() == false) {
 			this.setTopMotor(-1 * magnitude);
 		} else {
 			this.topMotorStop();
@@ -104,7 +105,7 @@ public class CargoWheelSubsystem extends Subsystem {
 	// BOTTOM MOTOR
 
 	public void bottomMotorSuck(double magnitude) {
-		if (hasCargoStrict() == false) {
+		if (hasCargoLenient() == false) {
 			this.setbottomMotor(magnitude);
 		} else {
 			this.bottomMotorStop();

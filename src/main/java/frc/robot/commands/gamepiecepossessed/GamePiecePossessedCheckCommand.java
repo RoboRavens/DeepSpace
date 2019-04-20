@@ -19,7 +19,7 @@ public class GamePiecePossessedCheckCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         // If we possess either type of piece, turn on the lights.
-        if (Robot.BEAK_SUBSYSTEM.getHatchPanelSensor() || Robot.CARGO_WHEEL_SUBSYSTEM.hasCargoStrict()) {
+        if (Robot.BEAK_SUBSYSTEM.getHatchPanelSensor() || Robot.CARGO_WHEEL_SUBSYSTEM.hasCargoLenient()) {
             Robot.GAME_PIECE_POSSESSED_SUBSYSTEM.turnOn();
 
             if (Robot.GAME_PIECE_POSSESSED_SUBSYSTEM.getHasGamePiece() == false) {

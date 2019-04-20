@@ -43,7 +43,7 @@ public class ReadyToCollectCommand extends Command {
 
     System.out.println("READYTOCOLLECTCOMMANDRUNNING");
 
-    if (Robot.CARGO_WHEEL_SUBSYSTEM.hasCargoStrict()) {
+    if (Robot.CARGO_WHEEL_SUBSYSTEM.hasCargoLenient()) {
       System.out.println("CARGO READY TO COLLECT");
       armRetractFullyCommand.start();
       _isFinished = true;
