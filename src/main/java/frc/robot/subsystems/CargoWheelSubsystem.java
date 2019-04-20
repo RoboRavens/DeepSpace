@@ -26,9 +26,9 @@ public class CargoWheelSubsystem extends Subsystem {
 		_cargoSensorLeft = new BufferedDigitalInput(RobotMap.cargoSensorLeft);
 		_cargoSensorRight = new BufferedDigitalInput(RobotMap.cargoSensorRight);
 
-		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargo", () -> this.hasCargoStrict());
-		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoLeft", () -> _cargoSensorLeft.get());
-		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoRight", () -> _cargoSensorRight.get());
+		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoStrict", () -> this.hasCargoStrict());
+		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoLeft", () -> this.getLeftCargoSensor());
+		NetworkTableDiagnostics.SubsystemBoolean("CargoWheel", "HasCargoRight", () -> this.getRightCargoSensor());
 	}
 	
 	public void periodic() {

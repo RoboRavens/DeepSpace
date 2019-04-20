@@ -15,6 +15,7 @@ import frc.robot.commands.elevator.ElevatorRetractFullyCommand;
 public class HatchPanelScoreLowCommand extends CommandGroup {
   
   public HatchPanelScoreLowCommand() {
+    System.out.println("HatchPanelScoreLowCommand init");
     addParallel(new ArmMoveToHeightCommand(Calibrations.armLowHatchEncoderValue));
     addParallel(new ElevatorRetractFullyCommand());
   }

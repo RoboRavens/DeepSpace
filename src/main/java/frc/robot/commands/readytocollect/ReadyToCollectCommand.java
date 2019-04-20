@@ -28,6 +28,7 @@ public class ReadyToCollectCommand extends Command {
   protected void initialize() {
     Robot.INTAKE_TRANSPORT_SUBSYSTEM.intakeExtend();
     hatchPanelScoreLowCommand.start();
+    _isFinished = false;
     if (Robot.gamePieceIsHatch) {
       Robot.BEAK_SUBSYSTEM.release();
     }
@@ -40,10 +41,14 @@ public class ReadyToCollectCommand extends Command {
       return;
     }
 
+    System.out.println("READYTOCOLLECTCOMMANDRUNNING");
+
     if (Robot.CARGO_WHEEL_SUBSYSTEM.hasCargoStrict()) {
+      System.out.println("CARGO READY TO COLLECT");
       armRetractFullyCommand.start();
       _isFinished = true;
     } else if (Robot.BEAK_SUBSYSTEM.getHatchPanelSensor()) {
+      System.out.println("HATCH READY TO COLLECT");
       hatchPanelIntakeCommand.start();
       _isFinished = true;
     }
