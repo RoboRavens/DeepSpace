@@ -19,6 +19,7 @@ public class DriveOntoThirdPlatformCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("DriveOntoThirdPlatformCommand init");
     Robot.CARGO_WHEEL_SUBSYSTEM.resetTimer();
     Robot.CARGO_WHEEL_SUBSYSTEM.startTimer();
   }

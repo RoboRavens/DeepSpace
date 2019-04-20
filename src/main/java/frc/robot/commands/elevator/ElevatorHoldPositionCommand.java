@@ -13,8 +13,8 @@ public class ElevatorHoldPositionCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		this.targetPosition = Robot.ELEVATOR_SUBSYSTEM.getEncoderPosition();
 		System.out.println("ElevatorHoldPositionCommand init");
+		this.targetPosition = Robot.ELEVATOR_SUBSYSTEM.getEncoderPosition();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

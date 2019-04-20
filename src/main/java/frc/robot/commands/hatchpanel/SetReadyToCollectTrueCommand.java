@@ -5,51 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.cargowheel;
+package frc.robot.commands.hatchpanel;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class CargoWheelSuckOrSpitCommand extends Command {
-  private double _magnitude;
-  private String _suckOrSpit;
-  private Timer _timer;
-
-  public CargoWheelSuckOrSpitCommand(double magnitude, String suckOrSpit) {
-    requires(Robot.CARGO_WHEEL_SUBSYSTEM);
-    _magnitude = magnitude;
-    _suckOrSpit = suckOrSpit;
-  }
+public class SetReadyToCollectTrueCommand extends Command {
+  public SetReadyToCollectTrueCommand() {}
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("CargoWheelSuckOrSpitCommand init");
-    _timer.reset();
-    _timer.start();
+    System.out.println("SetReadyToCollectTrueCommand init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (_suckOrSpit == "Suck" || _suckOrSpit == "suck") {
-      Robot.CARGO_WHEEL_SUBSYSTEM.topMotorSuck(_magnitude);
-      Robot.CARGO_WHEEL_SUBSYSTEM.bottomMotorSuck(_magnitude);
-    }
-    if (_suckOrSpit == "Spit" || _suckOrSpit == "spit") {
-      Robot.CARGO_WHEEL_SUBSYSTEM.topMotorSpit(_magnitude);
-      Robot.CARGO_WHEEL_SUBSYSTEM.bottomMotorSpit(_magnitude);
-    }
+    Robot.BEAK_SUBSYSTEM.setIsReadyToCollect(true);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (_timer.get() > 1.0) {
-      return true;
-    }
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
