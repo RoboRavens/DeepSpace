@@ -41,7 +41,7 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 	}
 
 	public long getMatchSecond() {
-		return Math.round(driverStation.getMatchTime());
+		return Math.round((long)driverStation.getMatchTime());
 	}
 
 	public boolean getMatchIsAtTime(int desiredMatchSecond) {
@@ -74,11 +74,13 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 	}
 
 	public void setAutonomousMode() {
-		_teleop = false;		
+		_teleop = false;
+		this.SetLEDColor(Color.WHITE);
 	}
 
 	public void setTestMode(){
 		_teleop = false;
+		this.SetLEDColor(Color.GRAY);
 	}
 
 	public void setGamePiecePosessedPattern() {
@@ -86,13 +88,16 @@ public class ProgrammableLEDSubsystem extends Subsystem {
 	}
 
 	public void off() {
-		this.SetLEDColor(0, 0, 0);
+		this.SetLEDColor(Color.RED);
 	}
 
 	public void SetLEDColor(Color color) {
-		float red = (color.getRed() / 256);
-		float green = (color.getGreen() / 256);
-		float blue = (color.getBlue() / 256);
+		float red = (((float)color.getRed() / 256));
+		System.out.println(red);
+		float green = (((float)color.getGreen() / 256));
+		System.out.println(green);
+		float blue = (((float)color.getBlue() / 256));
+		System.out.println(blue);
 		this.SetLEDColor(red, green, blue);
 	}
 	

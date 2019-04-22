@@ -52,6 +52,7 @@ public class LEDDuringMatchCommand extends Command {
   @Override
   protected void execute() {
     _matchSecond = Robot.PROGRAMMABLE_LED_SUBSYSTEM.getMatchSecond();
+    System.out.println(_matchSecond);
     _colorSelected = false;
 
     if (Robot.PROGRAMMABLE_LED_SUBSYSTEM.isTeleopMode() == false) {
