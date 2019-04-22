@@ -27,6 +27,7 @@ public class BeakSubsystem extends Subsystem {
   }
   
   public void release() {
+    System.out.println("Releasing");
     _beakRelease.set(true);
     _beakCapture.set(false);
   }
