@@ -32,7 +32,7 @@ public class WaitCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (_timer.get() == _waitTime) {
+    if (_timer.get() >= _waitTime) {
       return true;
     }
     return false;
