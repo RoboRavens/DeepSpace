@@ -137,7 +137,7 @@ public class RavenTank {
 			fpsTankChooseLimelightOrManual(squaredTranslation, adjustedTurn);
 		}
 		else {
-			Robot.LIMELIGHT_SUBSYSTEM.turnLEDOff();
+			//Robot.LIMELIGHT_SUBSYSTEM.turnLEDOff();
 			fpsTankManual(squaredTranslation, adjustedTurn);
 		}
 	}

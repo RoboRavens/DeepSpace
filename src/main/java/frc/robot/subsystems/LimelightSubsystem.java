@@ -129,16 +129,16 @@ public class LimelightSubsystem extends Subsystem {
 		if (_ledState == 0) {
 			setBothLEDOn();
 		} else if (_ledState == 3) {
-			setOneLEDOn();
+			useConfigPanel();
 		}
-	}
-
-	public void setOneLEDOn() {
-		_ledState = 0;
 	}
 
 	public void setBothLEDOn() {
 		_ledState = 3;
+	}
+
+	public void useConfigPanel() {
+		_ledState = 0;
 	}
 
 	public void turnLEDOff() {
@@ -146,7 +146,7 @@ public class LimelightSubsystem extends Subsystem {
 	}
 
 	public void turnLEDOn() {
-		ledMode.setNumber(_ledState);
+		ledMode.setNumber(3);
 	}
 
 		/*Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeading(Robot.DRIVE_TRAIN_SUBSYSTEM.ravenTank.getCurrentHeading() + x);

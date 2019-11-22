@@ -37,6 +37,7 @@ import frc.robot.commands.elevator.ElevatorExtendWhileHeldCommand;
 import frc.robot.commands.elevator.ElevatorRetractWhileHeldCommand;
 import frc.robot.commands.intaketransport.IntakeExtendCommand;
 import frc.robot.commands.intaketransport.IntakeRetractCommand;
+import frc.robot.commands.misc.LimelightAllignWithTargetCommand;
 import frc.robot.commands.misc.LimelightToggleLEDCommand;
 import frc.robot.commands.misc.RetractAllCommand;
 import frc.robot.commands.misc.SetOverride1Command;
@@ -111,6 +112,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 
+
 		driverStation = DriverStation.getInstance();
 
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -122,7 +124,7 @@ public class Robot extends TimedRobot {
 
 		BEAK_SUBSYSTEM.capture();
 
-		LIMELIGHT_SUBSYSTEM.turnLEDOff();
+		//LIMELIGHT_SUBSYSTEM.turnLEDOff();
 
 		this.setupDriveController();
 		this.setupOperationPanel();
@@ -145,7 +147,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		LIMELIGHT_SUBSYSTEM.turnLEDOff();
+		//LIMELIGHT_SUBSYSTEM.turnLEDOff();
 
 		Scheduler.getInstance().run();
 
@@ -190,6 +192,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		LIMELIGHT_SUBSYSTEM.turnLEDOn();
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.setGyroTargetHeadingToCurrentHeading();
 		DRIVE_TRAIN_SUBSYSTEM.ravenTank.resetGyroAdjustmentScaleFactor();
 		Robot.PROGRAMMABLE_LED_SUBSYSTEM.setTeleopMode();
@@ -204,6 +207,7 @@ public class Robot extends TimedRobot {
 	}
 
 	public void teleopPeriodic() {
+		
 		Scheduler.getInstance().run();
 		diagnostics.outputTeleopDiagnostics();
 
@@ -250,7 +254,7 @@ public class Robot extends TimedRobot {
 	}
 
 	public void setupDriveController() {
-		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whenPressed(new IntakeExtendCommand());
+		DRIVE_CONTROLLER.getButton(ButtonCode.RIGHTBUMPER).whileHeld(new LimelightAllignWithTargetCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.LEFTBUMPER).whenPressed(new IntakeExtendCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.B).whenPressed(new IntakeRetractCommand());
 		DRIVE_CONTROLLER.getButton(ButtonCode.BACK).whenPressed(new LimelightToggleLEDCommand());
